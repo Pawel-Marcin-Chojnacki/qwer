@@ -1,0 +1,337 @@
+\documentclass[a4paper,twoside,titlepage,openright]{book}
+\usepackage[MeX]{polski}
+\usepackage[utf8]{inputenc}
+\usepackage{enumitem} % słownik pojęć
+\usepackage{amsmath}
+\usepackage{tabularx} % tabele
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor} % kolory jak~się chce gdzieś użyć
+\usepackage{graphicx} % żeby ryciny i~zdjęcia były
+\usepackage{listings} % syntax highlighting
+\usepackage{verbatimbox} % marginesy dla~tabel
+\usepackage{emptypage} % usuwa nagłówki i~numery stron z~pustych stron
+\usepackage{afterpage} % to zapobiega ustawianiu obrazka PO tym
+
+% PAGE LAYOUT
+%\usepackage{showframe} % debug
+\marginparwidth 0pt
+\marginparsep 0pt
+\usepackage[top=3.5cm,bottom=3.5cm,inner=3.5cm,outer=2.5cm]{geometry}
+
+% HEADER, FOOTER
+\usepackage{fancyhdr} 
+\pagestyle{fancy}
+
+% TABLE OF CONTENTS
+
+%kropki w~spisie tresci
+\makeatletter
+\def\numberline#1{\hb@xt@\@tempdima{#1.\hfil}}
+\makeatother
+
+% CHAPTER TITLE
+
+%kropki po~tytułach rodziałów
+\makeatletter
+\def\@makechapterhead#1{%
+  \vspace*{50\p@}%
+  {\parindent \z@ \raggedright \normalfont
+	\ifnum \c@secnumdepth >\m@ne
+	  \if@mainmatter
+	   \huge\bfseries \@chapapp\space \thechapter.
+	   \par\nobreak
+	   \vskip 20\p@
+	\fi
+   \fi
+   \interlinepenalty\@M
+   \Huge \bfseries #1\par\nobreak
+   \vskip 40\p@
+  }}
+\makeatother
+
+% SPIS TREŚCI
+
+%kropki w~spisie tresci
+\makeatletter
+\def\numberline#1{\hb@xt@\@tempdima{#1.\hfil}}
+\makeatother
+
+% TYTUŁY ROZDZIAŁÓW
+
+%kropki po~tytułach rozdziałów
+\makeatletter
+\renewcommand*\@seccntformat[1]%
+{\csname the#1\endcsname.\enspace}
+\makeatother
+
+
+% KONFIGURACJA WYGLĄDU NAGŁÓWKA TEGO CO SIĘ POWTARZA
+
+\fancyhead{} 
+\fancyhead[LE]{\rightmark}
+\fancyhead[RO]{\leftmark}
+
+% WYGLĄD TABEL
+
+% vertical padding
+\renewcommand{\arraystretch}{1.5}
+
+% CODE LISTINGS 
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\lstset{ %
+%frame=lines,
+aboveskip=1.5em,
+    belowcaptionskip=1.5em,
+    xleftmargin=0.5cm,
+  backgroundcolor=\color{white},   % choose the background color
+  %basicstyle=\footnotesize,        % size of fonts used for the code
+  breaklines=true,                 % automatic line breaking only at whitespace
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  keywordstyle=\color{blue},       % keyword style
+  stringstyle=\color{mymauve},     % string literal style
+}
+
+\definecolor{maroon}{rgb}{0.5,0,0}
+\definecolor{darkgreen}{rgb}{0,0.5,0}
+
+\lstdefinelanguage{XML}
+{
+  basicstyle=\ttfamily,
+  morestring=[s]{"}{"},
+  morecomment=[s]{?}{?},
+  morecomment=[s]{!--}{--},
+  commentstyle=\color{darkgreen},
+  moredelim=[s][\color{black}]{>}{<},
+  moredelim=[s][\color{red}]{\ }{=},
+  stringstyle=\color{blue},
+  identifierstyle=\color{maroon},
+  morekeywords={Page.DataContext,viewModel:NameViewModel}
+}
+
+%\setmonofont{Consolas} %to be used with XeLaTeX or LuaLaTeX
+\definecolor{bluekeywords}{rgb}{0,0,1}
+\definecolor{greencomments}{rgb}{0,0.5,0}
+\definecolor{redstrings}{rgb}{0.64,0.08,0.08}
+\definecolor{xmlcomments}{rgb}{0.5,0.5,0.5}
+\definecolor{types}{rgb}{0.17,0.57,0.68}
+
+\lstset{language=[Sharp]C,
+%captionpos=b,
+%numbers=left, %Nummerierung
+%numberstyle=\tiny, % kleine Zeilennummern
+%frame=lines, % Oberhalb und unterhalb des Listings ist eine Linie
+showspaces=false,
+showtabs=false,
+breaklines=true,
+showstringspaces=false,
+breakatwhitespace=true,
+escapeinside={(*@}{@*)},
+commentstyle=\color{greencomments},
+morekeywords={partial, var, value, get, set},
+keywordstyle=\color{bluekeywords},
+stringstyle=\color{redstrings},
+basicstyle=\ttfamily\small,
+}
+
+
+
+
+\begin{document}
+
+% ################################
+%        STRONA TYTUŁOWA
+% ################################
+
+\begin{titlepage}
+
+%\newgeometry{inner=3cm,outer=3cm}
+
+\vspace*{1cm}
+\begin{center}
+\begin{Large}
+Uniwersytet Mikołaja Kopernika\\[1mm]
+Wydział Matematyki i~Informatyki\\[1mm]
+\end{Large}
+\end{center}
+
+\vfill
+
+\begin{center}
+{\Large Paweł Marcin Chojnacki}\\
+nr albumu: 260082\\
+informatyka
+\end{center}
+
+\vfill
+
+\begin{center}
+{\Large Praca magisterska}
+\end{center}
+
+\vspace{0.5cm}
+
+\begin{center}
+{\Huge \textbf{Tytuł pracy magisterskiej}}
+\end{center}
+
+\vspace{2cm}
+\hfill
+\begin{minipage}{6.5cm}
+Opiekun pracy dyplomowej\\
+dr hab. Piotr Wiśniewski
+\end{minipage}
+
+\vfill
+
+\begin{center}
+Toruń 2018
+\end{center}
+
+\end{titlepage}
+
+% odwracamy kartkę ze~stroną tytułową to nic nie~ma z~drugiej strony -> pusta strona
+\clearpage{\pagestyle{empty}\cleardoublepage}
+
+\tableofcontents
+
+\chapter*{Słownik pojęć}
+\markboth{}{Słownik pojęć}
+\addcontentsline{toc}{chapter}{Słownik pojęć}
+\begin{description}[style=nextline]
+	\item[Klasyfikacja binarna] Klasyfikacja binarna polega na jak najdokładniejszym stwierdzeniu posiadania cechy lub przynależności do kategorii danego obiektu.
+Najczęściej używane metody do klasyfikacji binarnej to: drzewa decyzyjne 
+Dane wejściowe należy przedstawić w formie macierzy. Każdy przykład do treningu i później klasyfikacji, musi być tych samych wymiarów. Wyjściem algorytmu klasyfikacji binarnej jest wektor z prawdopodobieństwem klasyfikacji każdego z przykładów. Wizualizacja funkcji, klasyfikującej czerwone i zielone kółka.
+W klasyfikacji binarnej przykłady zapisuje się jako pary (x,y) - x to wartość danego przykładu, y to odpowiedź na pytanie czy przykład posiada klasyfikowaną cechę.
+Mając m przykładów: {(x1,y1),(x2,y2),(x3,y3),...,(xm,ym)}. Dla uproszczenia obliczeń, zwyczajowo stosuje się zapis macierzowy:
+[ x(1), x(2),..., x(n) ]
+[ x(1), x(2),..., x(n) ]
+[ x(1), x(2),..., x(n) ]
+[ x(1), x(2),..., x(n) ]
+Jedna kolumna to jeden przykład, dlatego szerokość macierzy to m.
+Zbiór cech przykładów można również uprościć i zapisać je w formie wektora Y = [y1,y2,...ym]
+	\item[Regresja logistyczna] Metoda statystyczna używana do analizy zbioru danych, w którym mam więcej niż jedną zmienną determinującą wyjście. Wyjściem jest prawdopodobieństwo wystąpienia klasyfikowanego elementu. Algorytm regresji logistycznej przyjmuje na wejściu dane: n-wymiarowy wektor liczb rzeczywistych [np. Obraz], zestaw wag o tych samych wymiarach, liczba rzeczywista, bias.
+Do wygenerowania wyjścia, wystarczy obliczyć y = wT (wagi transponowane) * x (wejście) + b (bias). Należy jeszcze zastosować operację, która pozwoli na ustawienie parametrów w przedziale 0-1. Całe powyższe równanie użyć jako wejście do funkcji sigmoidy. Sigm(z) = 1 / 1 + e-z. Jeśli z jest duże, sigmoida będzie bliska 1, jeśli z jest liczbą ujemną, sigmoida zbliży się do 0.
+	\item[Funkcja kosztu regresji logistycznej] Funkcja do trenowania modelu regresji logistycznej. Mając zestawy treningowe, można wytrenować algorytm tak, aby podawał wartości prawdopodobieństwa jak najbliższe zestawu treningowego. Chcemy ustawić wagi i bias tak, aby te parametry dawały prawidłową odpowiedź dla każdego przykładu uczącego. Funkcja kosztu ma następujący wzór:
+	\item[Metoda gradientu prostego] Algorytm pozwalający znaleźć minimum funkcji. Wyobrażając sobie płaszczyznę funkcji dla wszystkich możliwych argumentów, algorytm przechodzi z losowo rozpoczętego miejsca w miejsce gdzie jest najgłębiej. Mając funkcję kosztu J(w,b) szukamy miejsca w którym błąd algorytmu jest jak najmniejszy.
+	\item[Wykres obliczeniowy] (ang. Computation graph). Dekompozycja wyrażenia w pojedyncze atomowe kroki. Używany do optymalizowania funkcji. Przydaje się podczas ręcznej analizy funkcji błędu.
+	\item[Funkcje aktywacji] 
+	\item[Def] cytat \cite{slownikPwn}
+\end{description}
+ 
+\chapter*{Wstęp}
+\markboth{}{Wstęp}
+\addcontentsline{toc}{chapter}{Wstęp}
+
+\section*{Nazwa sekcji}
+\addcontentsline{toc}{section}{Lorem ipsum }
+Lorem ipsum 
+
+
+
+\clearpage{\pagestyle{empty}\cleardoublepage}
+\chapter{Neurony}
+\markboth{}{Neurony}
+\addcontentsline{toc}{chapter}{Neurony}
+
+\section{Co to jest sieć neuronowa?}
+
+ 
+\section{Jak SN uczą się zachowań?}
+
+\subsection*{Uczenie nadzorowane}
+
+\subsection*{Uczenie nadzorowane}
+
+
+\chapter{Deep Learning}
+
+\section{Techniki w deep learning}
+
+
+\subsection*{Sieci neuronowe}
+\subsection*{Perceptron wielowarstwowy}
+\subsection*{Restricted Boltzman Machine}
+\subsection*{Stacked autoencoders}
+\subsection*{Convolutional auto-encoders}
+\subsection*{Convolutional Neural Networks}
+\subsection*{Recurrent Neural Networks}
+\subsection*{Long Short Term Memory}
+\subsection*{Fully Convolutional Networks}
+\subsection*{Multi-instance Learning CNN}
+\subsection*{Multi-scale/View/Stream CNN}
+
+\section*{Nazwa sekcji}
+\addcontentsline{toc}{section}{Lorem ipsum }
+
+
+
+
+
+
+\chapter{Podsumowanie}
+Lorem ipsum 
+ 
+ 
+ 
+\addcontentsline{toc}{chapter}{Spis rysunków}
+\listoffigures
+
+
+\addcontentsline{toc}{chapter}{Bibliografia}
+\begin{thebibliography}{99}
+
+\bibitem{deeplearningbook} \textsc{Goodfellow I., Bengio Y, Courville A.:}
+\textit{Deep Learning (Adaptive Computation and Machine Learning series)}, The MIT Press, 2016, ISBN 978-0262035613.
+
+\bibitem{medicalImage} \textit{Medical Image Retrieval using Deep Convolutional Neural Network}, 
+\texttt{https://arxiv.org/pdf/1703.08472.pdf}, \\dostęp: 10.04.2018.
+
+\bibitem{fastAI} \textit{Practical Deep Learning for Coders}, 
+\texttt{http://course.fast.ai}, \\dostęp: 10.04.2018.
+
+\bibitem{resnextArxiv} \textit{Aggregated Residual Transformations for Deep Neural Networks}, 
+\texttt{https://arxiv.org/pdf/1611.05431.pdf}, \\dostęp: 10.04.2018.
+
+\bibitem{alexnetNips} \textit{ImageNet Classification with Deep Convolutional Neural Networks}, 
+\texttt{https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf}, \\dostęp: 10.04.2018.
+
+\bibitem{lecun} \textit{Gradient-Based Learning Applied to Document Recognition}, 
+\texttt{http://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf}, \\dostęp: 10.04.2018.
+
+\bibitem{ganArxiv} \textit{Generative Adversarial Nets}, 
+\texttt{https://arxiv.org/pdf/1406.2661v1.pdf}, \\dostęp: 10.04.2018.
+
+\bibitem{dropout} \textit{Dropout: A Simple Way to Prevent Neural Networks from Overfitting}, 
+\texttt{https://www.cs.toronto.edu/~hinton/absps/JMLRdropout.pdf}, \\dostęp: 10.04.2018.
+
+\bibitem{relu} \textit{Rectified Linear Units Improve Restricted Boltzmann Machines
+}, 
+\texttt{http://www.cs.toronto.edu/~fritz/absps/reluICML.pdf}, \\dostęp: 10.04.2018.
+
+\bibitem{rCNN} \textit{Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Networks}, 
+\texttt{https://arxiv.org/pdf/1506.01497v3.pdf}, \\dostęp: 10.04.2018.
+
+\bibitem{ZFNet} \textit{Practical Deep Learning for Coders}, 
+\texttt{https://arxiv.org/pdf/1311.2901v3.pdf}, \\dostęp: 10.04.2018.
+
+\bibitem{VGGNet} \textit{VERY DEEP CONVOLUTIONAL NETWORKS FOR LARGE-SCALE IMAGE RECOGNITION}, 
+\texttt{https://arxiv.org/pdf/1409.1556v6.pdf}, \\dostęp: 10.04.2018.
+
+\bibitem{googleNet} \textit{Going Deeper with Convolutions}, 
+\texttt{https://www.cv-foundation.org/openaccess/content_cvpr_2015/papers/Szegedy_Going_Deeper_With_2015_CVPR_paper.pdf}, \\dostęp: 10.04.2018.
+
+\bibitem{microsoftResNet} \textit{Deep Residual Learning for Image Recognition}, 
+\texttt{https://arxiv.org/pdf/1512.03385v1.pdf}, \\dostęp: 10.04.2018.
+
+
+\end{thebibliography}
+
+
+
+
+\end{document}
