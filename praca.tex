@@ -219,8 +219,7 @@ Do wygenerowania wyjścia, wystarczy obliczyć y = wT (wagi transponowane) * x (
 	\item[Funkcja kosztu regresji logistycznej] Funkcja do trenowania modelu regresji logistycznej. Mając zestawy treningowe, można wytrenować algorytm tak, aby podawał wartości prawdopodobieństwa jak najbliższe zestawu treningowego. Chcemy ustawić wagi i bias tak, aby te parametry dawały prawidłową odpowiedź dla każdego przykładu uczącego. Funkcja kosztu ma następujący wzór:
 	\item[Metoda gradientu prostego] Algorytm pozwalający znaleźć minimum funkcji. Wyobrażając sobie płaszczyznę funkcji dla wszystkich możliwych argumentów, algorytm przechodzi z losowo rozpoczętego miejsca w miejsce gdzie jest najgłębiej. Mając funkcję kosztu J(w,b) szukamy miejsca w którym błąd algorytmu jest jak najmniejszy.
 	\item[Wykres obliczeniowy] (ang. Computation graph). Dekompozycja wyrażenia w pojedyncze atomowe kroki. Używany do optymalizowania funkcji. Przydaje się podczas ręcznej analizy funkcji błędu.
-	\item[Funkcje aktywacji] 
-	\item[Def] cytat \cite{slownikPwn}
+	\item[Funkcje aktywacji]
 \end{description}
  
 \chapter*{Wstęp}
@@ -264,6 +263,7 @@ Do wygenerowania wyjścia, wystarczy obliczyć y = wT (wagi transponowane) * x (
 
 \section{Przegląd bibliotek}
 \subsection{Tensorflow}
+
 \subsection{CNTK}
 \subsection{Keras}
 \subsection{PyTorch}
@@ -274,18 +274,96 @@ Do wygenerowania wyjścia, wystarczy obliczyć y = wT (wagi transponowane) * x (
 
 \chapter{Architektura}
 \section{Poglądy profesora Tadeusiewicza}
+Sieci neuronowe można ułożyć na nieskończenie wiele sposobów. Aby uzyskać dobre rezultaty należy sprawdzić kilka architektur i jak się zachowują dla dla posiadanych zbiorów danych i zadanych hiperparametrów.
+W zależności od typu architektury sieci można osiągnąć zupełnie inne wyniki uczenia dla tych samych algorytmów. 
+Architektury różnią się właściwie wszystkim, ilością warstw ukrytych ilością neuronów w warstwie ukrytej. 
+Poglądy Tadeusiewicza na architekturę sieci neuronowych.
+
+“Właśnie taka (warstwowa) struktura sieci wyjątkowo łatwo i wygodnie da się wytwarzać zarówno w formie modelu elektronicznego, jak i da się symulować w formie programu komputerowego. Dlatego badacze przyjęli właśnie strukturę warstwową i od tej pory stosują ją we wszystkich sztucznych sieciach neuronowych. Z pełną wiernością biologicznemu oryginałowi ma to niewiele wspólnego, ale jest praktyczne i wygodne. W związku z tym wszyscy tak postępują, nie martwiąc się ani przesłankami biologicznymi, ani dowodami wskazującymi, że architektura sieci bardziej wymyślnie dostosowanej do charakteru zadania może znacznie lepiej realizować stawiane zadania.”
+
+Tak napisał w 2007 roku, kiedy architektury sieci nie miały miały większego znaczenia ponieważ większość sieci była stosunkowo płytka (do 5 warstw ukrytych). Zbiory na których pracowano były stosunkowo niewielkie w porównaniu z dzisiejszymi zasobami skatalogowanych obrazów. 
+Obecnie istnieją dowody (choćby coroczne zawody ImageNet, w których udowadnia się że struktura sieci ma znaczenie. Może poprawić szybkość i dokładność uczenia). Profesor jest ekspertem w dziedzinie sieci neuronowych, jednak jego książki i poglądy są z lat 1990 - 2010. Późniejsze jego prace są dużo mniej znane.
+
 \section{Przegląd sprawdzonych architektur}
 \subsection{AlexNet}
+ [Alex Krizhevsky, Ilya Sutskever, Geoffrey E. Hinton, 2012] - konwolucyjna sieć neuronowa napisana przy użyciu CUDA pod zawody ImageNet. Została wytrenowana do sklasyfikowania 1,2 miliona obrazów podzielonych na 1000 klas. W testach top-1 i top-5 uzyskała wartości kolejno 37,5\% i 17\%, co jest wynikiem niesamowicie wysokim na 2012 rok. Sieć neuronowa zawiera 60 milionów parametrów i 650 000 neuronów.
+Architekturę tworzy 8 warstw, gdzie pierwsze 5 to warstwy konwolucyjne, a pozostałe 3 są warstwami w pełni połączonymi, ta ostatnia ma oczywiście 1000 wyjść z funkcji softmax.
+AlexNet znacząco przewyższyła swoją wydajnością poprzednich uczestników i wygrała zawody redukując błąd top-5 do 15,32\%. Drugie miejsce to błąd ok 26.2\% (nie była to CNN).
+Sieć jest głęboką modyfikacją architektury Yann’a LeCunn’a. AlexNet była zaplanowana na dwie karty graficzne, stąd rozdzielenie przepływu informacji na 2 części. Trenowanie sieci na 2 GPU było nowością na te czasy. Sieć została wytrenowana na zbiorze ImageNet. Do wyliczenia funkcji nieliniowych były używane ReLU (tutaj po raz pierwszy okazało się że ReLU działa dużo szybciej niż tanh). Sieć o której będą uczyły się dzieci na lekcjach historii.
+
+\begin{figure}[h]
+	\centering
+			\includegraphics[resolution=120]{AlexNet.png}
+		\caption{Architektura sieci AlexNet}
+\end{figure}
+
 \subsection{LeNet}
+Jest to obecnie mało znacząca architektura. Pierwsze praktyczne zastosowanie sieci konwolucyjnych jeszcze w latach 90’tych. Używana była do prostych zadań: czytanie kodów pocztowych, liczb.
 \subsection{VGG Net}
+ [Simoyan i Zisserman, 2014] - sieć złożona z 16 warstw konwolucyjnych, która charakteryzuje się małymi filtrami i duża głębokość sieci.
+W trakcie trenowania sieci wyjście jest ustawione na ustalony rozmiar (224 x 224 x 3). Przetwarzanie wstępne obejmuje odjęcie mediany wartości RGB dla każdego piksela. Zdjęcie jest przetwarzanie przez stos warstw konwolucyjnych, gdzie używane są filtry o bardzo małym polu widzenia (3x3) [najmniejszy możliwy rozmiar by móc rozpoznać kierunek]. Operacja Max-pooling jest wykonana na polu 4 pikseli, co pokazuje że jest to pobieranie jak najmniejszych cech z obrazu. Ukryte warstwy są wyposażone w nieliniową funkcję aktywacji ReLU. Po stosie warstw konwolucyjnych, następuje nałożenie 3 warstw w pełni połączonych (to takie duże warstwy zawierające wszystkie cechy?). Pierwsze dwie mają 4096 kanałów, trzecia już tylko 1000 (po jednym kanale na klasę obiektu). Obecnie architektura ta jest dość popularnym wyborem dla wyodrębniania cech ze zdjęć. Konfiguracje wag dla zbioru obrazów z ImageNet są dostępne online. W tej sieci problemem jest 140 milionów parametrów, którymi czasem trzeba zarządzać.
+
+\begin{figure}[h]
+	\centering
+			\includegraphics[resolution=120]{LeNet.png}
+		\caption{Architektura sieci LeNet}
+\end{figure}
+
 \subsection{GoogleNet / Inception}
+[Christian Szegedy, Wei Liu, Yangqing Jia, Pierre Sermanet, Scott Reed, Dragomir Anguelov, Dumitru Erhan, Vincent Vanhoucke, Andrew Rabinovich, 2014] - produkt jak nazwa wskazuje wyszedł z firmy Google. Charakteryzuje się przełomową poprawą użycia zasobów wewnętrznych. ImageNet jest zaprojektowana na jak największą szerokość i głębokość jednocześnie utrzymując stałe zużycie mocy obliczeniowej. Optymalizacja jakości opiera się na zasadzie Hebbian’a (jest to teoria neuronauki, która mówi o adaptacji neuronów w trakcie nauki). Błędy klasyfikacji wynoszą top-1: 17,2\% i top-5: 3,58\% (dla v3). Sieć składa się łącznie z 22 warstw. Sieć jest modułowa, gdzie każdy moduł pełni rolę wielopoziomowego ekstraktora cech przeliczającego konwolucje na macierzach rozmiarów 1x1, 3x3, 5x5. Zaletą tej architektury są bardzo małe rozmiary wag (mniej niż 100MB dla v3). Kolejną ważną zaletą jest ilość parametrów, tylko 4 miliony co jest wynikiem 12 razy lepszym od AlexNet. Jest to jedna z najbardziej złożonych sieci względem architektury modułowej. W wersji naiwnej każda warstwa posiada 4 ekstraktory cech (3 konwolucyjne i jedną 3x3 max pooling), następnie wartości te są składane i wysyłane do warstwy wyżej. Do poprawienia wydajności obliczeniowej pozbyto się warstwy “w pełni połączonej”.
+
 \subsection{ResNet}
+[Kaiming He et al, 2015]  - architektura oparta na mikro modułach. Charakteryzuje się możliwością odrzucania połączeń i posiada ogromny moduł na normalizację zbioru iteracji (batch normalization). Normalizacja jest pomysłem zaczerpniętym z rekurencyjnych sieci neuronowych. Ta technika pozwala stworzyć sieć ze 152 warstwami ukrytymi przy zachowaniu złożoności mniejszej niż VGG.
+
+\begin{figure}[h]
+	\centering
+			\includegraphics[resolution=120]{ResNet.png}
+		\caption{Architektura sieci ResNet}
+\end{figure}
+
 \subsection{ResNeXt}
+[Saining Xie, Ross Girshick, Piotr Dolla ́r Zhuowen Tu Kaiming He, 2017] - modularyzowalna 
+
+\begin{figure}[h]
+	\centering
+			\includegraphics[resolution=120]{ResNeXt.png}
+		\caption{Architektura sieci ResNeXt}
+\end{figure}
+
 \subsection{RCNN}
+\begin{figure}[h]
+	\centering
+			\includegraphics[resolution=120]{RCNN.png}
+		\caption{Architektura sieci RCNN}
+\end{figure}
+
 \subsection{YOLO}
+\begin{figure}[h]
+	\centering
+			\includegraphics[resolution=120]{YOLO.png}
+		\caption{Architektura sieci YOLO}
+\end{figure}
+
 \subsection{SqueezeNet}
+\begin{figure}[h]
+	\centering
+			\includegraphics[resolution=120]{SqueezeNet.png}
+		\caption{Architektura sieci SqueezeNet}
+\end{figure}
+
 \subsection{SegNet}
+\begin{figure}[h]
+	\centering
+			\includegraphics[resolution=120]{SegNet.png}
+		\caption{Architektura sieci SegNet}
+\end{figure}
+
 \subsection{Generative Adversarial Network}
+\begin{figure}[h]
+	\centering
+			\includegraphics[resolution=120]{GAN.png}
+		\caption{Architektura sieci GAN}
+\end{figure}
 
 \chapter{Podsumowanie} 
  
