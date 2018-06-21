@@ -1,1 +1,1 @@
-My work on neural networks, deep learning.
+My Masters thesis on neural networks, deep learning.
