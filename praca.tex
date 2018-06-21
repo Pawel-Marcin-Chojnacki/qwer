@@ -21,8 +21,6 @@
 \usepackage{fancyhdr} 
 \pagestyle{fancy}
 
-% TABLE OF CONTENTS
-
 %kropki w~spisie tresci
 \makeatletter
 \def\numberline#1{\hb@xt@\@tempdima{#1.\hfil}}
@@ -177,7 +175,7 @@ informatyka
 \vspace{0.5cm}
 
 \begin{center}
-{\Huge \textbf{Tytuł pracy magisterskiej}}
+{\Huge \textbf{Porównanie wydajności współczesnych architektur sieci neuronowych}}
 \end{center}
 
 \vspace{2cm}
@@ -224,14 +222,14 @@ Do wygenerowania wyjścia, wystarczy obliczyć y = wT (wagi transponowane) * x (
 	\item[Funkcja kosztu] Funkcja do trenowania modelu regresji logistycznej. Mając zestawy treningowe, można wytrenować algorytm tak, aby podawał wartości prawdopodobieństwa jak najbliższe zestawu treningowego. Chcemy ustawić wagi i bias tak, aby te parametry dawały prawidłową odpowiedź dla każdego przykładu uczącego. Funkcja kosztu ma następujący wzór:
 	\item[Metoda gradientu prostego] Algorytm pozwalający znaleźć minimum funkcji. Wyobrażając sobie płaszczyznę funkcji dla wszystkich możliwych argumentów, algorytm przechodzi z losowo rozpoczętego miejsca w miejsce gdzie jest najgłębiej. Mając funkcję kosztu J(w,b) szukamy miejsca w którym błąd algorytmu jest jak najmniejszy.
 	\item[Wykres obliczeniowy] (ang. Computation graph). Dekompozycja wyrażenia w pojedyncze atomowe kroki. Używany do optymalizowania funkcji. Przydaje się podczas ręcznej analizy funkcji błędu.
-	\item[Funkcje aktywacji]
-	\item[Pooling] -technika polegająca na zmniejszeniu danych wejściowych. Aby zmniejszyć obraz ustala się rozmiar filtra oraz wielkość kroku. Następuje przejscie po całym obrazie (po nałożeniu filtra) i wybiera się max z całego obszaru filtra do nowej macierzy. Pozwala to ograniczyć ilość parametrów i wyodrębnić konkretne cechy obiektu.
+	\item[Funkcje aktywacji] - funkcja definiująca 
+	\item[Pooling] - technika polegająca na zmniejszeniu danych wejściowych. Aby zmniejszyć obraz ustala się rozmiar filtra oraz wielkość kroku. Następuje przejscie po całym obrazie (po nałożeniu filtra) i wybiera się max z całego obszaru filtra do nowej macierzy. Pozwala to ograniczyć ilość parametrów i wyodrębnić konkretne cechy obiektu.
 	\item[Konwolucja]
 	\item[Wsteczna propagacja błędu] 
 	\item[Dropout]
 	\item[ReLU]
 	\item[Softmax]
-	\item[Epoch]
+	\item[Epoka ang. Epoch]
 	\item[Model]
 \end{description}
  
@@ -267,20 +265,12 @@ Do wygenerowania wyjścia, wystarczy obliczyć y = wT (wagi transponowane) * x (
 \section{Techniki w deep learning}
 
 \subsection{Sieci neuronowe}
-\subsection{Perceptron wielowarstwowy}
-\subsection{Restricted Boltzman Machine}
-\subsection{Stacked autoencoders}
-\subsection{Convolutional auto-encoders}
 \subsection{Convolutional Neural Networks}
 \subsection{Recurrent Neural Networks}
-\subsection{Long Short Term Memory}
 \subsection{Fully Convolutional Networks}
-\subsection{Multi-instance Learning CNN}
-\subsection{Multi-scale/View/Stream CNN}
 
 \section{Przegląd bibliotek}
 \subsection{Tensorflow}
-
 \subsection{Keras}
 \subsection{PyTorch}
 \subsection{deeplearning.js}
