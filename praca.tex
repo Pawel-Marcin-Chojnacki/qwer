@@ -10,7 +10,7 @@
 \usepackage{verbatimbox} % marginesy dla~tabel
 \usepackage{emptypage} % usuwa nagłówki i~numery stron z~pustych stron
 \usepackage{afterpage} % to zapobiega ustawianiu obrazka PO tym
-
+\graphicspath{{figures/}} %Setting the graphicspath
 % PAGE LAYOUT
 %\usepackage{showframe} % debug
 \marginparwidth 0pt
@@ -137,9 +137,6 @@ stringstyle=\color{redstrings},
 basicstyle=\ttfamily\small,
 }
 
-
-
-
 \begin{document}
 
 % ################################
@@ -241,8 +238,12 @@ Do wygenerowania wyjścia, wystarczy obliczyć y = wT (wagi transponowane) * x (
 \markboth{}{Wstęp}
 \addcontentsline{toc}{chapter}{Wstęp}
 
-
 \clearpage{\pagestyle{empty}\cleardoublepage}
+
+% ################################
+%        NEURONY
+% ################################
+
 \chapter{Neurony}
 
 \section{Co to jest sieć neuronowa?}
@@ -270,7 +271,15 @@ Do wygenerowania wyjścia, wystarczy obliczyć y = wT (wagi transponowane) * x (
 \subsection{Fully Convolutional Networks}
 
 \section{Przegląd bibliotek}
+
 \subsection{Tensorflow}
+Pierwsza otwarta biblioteka od Google. Obecnie najczęściej używana podczas prac naukowych, o czym świadczy ilość cytowań[1]. Od 2018 roku dostępna również pod nazwą Tensorflow.js jako biblioteka javascript, udostępniające ten sam interfejs programistyczny.
+\begin{figure}[h]
+	\centering
+			\includegraphics[resolution=120]{Tensorflow.png}
+		\caption{Logo biblioteki Tensorflow}
+\end{figure}
+
 \subsection{Keras}
 \begin{figure}[h]
 	\centering
@@ -280,11 +289,57 @@ Do wygenerowania wyjścia, wystarczy obliczyć y = wT (wagi transponowane) * x (
 Keras jest frameworkiem udostępniającym wysokopoziomowe API sieci neuronowych. Działanie opiera się na wykorzystaniu Tensorflow, CNTK lub Theano jako bibliotek wykonujących obliczenia. Głównym założeniem tego oprogramowania jest możliwość szybkiego wykonywania eksperymentów, co ma się przełożyć na lepsze badanie uczenia maszynowego.
 
 \subsection{PyTorch}
+\begin{figure}[h]
+	\centering
+			\includegraphics[resolution=120]{PyTorch.png}
+		\caption{Logo biblioteki PyTorch}
+\end{figure}
+
 \subsection{deeplearning.js}
+\begin{figure}[h]
+	\centering
+			\includegraphics[resolution=120]{DeeplearningJS.png}
+		\caption{Logo biblioteki deeplearning.js}
+\end{figure}
+
 \subsection{Paddle}
+\begin{figure}[h]
+	\centering
+			\includegraphics[resolution=120]{Paddle.png}
+		\caption{Logo biblioteki Paddle}
+\end{figure}
+
 \subsection{MXNet}
+\begin{figure}[h]
+	\centering
+			\includegraphics[resolution=120]{MXNet.png}
+		\caption{Logo biblioteki MXNet}
+\end{figure}
+
 \subsection{Caffe2}
+\begin{figure}[h]
+	\centering
+			\includegraphics[resolution=120]{Caffe2.png}
+		\caption{Logo biblioteki Caffe2}
+\end{figure}
+
 \subsection{ML.NET}
+\begin{figure}[h]
+	\centering
+			\includegraphics[resolution=120]{ML.NET.png}
+		\caption{Logo biblioteki ML.NET}
+\end{figure}
+
+\subsection{PyBrain}
+\begin{figure}[h]
+	\centering
+			\includegraphics[resolution=120]{PyBrain.png}
+		\caption{Logo biblioteki PyBrain}
+\end{figure}
+
+% ################################
+%        ARCHITEKTURA
+% ################################
 
 \chapter{Architektura}
 \section{Poglądy profesora Tadeusiewicza}
@@ -385,6 +440,10 @@ Cały przepływ danych do wykrycia obiektów jest jedną siecią, dlatego może 
 			\includegraphics[resolution=120]{GAN.png}
 		\caption{Architektura sieci GAN}
 \end{figure}
+
+% ################################
+%        PORÓWNANIE WYDAJNOŚĆI ARCHITEKTUR
+% ################################
 
 % ################################
 %        PODSUMOWANIE
