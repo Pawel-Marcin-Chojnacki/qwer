@@ -206,14 +206,6 @@ Toruń 2018
 	\item[Klasyfikacja binarna] Klasyfikacja binarna polega na jak najdokładniejszym stwierdzeniu posiadania cechy lub przynależności do kategorii danego obiektu.
 Najczęściej używane metody do klasyfikacji binarnej to: drzewa decyzyjne 
 Dane wejściowe należy przedstawić w formie macierzy. Każdy przykład do treningu i później klasyfikacji, musi być tych samych wymiarów. Wyjściem algorytmu klasyfikacji binarnej jest wektor z prawdopodobieństwem klasyfikacji każdego z przykładów. Wizualizacja funkcji, klasyfikującej czerwone i zielone kółka.
-W klasyfikacji binarnej przykłady zapisuje się jako pary (x,y) - x to wartość danego przykładu, y to odpowiedź na pytanie czy przykład posiada klasyfikowaną cechę.
-Mając m przykładów: {(x1,y1),(x2,y2),(x3,y3),...,(xm,ym)}. Dla uproszczenia obliczeń, zwyczajowo stosuje się zapis macierzowy:
-[ x(1), x(2),..., x(n) ]
-[ x(1), x(2),..., x(n) ]
-[ x(1), x(2),..., x(n) ]
-[ x(1), x(2),..., x(n) ]
-Jedna kolumna to jeden przykład, dlatego szerokość macierzy to m.
-Zbiór cech przykładów można również uprościć i zapisać je w formie wektora Y = [y1,y2,...ym]
 	\item[Regresja logistyczna] Metoda statystyczna używana do analizy zbioru danych, w którym mam więcej niż jedną zmienną determinującą wyjście. Wyjściem jest prawdopodobieństwo wystąpienia klasyfikowanego elementu. Algorytm regresji logistycznej przyjmuje na wejściu dane: n-wymiarowy wektor liczb rzeczywistych [np. Obraz], zestaw wag o tych samych wymiarach, liczba rzeczywista, bias.
 Do wygenerowania wyjścia, wystarczy obliczyć y = wT (wagi transponowane) * x (wejście) + b (bias). Należy jeszcze zastosować operację, która pozwoli na ustawienie parametrów w przedziale 0-1. Całe powyższe równanie użyć jako wejście do funkcji sigmoidy. Sigm(z) = 1 / 1 + e-z. Jeśli z jest duże, sigmoida będzie bliska 1, jeśli z jest liczbą ujemną, sigmoida zbliży się do 0.
 	\item[Funkcja kosztu] Funkcja do trenowania modelu regresji logistycznej. Mając zestawy treningowe, można wytrenować algorytm tak, aby podawał wartości prawdopodobieństwa jak najbliższe zestawu treningowego. Chcemy ustawić wagi i bias tak, aby te parametry dawały prawidłową odpowiedź dla każdego przykładu uczącego. Funkcja kosztu ma następujący wzór:
@@ -263,10 +255,12 @@ Do wygenerowania wyjścia, wystarczy obliczyć y = wT (wagi transponowane) * x (
 
 \chapter{Deep Learning}
 
-\section{Techniki w deep learning}
+\section{Techniki w Deep Learning}
+W tym rozdzial przybliżę trzy interesujące techniki głębokiego uczenia. Wybrałem je ze względu na ich obszerną ilość zastosowań. Następnie opiszę kilka bibliotek implementujących wsparcie dla większości architektur sieci przedstawionych w pracy. Biblioteki są wybrane na podstawie przekroju platform i języków mi znanych. 
 
 \subsection{Sieci neuronowe}
 \subsection{Convolutional Neural Networks}
+Inaczej znane jako
 \subsection{Recurrent Neural Networks}
 \subsection{Fully Convolutional Networks}
 
@@ -296,6 +290,7 @@ Keras jest frameworkiem udostępniającym wysokopoziomowe API sieci neuronowych.
 \end{figure}
 
 \subsection{deeplearning.js}
+Pierwszy zestaw uczenia maszynowego do użycia w przeglądarce. 
 \begin{figure}[h]
 	\centering
 			\includegraphics[resolution=120]{DeeplearningJS.png}
@@ -303,6 +298,7 @@ Keras jest frameworkiem udostępniającym wysokopoziomowe API sieci neuronowych.
 \end{figure}
 
 \subsection{Paddle}
+Chińskie oprogramowanie, mało znane w Europie / USA, za to jest to najpopularniejszy framework w Chinach. Uważam że zasługuje na wyróżnienie ze względu na unikalny charakter. Paddle jest open-source, jednak większość dokumentacji jest w języku kantońskim.
 \begin{figure}[h]
 	\centering
 			\includegraphics[resolution=120]{Paddle.png}
@@ -324,6 +320,7 @@ Keras jest frameworkiem udostępniającym wysokopoziomowe API sieci neuronowych.
 \end{figure}
 
 \subsection{ML.NET}
+Nowe oprogramowanie od Microsoftu, udostępnione na licencji [licencja], głównie polecane programistom w środowisku .NET. Docelowo ma stać się częścią .NET Core. Nastawione na łatwość integracji z oprogramowaniem biznesowym, chmurą Azure oraz łatwość obsługi przez programistów pracujących w technologiach Microsoftu.
 \begin{figure}[h]
 	\centering
 			\includegraphics[resolution=120]{ML.NET.png}
@@ -331,6 +328,7 @@ Keras jest frameworkiem udostępniającym wysokopoziomowe API sieci neuronowych.
 \end{figure}
 
 \subsection{PyBrain}
+
 \begin{figure}[h]
 	\centering
 			\includegraphics[resolution=120]{PyBrain.png}
