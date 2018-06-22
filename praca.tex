@@ -267,12 +267,12 @@ Inaczej znane jako
 \section{Przegląd bibliotek}
 
 \subsection{Tensorflow}
-Pierwsza otwarta biblioteka od Google. Obecnie najczęściej używana podczas prac naukowych, o czym świadczy ilość cytowań[1]. Od 2018 roku dostępna również pod nazwą Tensorflow.js jako biblioteka javascript, udostępniające ten sam interfejs programistyczny.
 \begin{figure}[h]
 	\centering
 			\includegraphics[resolution=120]{Tensorflow.png}
 		\caption{Logo biblioteki Tensorflow}
 \end{figure}
+Pierwsza otwarta biblioteka od Google. Obecnie najczęściej używana podczas prac naukowych, o czym świadczy ilość cytowań[1]. Od 2018 roku dostępna również pod nazwą Tensorflow.js jako biblioteka javascript, udostępniające ten sam interfejs programistyczny.
 
 \subsection{Keras}
 \begin{figure}[h]
@@ -289,21 +289,21 @@ Keras jest frameworkiem udostępniającym wysokopoziomowe API sieci neuronowych.
 		\caption{Logo biblioteki PyTorch}
 \end{figure}
 
-\subsection{deeplearning.js}
-Pierwszy zestaw uczenia maszynowego do użycia w przeglądarce. 
+\subsection{Tensorflow.js [Deeplearn.js]}
 \begin{figure}[h]
 	\centering
-			\includegraphics[resolution=120]{DeeplearningJS.png}
-		\caption{Logo biblioteki deeplearning.js}
+			\includegraphics[resolution=120]{TensorflowJS.png}
+		\caption{Logo biblioteki Tensorflow.js}
 \end{figure}
+Pierwszy zestaw uczenia maszynowego do użycia w przeglądarce. 
 
 \subsection{Paddle}
-Chińskie oprogramowanie, mało znane w Europie / USA, za to jest to najpopularniejszy framework w Chinach. Uważam że zasługuje na wyróżnienie ze względu na unikalny charakter. Paddle jest open-source, jednak większość dokumentacji jest w języku kantońskim.
 \begin{figure}[h]
 	\centering
 			\includegraphics[resolution=120]{Paddle.png}
 		\caption{Logo biblioteki Paddle}
 \end{figure}
+Chińskie oprogramowanie, mało znane w Europie / USA, za to jest to najpopularniejszy framework w Chinach. Uważam że zasługuje na wyróżnienie ze względu na unikalny charakter. Paddle jest open-source, jednak większość dokumentacji jest w języku kantońskim.
 
 \subsection{MXNet}
 \begin{figure}[h]
@@ -320,15 +320,14 @@ Chińskie oprogramowanie, mało znane w Europie / USA, za to jest to najpopularn
 \end{figure}
 
 \subsection{ML.NET}
-Nowe oprogramowanie od Microsoftu, udostępnione na licencji [licencja], głównie polecane programistom w środowisku .NET. Docelowo ma stać się częścią .NET Core. Nastawione na łatwość integracji z oprogramowaniem biznesowym, chmurą Azure oraz łatwość obsługi przez programistów pracujących w technologiach Microsoftu.
 \begin{figure}[h]
 	\centering
 			\includegraphics[resolution=120]{ML.NET.png}
 		\caption{Logo biblioteki ML.NET}
 \end{figure}
+Nowe oprogramowanie od Microsoftu, udostępnione na licencji [licencja], głównie polecane programistom w środowisku .NET. Docelowo ma stać się częścią .NET Core. Nastawione na łatwość integracji z oprogramowaniem biznesowym, chmurą Azure oraz łatwość obsługi przez programistów pracujących w technologiach Microsoftu.
 
 \subsection{PyBrain}
-
 \begin{figure}[h]
 	\centering
 			\includegraphics[resolution=120]{PyBrain.png}
@@ -352,13 +351,6 @@ Tak napisał w 2007 roku, kiedy architektury sieci nie miały miały większego 
 Obecnie istnieją dowody (choćby coroczne zawody ImageNet, w których udowadnia się że struktura sieci ma znaczenie. Może poprawić szybkość i dokładność uczenia). Profesor jest ekspertem w dziedzinie sieci neuronowych, jednak jego książki i poglądy są z lat 1990 - 2010. Późniejsze jego prace są dużo mniej znane.
 
 \section{Przegląd sprawdzonych architektur}
-\subsection{CNTK}
-[Authors, Year] - 
-\begin{figure}[h]
-	\centering
-			\includegraphics[resolution=120]{CNTK.png}
-		\caption{Architektura sieci CNTK}
-\end{figure}
 
 \subsection{AlexNet}
  [Alex Krizhevsky, Ilya Sutskever, Geoffrey E. Hinton, 2012] - konwolucyjna sieć neuronowa napisana przy użyciu CUDA pod zawody ImageNet. Została wytrenowana do sklasyfikowania 1,2 miliona obrazów podzielonych na 1000 klas. W testach top-1 i top-5 uzyskała wartości kolejno 37,5\% i 17\%, co jest wynikiem niesamowicie wysokim na 2012 rok. Sieć neuronowa zawiera 60 milionów parametrów i 650 000 neuronów. Architekturę tworzy 8 warstw, gdzie pierwsze 5 to warstwy konwolucyjne, a pozostałe 3 są warstwami w pełni połączonymi, ta ostatnia ma oczywiście 1000 wyjść z funkcji softmax. AlexNet znacząco przewyższyła swoją wydajnością poprzednich uczestników i wygrała zawody redukując błąd top-5 do 15,32\%. Drugie miejsce to błąd ok 26.2\% (nie była to CNN). Sieć jest głęboką modyfikacją architektury Yann’a LeCunn’a. AlexNet była zaplanowana na dwie karty graficzne, stąd rozdzielenie przepływu informacji na 2 części. Trenowanie sieci na 2 GPU było nowością na te czasy. Sieć została wytrenowana na zbiorze ImageNet. Do wyliczenia funkcji nieliniowych były używane ReLU (tutaj po raz pierwszy okazało się że ReLU działa dużo szybciej niż tanh). Sieć o której będą uczyły się dzieci na lekcjach historii.
@@ -385,7 +377,6 @@ W trakcie trenowania sieci wyjście jest ustawione na ustalony rozmiar (224 x 22
 
 \subsection{ResNet}
 [Kaiming He et al, 2015]  - architektura oparta na mikro modułach. Charakteryzuje się możliwością odrzucania połączeń i posiada ogromny moduł na normalizację zbioru iteracji (batch normalization). Normalizacja jest pomysłem zaczerpniętym z rekurencyjnych sieci neuronowych. Ta technika pozwala stworzyć sieć ze 152 warstwami ukrytymi przy zachowaniu złożoności mniejszej niż VGG.
-
 \begin{figure}[h]
 	\centering
 			\includegraphics[resolution=120]{ResNet.png}
@@ -394,7 +385,6 @@ W trakcie trenowania sieci wyjście jest ustawione na ustalony rozmiar (224 x 22
 
 \subsection{ResNeXt}
 [Saining Xie, Ross Girshick, Piotr Dolla ́r Zhuowen Tu Kaiming He, 2017] - modularyzowalna 
-
 \begin{figure}[h]
 	\centering
 			\includegraphics[resolution=120]{ResNeXt.png}
@@ -442,9 +432,18 @@ Cały przepływ danych do wykrycia obiektów jest jedną siecią, dlatego może 
 		\caption{Architektura sieci GAN}
 \end{figure}
 
+\subsection{CNTK}
+[Authors, Year] - 
+\begin{figure}[h]
+	\centering
+			\includegraphics[resolution=120]{CNTK.png}
+		\caption{Architektura sieci CNTK}
+\end{figure}
+
 % ################################
 %        PORÓWNANIE WYDAJNOŚĆI ARCHITEKTUR
 % ################################
+\chapter{Testy wydajności}
 
 % ################################
 %        PODSUMOWANIE
