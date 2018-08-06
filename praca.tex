@@ -9,7 +9,7 @@
 \usepackage{listings} % syntax highlighting
 \usepackage{verbatimbox} % marginesy dla~tabel
 \usepackage{emptypage} % usuwa nagłówki i~numery stron z~pustych stron
-\usepackage{afterpage} % to zapobiega ustawianiu obrazka PO tym
+\usepackage{afterpage} % to zapobiega 
 \graphicspath{{figures/}} %Setting the graphicspath
 % PAGE LAYOUT
 %\usepackage{showframe} % debug
@@ -216,9 +216,9 @@ Do wygenerowania wyjścia, wystarczy obliczyć y = wT (wagi transponowane) * x (
 	\item[Konwolucja]
 	\item[Wsteczna propagacja błędu] 
 	\item[Dropout]
-	\item[ReLU]
+	\item[Rektyfikowana jednostka liniowa (ReLU)] 
 	\item[Softmax]
-	\item[Epoka ang. Epoch]
+	\item[Epoka]
 	\item[Model]
 \end{description}
  
@@ -232,12 +232,16 @@ Do wygenerowania wyjścia, wystarczy obliczyć y = wT (wagi transponowane) * x (
 
 \clearpage{\pagestyle{empty}\cleardoublepage}
 
+Wstęp pisze się na koniec.
+
 % ################################
 %        NEURONY
 % ################################
 
 \chapter{Neurony}
-W niniejszym rozdzialę przedstawię idee neuronu komputerowego, wywodzącą się z prostego schematu neuronu mózgowego. Opiszę w jaki sposób tworzy się z nich całe sieci oraz przedstawię wszystkie elementy potrzebne by zbudować pełną architekturę sieci.
+W niniejszym rozdzialę przedstawię idee sztucznego neuronu McCullocha i Pittsa. Model neurony był wczesnym odwzorowaniem neuronu mózgowego z 1943 roku. Reprezentuje on model liniowy mogący rozpoznać dwie różne kategorie wejść. Na sam neuron składa się funkcja f(x, w) -> x - wejście, w - waga. Ta prosta jednostka stanowi dziś podstawę budowy każdej sieci neuronowej. Aby funkcja zwracała oczekiwane wyniki, wagi powinny być poprawnie ustawione. Początkowo wagi ustawiano ręcznie za pomocą operatora, który wcześniej przeliczał je dla odpowiednich parametrów wejścia\\wyjścia. W latach 50tych perceptron stał się pierwszym modelem umiejącym samodzielnie wyliczyć poprawnie wagi definiujące zadaną klasę na podstawie przykładów. Już kilka lat po wynalezieniu sieci neuronowych, okazało się że neurony mózgowe działają zupełnie inaczej, nomenklatura nawołująca do neuronów mózgowych jakkolwiek błędna, pozwala wprowadzić prostą abstrakcję na modele matematyczne. 
+
+Opiszę w jaki sposób stworzyć sieć neuronową oraz przedstawię wszystkie elementy potrzebne do zbudowania funkcjonalnej i wydajnej architektury sieci.
 
 \section{Co to jest sieć neuronowa?}
 
@@ -296,7 +300,7 @@ Keras jest frameworkiem udostępniającym wysokopoziomowe API sieci neuronowych.
 			\includegraphics[resolution=120]{TensorflowJS.png}
 		\caption{Logo biblioteki Tensorflow.js}
 \end{figure}
-Pierwszy zestaw uczenia maszynowego do użycia w przeglądarce. 
+Znany dawniej jako DeepLearning.js Pierwszy zestaw uczenia maszynowego do użycia w przeglądarce. Działa w oparciu o WebGL. Dostarcza calej mocy Tensorflow do przeglądarki czy dowolnego interpretera kodu Javascript.
 
 \subsection{PaddlePaddle}
 \begin{figure}[h]
@@ -333,6 +337,16 @@ Nowe oprogramowanie od Microsoftu, udostępnione na licencji [licencja], główn
 	\centering
 			\includegraphics[resolution=120]{PyBrain.png}
 		\caption{Logo biblioteki PyBrain}
+\end{figure}
+
+
+\subsection{CNTK}
+[Microsoft Research, 2016] - nazwa kompletna Microsoft Cognitive Toolkit. Jest to zestaw narzędzi z działu badawczego Microsoftu, zajmującego sie Deep Learningiem. Narzędzie opisuje sieci neuronowe jako szereg obliczeń na grafie skierowanym. W tym grafie węzły (liście) reprezentują wartości wejściowe oraz parametry sieci, zaś pozostałe węzły są operacjami macierzowymi na ich wejściu. Cognitive Toolkit pozwala użytkownikom w prosty sposób tworzyć i łączyć popularne modele jak (ang. fast-forward Deep Neural Networks), konwolucyjne sieci neuronowe, rekurencyjne sieci neuronowe. Implementuje algorytm spadku gradientowego, wsteczną propagację błędów z automatycznym skalowaniem na wiele urządzeń GPU rozproszonych na różnych serwerach.
+CNTK działa na systemach operacyjnych Windows i GNU\\Linux.
+\begin{figure}[h]
+	\centering
+			\includegraphics[resolution=120]{CNTK.png}
+		\caption{Architektura sieci CNTK}
 \end{figure}
 
 % ################################
@@ -433,13 +447,6 @@ Cały przepływ danych do wykrycia obiektów jest jedną siecią, dlatego może 
 		\caption{Architektura sieci GAN}
 \end{figure}
 
-\subsection{CNTK}
-[Authors, Year] - 
-\begin{figure}[h]
-	\centering
-			\includegraphics[resolution=120]{CNTK.png}
-		\caption{Architektura sieci CNTK}
-\end{figure}
 
 % ################################
 %        PORÓWNANIE WYDAJNOŚĆI ARCHITEKTUR
