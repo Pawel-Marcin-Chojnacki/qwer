@@ -1,4 +1,4 @@
-\documentclass[a4paper,twoside,titlepage,openright]{book}
+\documentclass[12pt,a4paper,twoside,titlepage,openright]{book}
 \usepackage[MeX]{polski}
 \usepackage[utf8]{inputenc}
 \usepackage{enumitem} % słownik pojęć
@@ -10,12 +10,15 @@
 \usepackage{verbatimbox} % marginesy dla~tabel
 \usepackage{emptypage} % usuwa nagłówki i~numery stron z~pustych stron
 \usepackage{afterpage} % to zapobiega ustawianiu obrazka PO tym
+\usepackage{filecontents} % pozwala na wstawienie bibliografi
+\usepackage{setspace} % interlinia
+\onehalfspacing
 \graphicspath{{figures/}} %Setting the graphicspath
 % PAGE LAYOUT
 %\usepackage{showframe} % debug
 \marginparwidth 0pt
 \marginparsep 0pt
-\usepackage[top=3.5cm,bottom=3.5cm,inner=3.5cm,outer=2.5cm]{geometry}
+\usepackage[top=2.5cm,bottom=3cm,inner=4.5cm,outer=3cm]{geometry}
 
 % HEADER, FOOTER
 \usepackage{fancyhdr} 
@@ -229,27 +232,46 @@ Do wygenerowania wyjścia, wystarczy obliczyć y = wT (wagi transponowane) * x (
 \chapter*{Wstęp}
 \markboth{}{Wstęp}
 \addcontentsline{toc}{chapter}{Wstęp}
-
-\clearpage{\pagestyle{empty}\cleardoublepage}
-
-Wstęp pisze się na koniec.
+Celem niniejszej pracy magisterskiej jest przedstawienie nowoczesnych, czyli z ostatnich pięciu lat, architektur sieci neuronowych oraz przegląd najpopularniejszych bibliotek implementujących algorytmy uczenia maszynowego i w szczególności zoptymalizowanych do pracy z uczeniem głębokim na wielu procesorach graficznych. Głębokie sieci neuronowe znane są już od lat 60tych XX wieku, algorytmy uczące również były aktywnie rozwijane do lat 80tych. Wtedy też nadzieje wojska amerykańskiego na sztuczną inteligencję wygasły powodując zimę SI przez brak funduszy na badania. Do 2012 roku była to dziedzina zarezerwowana dla doktorów matematyki i informatyki (głównie statystyków). Wtedy też pojawiły się pierwsze głębokie sieci neuronowe mające trafność blisko 80\%. Od tej pory nastąpił gwałtowny rozwój start-upów związanych z Deep Learningiem. Moc obliczeniowa tanieje z każdym rokiem i kluczowe dla rozwoju dziedziny okazały się karty graficzne firmy NVidia (szczególnie te przeznaczone na rykek graczy). Właśnie przez brak ciągłości w rozwoju i nagłą modę, wszystkie obecnie używane narzędzia mają nie więcej niż 5 lat. Literatura w czasie wydania często staje się nieaktualna, dlatego wykorzystana literatura to głównie publikacje elektroniczne z serwisu arXiv.com, zazwyczaj jeszcze bez recenzji naukowej. 
+W dalszej części pracy przedstawiane są główne problemy wydajnościowe, z którymi borykają się osoby praktykujące Deep Learning. Przez wydajność należy rozumieć zarówno czas obliczeń potrzebny do uczenia modelu rozpoznawania danego mu zagadnienia oraz dokładność z jaką już nauczony program potrafi rozpoznać niespotkane wcześniej dane. Oba te parametry są od siebie zależne, koszt poprawy jakości predykcji algorytmu o ostatnie 1-2\% może wynosić setki tysięcy złotych. Na koszt składa się energia elektryczna, farma serwerów wyposażonych w karty graficzne oraz tygodnie czekania na wynik. Architektury posiadają wiele hiperparametrów, które wpływają na precyzję, po zmianie wartości dowolnego należy zacząć pracę algorytmu od początku. Następnie przedstawnionych jest kilka nowatorskich technik strojenia hiperparametrów, które ze względu na to że zostały odkryte przez mało znanych badaczy, nie zostały jeszcze rozpowszechnione w dużych ośrodkach badawczych jak DeepMind, te techniki również są na tyle nowe, że nie ma wydawnictwa branżowego opisującego ich użycia dla praktyków. Te algorytmy pozwalają efektywnie zmniejszyć błąd klasyfikatora o 10-20\%, co wiąże się z dużo wyższą wydajnością, przy znikomym nakładzie pracy. Do prezentacji działania bibliotek, architektur i algorytmów użyty został gotowy zbiór danych. Zestaw danych prezentacyjnych pochodzi z serwisu Kaggle. Jest to zbiór zdjęć z prześwietleń rentgenowskich podzielony na dwie kategorie: płuca zdrowe i płuca z zapaleniem płuc. Dane są anonimowe i zostały zweryfikowane przez Kaggle, na końcu pracy ze zdjęciami znajduje się porównanie z osiągnięciami społeczności. Badanym obszarem pozostają zagadnienia klasyfikacji obrazów. Na przykładzie zbioru zdjęć, prezentowany jest sposób wykorzystania gotowych moedeli i metody optymalizacji je pod wybraną domenę. Takie podejście pozwala uniknąć wysokich kosztów tworzenia własnych modeli (co kosztuje kilka do kilkunastu tygodni obliczeń na wielu kartach GPU). Głębokie sieci neuronowe również świetnie się sprawdzają przy zadaniach rozpoznawania mowy, przetwarzaniu języka naturalnego i systemach rekomendacji, zagadnienia zbyt obszerne by zostały opisane razem.
+Praca jest podzielona na etapy tworzenia modelu od dołu struktury sieci neuronowych. Rozpoczyna się od przedstawienia pojedynczych elementów i struktury matematycznej sieci. Następnie opisany jest każdy element tworzący gotową architekturę.
+Wszystkie przedstawione kody źródłowe zostały napisane w języku Python. Z założenia stał się językiem dominującym w uczeniu maszynowym, kosztem języka R. Python składnią jest zbliżony do pseudokodu, dodatkowo wszystkie popularne biblioteki udostępniają nakładki API dla Pythona. Książki wykorzystane w tworzeniu tego tekstu, zawierają wyłącznie kod Pythonowy (z kilkoma nawiązaniami do języków R i C++).
 
 % ################################
 %        NEURONY
 % ################################
 
 \chapter{Neurony}
-W niniejszym rozdzialę przedstawię idee sztucznego neuronu McCullocha i Pittsa. Model neurony był wczesnym odwzorowaniem neuronu mózgowego z 1943 roku. Reprezentuje on model liniowy mogący rozpoznać dwie różne kategorie wejść. Na sam neuron składa się funkcja f(x, w) -> x - wejście, w - waga. Ta prosta jednostka stanowi dziś podstawę budowy każdej sieci neuronowej. Aby funkcja zwracała oczekiwane wyniki, wagi powinny być poprawnie ustawione. Początkowo wagi ustawiano ręcznie za pomocą operatora, który wcześniej przeliczał je dla odpowiednich parametrów wejścia\\wyjścia. W latach 50tych perceptron stał się pierwszym modelem umiejącym samodzielnie wyliczyć poprawnie wagi definiujące zadaną klasę na podstawie przykładów. Już kilka lat po wynalezieniu sieci neuronowych, okazało się że neurony mózgowe działają zupełnie inaczej, nomenklatura nawołująca do neuronów mózgowych jakkolwiek błędna, pozwala wprowadzić prostą abstrakcję na modele matematyczne. 
+W niniejszym rozdzialę przedstawię idee sztucznego neuronu McCullocha i Pittsa. Model neurony był wczesnym odwzorowaniem neuronu mózgowego z 1943 roku. Reprezentuje on model liniowy mogący rozpoznać dwie różne kategorie wejść. Na sam neuron składa się funkcja f(x, w) -> x - wejście, w - waga. Ta prosta jednostka stanowi dziś podstawę budowy każdej sieci neuronowej. Aby funkcja zwracała oczekiwane wyniki, wagi powinny być poprawnie ustawione. Początkowo wagi ustawiano ręcznie za pomocą operatora, który wcześniej przeliczał je dla odpowiednich parametrów wejścia\\wyjścia. W latach 50tych perceptron stał się pierwszym modelem umiejącym samodzielnie wyliczyć poprawnie wagi definiujące zadaną klasę na podstawie przykładów. Już kilka lat po wynalezieniu sieci neuronowych, okazało się że neurony mózgowe działają zupełnie inaczej, nomenklatura nawołująca do neuronów mózgowych jakkolwiek błędna, pozwala wprowadzić prostą abstrakcję na modele matematyczne.
 
 Opiszę w jaki sposób stworzyć sieć neuronową oraz przedstawię wszystkie elementy potrzebne do zbudowania funkcjonalnej i wydajnej architektury sieci.
 
-\section{Co to jest sieć neuronowa?}
+\section{Model neuronu prostego}
+\begin{figure}[h]
+	\centering
+			\includegraphics[resolution=120]{Neuron.png}
+		\caption{Prosta reprezentacja neuronu.}
+\end{figure}
 
-\section{Jak uczyć sieć zachowań?}
+
+\section{Co to jest sieć neuronowa?}
+Koncepcja sieci neuronowej to luźne połączenie wielu pojedynczych neuronów. Pozwala to na rozpoznawanie bardziej skomplikowanych wzorców niż klasyfikacja binarna. 
+
+\begin{figure}[h]
+	\centering
+			\includegraphics[resolution=120]{SiecNeuronowa.png}
+		\caption{Prosta sieć neuronowa.}
+\end{figure}
+
+\section{Jak uczyć sieci neuronowe}
+W obecnym momencie istnieją dwie możliwości by sieć posiadła umiejętność poprawnej klasyfikacji. 
+
 \subsection*{Uczenie nadzorowane}
 \subsection*{Uczenie nienadzorowane}
 
+
 \section{Elementy sieci neuronowych}
+
 \subsection{Metoda gradientu prostego}
 \subsection{Funkcje aktywacji}
 \subsection{Wykres obliczeniowy}
@@ -258,9 +280,13 @@ Opiszę w jaki sposób stworzyć sieć neuronową oraz przedstawię wszystkie el
 \subsection{Hiperparametry}
 \subsection{Jak zbudować sieć neuronową}
 
+% ################################
+%        DEEP LEARNING
+% ################################
+
 \chapter{Deep Learning}
 
-\section{Techniki w Deep Learning}
+\section{Techniki tworzenia głębokich sieci}
 W tym rozdzial przybliżę trzy interesujące techniki głębokiego uczenia. Wybrałem je ze względu na ich obszerną ilość zastosowań. Następnie opiszę kilka bibliotek implementujących wsparcie dla większości architektur sieci przedstawionych w pracy. Biblioteki są wybrane na podstawie przekroju platform i języków mi znanych. 
 
 \subsection{Sieci neuronowe}
@@ -269,7 +295,8 @@ Inaczej znane jako
 \subsection{Recurrent Neural Networks}
 \subsection{Fully Convolutional Networks}
 
-\section{Przegląd bibliotek}
+\chapter{Deep Learning}
+\chapter{Biblioteki implementujące uczenie głębokie}
 
 \subsection{Tensorflow}
 \begin{figure}[h]
@@ -327,7 +354,7 @@ Chińskie oprogramowanie, mało znane w Europie / USA, za to jest to najpopularn
 \subsection{ML.NET}
 \begin{figure}[h]
 	\centering
-			\includegraphics[resolution=120]{ML.NET.png}
+			\includegraphics[resolution=120]{ML_NET.png}
 		\caption{Logo biblioteki ML.NET}
 \end{figure}
 Nowe oprogramowanie od Microsoftu, udostępnione na licencji [licencja], głównie polecane programistom w środowisku .NET. Docelowo ma stać się częścią .NET Core. Nastawione na łatwość integracji z oprogramowaniem biznesowym, chmurą Azure oraz łatwość obsługi przez programistów pracujących w technologiach Microsoftu.
@@ -354,7 +381,7 @@ CNTK działa na systemach operacyjnych Windows i GNU\\Linux.
 % ################################
 
 \chapter{Architektura}
-\section{Poglądy profesora Tadeusiewicza}
+\section{Znaczenie architektury dla wydajności sieci}
 Sieci neuronowe można ułożyć na nieskończenie wiele sposobów. Aby uzyskać dobre rezultaty należy sprawdzić kilka architektur i jak się zachowują dla dla posiadanych zbiorów danych i zadanych hiperparametrów.
 W zależności od typu architektury sieci można osiągnąć zupełnie inne wyniki uczenia dla tych samych algorytmów. 
 Architektury różnią się właściwie wszystkim, ilością warstw ukrytych ilością neuronów w warstwie ukrytej. 
@@ -365,10 +392,14 @@ Poglądy Tadeusiewicza na architekturę sieci neuronowych.
 Tak napisał w 2007 roku, kiedy architektury sieci nie miały miały większego znaczenia ponieważ większość sieci była stosunkowo płytka (do 5 warstw ukrytych). Zbiory na których pracowano były stosunkowo niewielkie w porównaniu z dzisiejszymi zasobami skatalogowanych obrazów. 
 Obecnie istnieją dowody (choćby coroczne zawody ImageNet, w których udowadnia się że struktura sieci ma znaczenie. Może poprawić szybkość i dokładność uczenia). Profesor jest ekspertem w dziedzinie sieci neuronowych, jednak jego książki i poglądy są z lat 1990 - 2010. Późniejsze jego prace są dużo mniej znane.
 
-\section{Przegląd sprawdzonych architektur}
+\section{Przegląd najbardziej efektywnych architektur}
 
 \subsection{AlexNet}
- [Alex Krizhevsky, Ilya Sutskever, Geoffrey E. Hinton, 2012] - konwolucyjna sieć neuronowa napisana przy użyciu CUDA pod zawody ImageNet. Została wytrenowana do sklasyfikowania 1,2 miliona obrazów podzielonych na 1000 klas. W testach top-1 i top-5 uzyskała wartości kolejno 37,5\% i 17\%, co jest wynikiem niesamowicie wysokim na 2012 rok. Sieć neuronowa zawiera 60 milionów parametrów i 650 000 neuronów. Architekturę tworzy 8 warstw, gdzie pierwsze 5 to warstwy konwolucyjne, a pozostałe 3 są warstwami w pełni połączonymi, ta ostatnia ma oczywiście 1000 wyjść z funkcji softmax. AlexNet znacząco przewyższyła swoją wydajnością poprzednich uczestników i wygrała zawody redukując błąd top-5 do 15,32\%. Drugie miejsce to błąd ok 26.2\% (nie była to CNN). Sieć jest głęboką modyfikacją architektury Yann’a LeCunn’a. AlexNet była zaplanowana na dwie karty graficzne, stąd rozdzielenie przepływu informacji na 2 części. Trenowanie sieci na 2 GPU było nowością na te czasy. Sieć została wytrenowana na zbiorze ImageNet. Do wyliczenia funkcji nieliniowych były używane ReLU (tutaj po raz pierwszy okazało się że ReLU działa dużo szybciej niż tanh). Sieć o której będą uczyły się dzieci na lekcjach historii.
+ [Alex Krizhevsky, Ilya Sutskever, Geoffrey E. Hinton, 2012] - pierwsza prawdziwa konwolucyjna sieć neuronowa (CNN), która pomogła zmienić opinię na temat uczenia głębokiego. Została zaimplementowana z użyciem biblioteki CUDA. Pierwsza sieć neuronowa, ucząca się z powodzeniem dla dużego zbioru danych.
+ Została wytrenowana na zbiorze danych złożonym z ponad 15 milionów obrazów podzielonych na 22000 klas. 
+ W testach top-1 i top-5 uzyskała wartości kolejno 37,5\% i 17\%, co pozwoliło wygrać konkurs ImageNet Large Scale Visual Recognition Challenge. 
+ Sieć neuronowa zawiera 60 milionów parametrów i 650 000 neuronów. Architekturę tworzy 8 warstw, gdzie pierwsze 5 to warstwy konwolucyjne, a pozostałe 3 są warstwami w pełni połączonymi, ta ostatnia ma oczywiście 1000 wyjść z funkcji softmax. AlexNet znacząco przewyższyła swoją wydajnością poprzednich uczestników i wygrała zawody redukując błąd top-5 do 15,32\%. Drugie miejsce to błąd ok 26.2\% (nie była to CNN). Sieć jest głęboką modyfikacją architektury Yann’a LeCunn’a. AlexNet była zaplanowana na dwie karty graficzne, stąd rozdzielenie przepływu informacji na 2 części. Trenowanie sieci na 2 GPU było nowością na te czasy. Sieć została wytrenowana na zbiorze ImageNet. Do wyliczenia funkcji nieliniowych były używane ReLU (tutaj po raz pierwszy okazało się że ReLU działa dużo szybciej niż tanh). Sieć o której będą uczyły się dzieci na lekcjach historii. \cite{NIPS2012_4824}
+
 \begin{figure}[h]
 	\centering
 			\includegraphics[resolution=120]{AlexNet.png}
@@ -376,7 +407,8 @@ Obecnie istnieją dowody (choćby coroczne zawody ImageNet, w których udowadnia
 \end{figure}
 
 \subsection{LeNet}
-[Authors, Year] - Jest to obecnie mało znacząca architektura. Pierwsze praktyczne zastosowanie sieci konwolucyjnych jeszcze w latach 90’tych. Używana była do prostych zadań: czytanie kodów pocztowych, liczb.
+[Authors, Year] - Jest to obecnie mało znacząca architektura. Pierwsze praktyczne zastosowanie sieci konwolucyjnych jeszcze w latach 90’tych. Używana była do prostych zadań: czytanie kodów pocztowych, liczb.\cite{Lecun98gradient-basedlearning}
+
 \begin{figure}[h]
 	\centering
 			\includegraphics[resolution=120]{LeNet.png}
@@ -385,13 +417,13 @@ Obecnie istnieją dowody (choćby coroczne zawody ImageNet, w których udowadnia
 
 \subsection{VGG Net}
  [Simoyan i Zisserman, 2014] - sieć złożona z 16 warstw konwolucyjnych, która charakteryzuje się małymi filtrami i duża głębokość sieci.
-W trakcie trenowania sieci wyjście jest ustawione na ustalony rozmiar (224 x 224 x 3). Przetwarzanie wstępne obejmuje odjęcie mediany wartości RGB dla każdego piksela. Zdjęcie jest przetwarzanie przez stos warstw konwolucyjnych, gdzie używane są filtry o bardzo małym polu widzenia (3x3) [najmniejszy możliwy rozmiar by móc rozpoznać kierunek]. Operacja Max-pooling jest wykonana na polu 4 pikseli, co pokazuje że jest to pobieranie jak najmniejszych cech z obrazu. Ukryte warstwy są wyposażone w nieliniową funkcję aktywacji ReLU. Po stosie warstw konwolucyjnych, następuje nałożenie 3 warstw w pełni połączonych (to takie duże warstwy zawierające wszystkie cechy?). Pierwsze dwie mają 4096 kanałów, trzecia już tylko 1000 (po jednym kanale na klasę obiektu). Obecnie architektura ta jest dość popularnym wyborem dla wyodrębniania cech ze zdjęć. Konfiguracje wag dla zbioru obrazów z ImageNet są dostępne online. W tej sieci problemem jest 140 milionów parametrów, którymi czasem trzeba zarządzać.
+W trakcie trenowania sieci wyjście jest ustawione na ustalony rozmiar (224 x 224 x 3). Przetwarzanie wstępne obejmuje odjęcie mediany wartości RGB dla każdego piksela. Zdjęcie jest przetwarzanie przez stos warstw konwolucyjnych, gdzie używane są filtry o bardzo małym polu widzenia (3x3) [najmniejszy możliwy rozmiar by móc rozpoznać kierunek]. Operacja Max-pooling jest wykonana na polu 4 pikseli, co pokazuje że jest to pobieranie jak najmniejszych cech z obrazu. Ukryte warstwy są wyposażone w nieliniową funkcję aktywacji ReLU. Po stosie warstw konwolucyjnych, następuje nałożenie 3 warstw w pełni połączonych (to takie duże warstwy zawierające wszystkie cechy?). Pierwsze dwie mają 4096 kanałów, trzecia już tylko 1000 (po jednym kanale na klasę obiektu). Obecnie architektura ta jest dość popularnym wyborem dla wyodrębniania cech ze zdjęć. Konfiguracje wag dla zbioru obrazów z ImageNet są dostępne online. W tej sieci problemem jest 140 milionów parametrów, którymi czasem trzeba zarządzać. \cite{DBLP:journals/corr/SimonyanZ14a}
 
 \subsection{GoogleNet / Inception}
-[Christian Szegedy, Wei Liu, Yangqing Jia, Pierre Sermanet, Scott Reed, Dragomir Anguelov, Dumitru Erhan, Vincent Vanhoucke, Andrew Rabinovich, 2014] - produkt jak nazwa wskazuje wyszedł z firmy Google. Charakteryzuje się przełomową poprawą użycia zasobów wewnętrznych. ImageNet jest zaprojektowana na jak największą szerokość i głębokość jednocześnie utrzymując stałe zużycie mocy obliczeniowej. Optymalizacja jakości opiera się na zasadzie Hebbian’a (jest to teoria neuronauki, która mówi o adaptacji neuronów w trakcie nauki). Błędy klasyfikacji wynoszą top-1: 17,2\% i top-5: 3,58\% (dla v3). Sieć składa się łącznie z 22 warstw. Sieć jest modułowa, gdzie każdy moduł pełni rolę wielopoziomowego ekstraktora cech przeliczającego konwolucje na macierzach rozmiarów 1x1, 3x3, 5x5. Zaletą tej architektury są bardzo małe rozmiary wag (mniej niż 100MB dla v3). Kolejną ważną zaletą jest ilość parametrów, tylko 4 miliony co jest wynikiem 12 razy lepszym od AlexNet. Jest to jedna z najbardziej złożonych sieci względem architektury modułowej. W wersji naiwnej każda warstwa posiada 4 ekstraktory cech (3 konwolucyjne i jedną 3x3 max pooling), następnie wartości te są składane i wysyłane do warstwy wyżej. Do poprawienia wydajności obliczeniowej pozbyto się warstwy “w pełni połączonej”.
+[Christian Szegedy, Wei Liu, Yangqing Jia, Pierre Sermanet, Scott Reed, Dragomir Anguelov, Dumitru Erhan, Vincent Vanhoucke, Andrew Rabinovich, 2014] - produkt jak nazwa wskazuje wyszedł z firmy Google. Charakteryzuje się przełomową poprawą użycia zasobów wewnętrznych. ImageNet jest zaprojektowana na jak największą szerokość i głębokość jednocześnie utrzymując stałe zużycie mocy obliczeniowej. Optymalizacja jakości opiera się na zasadzie Hebbian’a (jest to teoria neuronauki, która mówi o adaptacji neuronów w trakcie nauki). Błędy klasyfikacji wynoszą top-1: 17,2\% i top-5: 3,58\% (dla v3). Sieć składa się łącznie z 22 warstw. Sieć jest modułowa, gdzie każdy moduł pełni rolę wielopoziomowego ekstraktora cech przeliczającego konwolucje na macierzach rozmiarów 1x1, 3x3, 5x5. Zaletą tej architektury są bardzo małe rozmiary wag (mniej niż 100MB dla v3). Kolejną ważną zaletą jest ilość parametrów, tylko 4 miliony co jest wynikiem 12 razy lepszym od AlexNet. Jest to jedna z najbardziej złożonych sieci względem architektury modułowej. W wersji naiwnej każda warstwa posiada 4 ekstraktory cech (3 konwolucyjne i jedną 3x3 max pooling), następnie wartości te są składane i wysyłane do warstwy wyżej. Do poprawienia wydajności obliczeniowej pozbyto się warstwy “w pełni połączonej”. \cite{DBLP:journals/corr/SzegedyLJSRAEVR14}
 
 \subsection{ResNet}
-[Kaiming He et al, 2015]  - architektura oparta na mikro modułach. Charakteryzuje się możliwością odrzucania połączeń i posiada ogromny moduł na normalizację zbioru iteracji (batch normalization). Normalizacja jest pomysłem zaczerpniętym z rekurencyjnych sieci neuronowych. Ta technika pozwala stworzyć sieć ze 152 warstwami ukrytymi przy zachowaniu złożoności mniejszej niż VGG.
+[Kaiming He et al, 2015]  - architektura oparta na mikro modułach. Charakteryzuje się możliwością odrzucania połączeń i posiada ogromny moduł na normalizację zbioru iteracji (batch normalization). Normalizacja jest pomysłem zaczerpniętym z rekurencyjnych sieci neuronowych. Ta technika pozwala stworzyć sieć ze 152 warstwami ukrytymi przy zachowaniu złożoności mniejszej niż VGG. \cite{DBLP:journals/corr/XieGDTH16}
 \begin{figure}[h]
 	\centering
 			\includegraphics[resolution=120]{ResNet.png}
@@ -399,24 +431,25 @@ W trakcie trenowania sieci wyjście jest ustawione na ustalony rozmiar (224 x 22
 \end{figure}
 
 \subsection{ResNeXt}
-[Saining Xie, Ross Girshick, Piotr Dolla ́r Zhuowen Tu Kaiming He, 2017] - modularyzowalna 
+[Saining Xie, Ross Girshick, Piotr Dollar Zhuowen Tu Kaiming He, 2017] - modularyzowalna 
+\cite{DBLP:journals/corr/XieGDTH16}
 \begin{figure}[h]
 	\centering
 			\includegraphics[resolution=120]{ResNeXt.png}
 		\caption{Architektura sieci ResNeXt}
 \end{figure}
 
-\subsection{RCNN}
-[Authors, Year] - 
+\subsection{RCNN -- obrazek jest zastępczy nie ma nic w internecie interesującego}
+[Authors, Year] - \cite{DBLP:journals/corr/RenHG015}
 \begin{figure}[h]
 	\centering
-			\includegraphics[resolution=120]{RCNN.png}
+			\includegraphics[resolution=120]{ResNeXt.png}
 		\caption{Architektura sieci RCNN}
 \end{figure}
 
 \subsection{YOLO - You Only Look Once }
 [Joseph Redmon, Santosh Divvala, Ross Girshick, Ali Farhadi, 2016] - You Only Look Once jest systemem wykrywania obiektów w czasie rzeczywistym. Obraz jest dzielony na części oddzielonymi od sieibie prostokątami, ..???
-Cały przepływ danych do wykrycia obiektów jest jedną siecią, dlatego może być zoptymalizowany 
+Cały przepływ danych do wykrycia obiektów jest jedną siecią, dlatego może być zoptymalizowany \cite{DBLP:journals/corr/RedmonDGF15}
 \begin{figure}[h]
 	\centering
 			\includegraphics[resolution=120]{YOLO.png}
@@ -424,7 +457,7 @@ Cały przepływ danych do wykrycia obiektów jest jedną siecią, dlatego może 
 \end{figure}
 
 \subsection{SqueezeNet}
-[Authors, Year] - 
+[Authors, Year] - \cite{DBLP:journals/corr/IandolaMAHDK16}
 \begin{figure}[h]
 	\centering
 			\includegraphics[resolution=120]{SqueezeNet.png}
@@ -432,7 +465,7 @@ Cały przepływ danych do wykrycia obiektów jest jedną siecią, dlatego może 
 \end{figure}
 
 \subsection{SegNet}
-[Authors, Year] - 
+[Authors, Year] - \cite{DBLP:journals/corr/BadrinarayananH15}
 \begin{figure}[h]
 	\centering
 			\includegraphics[resolution=120]{SegNet.png}
@@ -440,7 +473,7 @@ Cały przepływ danych do wykrycia obiektów jest jedną siecią, dlatego może 
 \end{figure}
 
 \subsection{Generative Adversarial Network}
-[Ian J. Goodfellow, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, Sherjil Ozair†, Aaron Courville, Yoshua Bengio‡, 2014] - w skrócie GAN. Są architekturą sieci neuronowych skomponowanych z dwóch sieci przeciwstawionych wobec siebie. Zaprojektowane na uniwersytecie w Montrealu (gdzie powstało większość przełomów dotyczących neuronów) przez największe obecnie autorytety w dziedzinie. GAN obudził duze nadzieje na szybkie i "twórcze" działania algorytmów, jego najczęstszym zastosowaniem jest tworzenie komputerowych "dzieł sztuki". Jak to działa? Jedna sieć generuje kandydatów, a druga ich ocenia wytworzone obiekty. W ten sposób obie sieci uczą się od siebie wzajemnie. -
+[Ian J. Goodfellow, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, Sherjil Ozair†, Aaron Courville, Yoshua Bengio‡, 2014] - w skrócie GAN. Są architekturą sieci neuronowych skomponowanych z dwóch sieci przeciwstawionych wobec siebie. Zaprojektowane na uniwersytecie w Montrealu (gdzie powstało większość przełomów dotyczących neuronów) przez największe obecnie autorytety w dziedzinie. GAN obudził duze nadzieje na szybkie i "twórcze" działania algorytmów, jego najczęstszym zastosowaniem jest tworzenie komputerowych "dzieł sztuki". Jak to działa? Jedna sieć generuje kandydatów, a druga ich ocenia wytworzone obiekty. W ten sposób obie sieci uczą się od siebie wzajemnie. - \cite{NIPS2014_5423}
 \begin{figure}[h]
 	\centering
 			\includegraphics[resolution=120]{GAN.png}
@@ -449,7 +482,7 @@ Cały przepływ danych do wykrycia obiektów jest jedną siecią, dlatego może 
 
 
 % ################################
-%        PORÓWNANIE WYDAJNOŚĆI ARCHITEKTUR
+%        PORÓWNANIE WYDAJNOŚCI ARCHITEKTUR
 % ################################
 \chapter{Testy wydajności}
 
@@ -459,15 +492,21 @@ Cały przepływ danych do wykrycia obiektów jest jedną siecią, dlatego może 
 
 \chapter{Podsumowanie} 
 
+% ################################
+%        SPIS RYSUNKÓW
+% ################################
+
 \addcontentsline{toc}{chapter}{Spis rysunków}
 \listoffigures
 
 % ################################
 %        BIBLIOGRAFIA
 % ################################
+\bibliographystyle{plain}
+\bibliography{bibliography/alexnetNips,bibliography/deeplearningbook,bibliography/dropout,bibliography/fastAI,bibliography/ganArxiv,bibliography/googleNet,bibliography/lecun,bibliography/medicalImage,bibliography/microsoftResNet,bibliography/rCNN,bibliography/relu,bibliography/resnextArxiv,bibliography/VGGNet,bibliography/ZFNet,bibliography/ResNeXt,bibliography/YOLO,bibliography/SqueezeNet,bibliography/SegNet} 
 
-\addcontentsline{toc}{chapter}{Bibliografia}
-\begin{thebibliography}{99}
+% \addcontentsline{toc}{chapter}{Bibliografia}
+% \begin{thebibliography}{99}
 
 %\bibitem{deeplearningbook} \textsc{Goodfellow I., Bengio Y, Courville A.:}
 %\textit{Deep Learning (Adaptive Computation and Machine Learning series)}, The MIT Press, 2016, ISBN 978-0262035613.
@@ -512,5 +551,5 @@ Cały przepływ danych do wykrycia obiektów jest jedną siecią, dlatego może 
 %\bibitem{microsoftResNet} \textit{Deep Residual Learning for Image Recognition}, 
 %\texttt{https://arxiv.org/pdf/1512.03385v1.pdf}, \\dostęp: 10.04.2018.
 
-\end{thebibliography}
+% \end{thebibliography}
 \end{document}
