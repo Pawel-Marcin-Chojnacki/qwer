@@ -232,45 +232,65 @@ Do wygenerowania wyjścia, wystarczy obliczyć y = wT (wagi transponowane) * x (
 \chapter*{Wstęp}
 \markboth{}{Wstęp}
 \addcontentsline{toc}{chapter}{Wstęp}
-Celem niniejszej pracy magisterskiej jest przedstawienie nowoczesnych, czyli z ostatnich pięciu lat, architektur sieci neuronowych oraz przegląd najpopularniejszych bibliotek implementujących algorytmy uczenia maszynowego i w szczególności zoptymalizowanych do pracy z uczeniem głębokim na wielu procesorach graficznych. Głębokie sieci neuronowe znane są już od lat 60tych XX wieku, algorytmy uczące również były aktywnie rozwijane do lat 80tych. Wtedy też nadzieje wojska amerykańskiego na sztuczną inteligencję wygasły powodując zimę SI przez brak funduszy na badania. Do 2012 roku była to dziedzina zarezerwowana dla doktorów matematyki i informatyki (głównie statystyków). Wtedy też pojawiły się pierwsze głębokie sieci neuronowe mające trafność blisko 80\%. Od tej pory nastąpił gwałtowny rozwój start-upów związanych z Deep Learningiem. Moc obliczeniowa tanieje z każdym rokiem i kluczowe dla rozwoju dziedziny okazały się karty graficzne firmy NVidia (szczególnie te przeznaczone na rykek graczy). Właśnie przez brak ciągłości w rozwoju i nagłą modę, wszystkie obecnie używane narzędzia mają nie więcej niż 5 lat. Literatura w czasie wydania często staje się nieaktualna, dlatego wykorzystana literatura to głównie publikacje elektroniczne z serwisu arXiv.com, zazwyczaj jeszcze bez recenzji naukowej. 
-W dalszej części pracy przedstawiane są główne problemy wydajnościowe, z którymi borykają się osoby praktykujące Deep Learning. Przez wydajność należy rozumieć zarówno czas obliczeń potrzebny do uczenia modelu rozpoznawania danego mu zagadnienia oraz dokładność z jaką już nauczony program potrafi rozpoznać niespotkane wcześniej dane. Oba te parametry są od siebie zależne, koszt poprawy jakości predykcji algorytmu o ostatnie 1-2\% może wynosić setki tysięcy złotych. Na koszt składa się energia elektryczna, farma serwerów wyposażonych w karty graficzne oraz tygodnie czekania na wynik. Architektury posiadają wiele hiperparametrów, które wpływają na precyzję, po zmianie wartości dowolnego należy zacząć pracę algorytmu od początku. Następnie przedstawnionych jest kilka nowatorskich technik strojenia hiperparametrów, które ze względu na to że zostały odkryte przez mało znanych badaczy, nie zostały jeszcze rozpowszechnione w dużych ośrodkach badawczych jak DeepMind, te techniki również są na tyle nowe, że nie ma wydawnictwa branżowego opisującego ich użycia dla praktyków. Te algorytmy pozwalają efektywnie zmniejszyć błąd klasyfikatora o 10-20\%, co wiąże się z dużo wyższą wydajnością, przy znikomym nakładzie pracy. Do prezentacji działania bibliotek, architektur i algorytmów użyty został gotowy zbiór danych. Zestaw danych prezentacyjnych pochodzi z serwisu Kaggle. Jest to zbiór zdjęć z prześwietleń rentgenowskich podzielony na dwie kategorie: płuca zdrowe i płuca z zapaleniem płuc. Dane są anonimowe i zostały zweryfikowane przez Kaggle, na końcu pracy ze zdjęciami znajduje się porównanie z osiągnięciami społeczności. Badanym obszarem pozostają zagadnienia klasyfikacji obrazów. Na przykładzie zbioru zdjęć, prezentowany jest sposób wykorzystania gotowych moedeli i metody optymalizacji je pod wybraną domenę. Takie podejście pozwala uniknąć wysokich kosztów tworzenia własnych modeli (co kosztuje kilka do kilkunastu tygodni obliczeń na wielu kartach GPU). Głębokie sieci neuronowe również świetnie się sprawdzają przy zadaniach rozpoznawania mowy, przetwarzaniu języka naturalnego i systemach rekomendacji, zagadnienia zbyt obszerne by zostały opisane razem.
+Celem niniejszej pracy magisterskiej jest przedstawienie nowoczesnych (czyli z ostatnich pięciu lat) architektur sieci neuronowych oraz przegląd najpopularniejszych bibliotek implementujących algorytmy uczenia maszynowego, a w szczególności zoptymalizowanych do pracy z uczeniem głębokim na wielu procesorach graficznych. Głębokie sieci neuronowe, czyli zawierające więcej niż jedną warstwę ukrytą, znane są już od wczesnych lat 60tych XX wieku. Algorytmy uczenia maszynowego były bardzo aktywnie rozwijane w latach 1950 - 1971, fundusze na badania w czasach zimnej wojny były w USA kilkukrotnie wyższe w udziale PKB. W czasie kryzysu z roku 1981, nadzieje wojska amerykańskiego na sztuczną inteligencję wygasły powodując epokę znaną jako drugą zimę SI (ang. second AI winter). Brak funduszy na badania znacząco zachamował rozwój systemów samouczących i do 2012 roku była to dziedzina zarezerwowana głównie dla doktorów matematyki i informatyki (głównie statystyków). Powrót na pierwsze strony gazet popularnonaukowych spowodował Geoffrey Hinton, wykorzystując swoje idee sprzed lat na bardzo wydajnym sprzęcie. Mowa o dwóch kartach graficznych GeForce GTX 580 3GB\cite{NIPS2012_4824}, które przez tydzień trenowały architekturę do rozpoznania obrazów pod zawody ImageNet Competition 2012. Wcześniej takie zawody wygrywało oprogramowanie łączące wiele algorytmów uczenia maszynowego, stąd nagły zwrot w kierunku jednolitego narzędzia dającego tym lepsze rezultaty im więcej danych do uczenia dostanie. Pierwszy raz można było zobaczyć głębokie sieci neuronowe mające trafność powyżej 80\%. Po publikacji dokumentu \"ImageNet Classification with Deep Convolutional Neural Networks\" nastąpił gwałtowny rozwój start-upów związanych z Deep Learningiem. Moc obliczeniowa kart graficznych i dedykowanych układów tanieje z każdym rokiem. Kluczowe dla rozwoju dziedziny są karty graficzne firmy NVidia. Firma chcąc być liderem w rewolucji SI, zmieniła swój wizerunek z dostawcy rozrywki dla graczy na lidera urządzeń i oprogramowania stanowiącego podstawę systemów uczących. Przez nagłą modę, wszystkie obecnie używane narzędzia mają nie więcej niż 5 lat. Dziedzina jest tak dynamiczna że zdaża się iż literatura w czasie publikacji papierowej staje się nieaktualna. Dlatego wykorzystana w tej pracy literatura to głównie publikacje elektroniczne z serwisu arXiv, będące zazwyczaj jeszcze bez recenzji naukowej. 
+
+Intensywność obliczeń potrzebnych do stworzenia dobrego modelu wytwarza konieczność przedstawienia problemów osób praktykujących Deep Learning. W rozdziale poświęconym wydajności architektur przedstawiono sposoby na uniknięcie najczęściej popełnianych błedów oraz zbiór powszechnie przyjętych praktyk. Wydajność jest rozumiana zarówno jako czas obliczeń potrzebny do uczenia modelu rozpoznawania danego mu zagadnienia oraz dokładność z jaką już nauczony program potrafi rozpoznać niespotkane wcześniej dane. Oba te parametry są od siebie zależne, koszt poprawy jakości predykcji algorytmu o ostatnie 1-2\% może wynosić setki tysięcy złotych. Składa się na to energia elektryczna, farma serwerów wyposażonych w karty graficzne oraz tygodnie czekania na wynik. Zmiany zachodzące w rozwoju sprzętu i technik przenoszenia cech między modelami powzwolą na tworzenie aplikacji w czasie rzeczywistym już za kilka do kilkunastu lat.
+Architektury posiadają wiele hiperparametrów, które wpływają na precyzję, po zmianie wartości dowolnego należy zacząć pracę algorytmu od początku. Dlatego dobór odpowiednio bliskich ideałowi wartości na start jest niezwykle cenny. Na rok 2017, żadna biblioteka nie posiada wbudowanych automatów do poszukiwania optymalnych hiperparametrów, dobieranie ich dzieje się na intuicję wyrobioną dziesiątkami prób. Istnieje kilka nowatorskich technik strojenia hiperparametrów, które ze względu na to że zostały odkryte przez mało znanych badaczy, nie zostały jeszcze rozpowszechnione w dużych ośrodkach badawczych, te techniki również są na tyle nowe, że nie ma wydawnictwa branżowego opisującego ich użycia dla praktyków. Techniki strojenia to algorytmy pozwalajce efektywnie zmniejszyć błąd klasyfikatora o 10-20\%, co wiąże się z dużo wyższą wydajnością, przy znikomym nakładzie pracy. 
+Do prezentacji działania bibliotek, architektur i algorytmów użyty został gotowy zbiór danych. Zestaw danych prezentacyjnych pochodzi z serwisu Kaggle. Jest to zbiór zdjęć z prześwietleń rentgenowskich podzielony na dwie kategorie: płuca zdrowe i płuca z zapaleniem płuc. Dane są anonimowe i zostały zweryfikowane przez Kaggle. Na końcu pracy z danymi znajduje się porównanie z osiągnięciami społeczności. Badanym obszarem są zagadnienia klasyfikacji obrazów, przy pomocy tworzenia map cech każdej z klas. Na przykładzie zbioru zdjęć, prezentowany jest sposób wykorzystania gotowych moedeli i metody optymalizacji je pod wybraną domenę. Takie podejście pozwala uniknąć wysokich kosztów tworzenia własnych modeli (co kosztuje kilka do kilkunastu tygodni obliczeń na wielu kartach GPU). 
+Głębokie sieci neuronowe również świetnie się sprawdzają przy zadaniach rozpoznawania mowy, przetwarzaniu języka naturalnego i systemach rekomendacji, zagadnienia zbyt obszerne by zostały opisane razem.
 Praca jest podzielona na etapy tworzenia modelu od dołu struktury sieci neuronowych. Rozpoczyna się od przedstawienia pojedynczych elementów i struktury matematycznej sieci. Następnie opisany jest każdy element tworzący gotową architekturę.
-Wszystkie przedstawione kody źródłowe zostały napisane w języku Python. Z założenia stał się językiem dominującym w uczeniu maszynowym, kosztem języka R. Python składnią jest zbliżony do pseudokodu, dodatkowo wszystkie popularne biblioteki udostępniają nakładki API dla Pythona. Książki wykorzystane w tworzeniu tego tekstu, zawierają wyłącznie kod Pythonowy (z kilkoma nawiązaniami do języków R i C++).
+Wszystkie przedstawione kody źródłowe zostały napisane w języku Python 3.6. Staje się on dominującym językiem w uczeniu maszynowym, kosztem języka R. Python składnią jest zbliżony do pseudokodu, dodatkowo wszystkie popularne biblioteki udostępniają nakładki API dla Pythona. Książki wykorzystane w tworzeniu tego tekstu, zawierają wyłącznie kod Pythonowy (z kilkoma nawiązaniami do języków R i C++).
 
 % ################################
 %        NEURONY
 % ################################
 
 \chapter{Neurony}
-W niniejszym rozdzialę zostały przedstawione idee sztucznego neuronu McCullocha i Pittsa. Model neuronu był wczesnym wyobrażeniem neuronu mózgowego z 1943 roku, kilka lat później biolodzy odkryli że mózg wydląda i działa inaczej. Nazwa została przyjęta w kręgach akademickich i biznesowych, stąd często osoby nie znające budowy mózgu ani działania sieci neuronowych mylne nazywają zagadnienie Sztuczną Inteligencją.  z Reprezentuje on model liniowy mogący rozpoznać dwie różne kategorie wejść. Na sam neuron składa się funkcja f(x, w) -> x - wejście, w - waga. Ta prosta jednostka stanowi dziś podstawę budowy każdej sieci neuronowej. Aby funkcja zwracała oczekiwane wyniki, wagi powinny być poprawnie ustawione. Początkowo wagi ustawiano ręcznie za pomocą operatora, który wcześniej przeliczał je dla odpowiednich parametrów wejścia\\wyjścia. W latach 50tych perceptron stał się pierwszym modelem umiejącym samodzielnie wyliczyć poprawnie wagi definiujące zadaną klasę na podstawie przykładów. Już kilka lat po wynalezieniu sieci neuronowych, okazało się że neurony mózgowe działają zupełnie inaczej, nomenklatura nawołująca do neuronów mózgowych jakkolwiek błędna, pozwala wprowadzić prostą abstrakcję na modele matematyczne.
+%Tutaj opisuję bardzo ogólnym językiem co jest w rozdziale, co to jest neuron i sieć neuronowa. Tak około 1-2 strony.
+W niniejszym rozdziale została przedstawiona idea sztucznego neuronu McCullocha i Pittsa. Opracowany model biologicznego neuronu z 1943 roku jest tak uniwersalny że do dziś stanowi podstawę budowy sieci neuronowych. Przedstawiono tutaj również w jaki sposób znaleźć mapę cech, czy mówiąc prościej jak nauczyć neurony rozpoznawać wzorce. Na końcu rozdziału opisane są możliwości jakie daje łączenie sztucznych neuronów w sieć.
 
-Opiszę w jaki sposób stworzyć sieć neuronową oraz przedstawię wszystkie elementy potrzebne do zbudowania funkcjonalnej i wydajnej architektury sieci.
+Pierwszy model sztucznego neuronu był wyobrażeniem biologicznej reprezentacji neuronu mózgowego z lat 40tych XX wieku. Była to bardziej próba implementacji idei niż odwzorowanie prawdziwego odpowiednika, który jest bardziej złożony i nie do końca znany jest sposób jego zachowania. Zdefiniowany przez noblistę Ramon y Cajal'a w 1906 roku neuron jest specjalistycznym nośnikiem wszelkich informacji, a także elementem przetwarzającym wszystkie doznania, emocje, a także sterownikiem całego ciała. Uproszczeniem które pozwoliło na sprawną implementację jest wyodrębnienie zasady przetwarzania informacji bioelektrycznej do kilku prostszych operacji. Takie uproszczenie składa się z wielu sygnałów wejściowych, wagi przypisanej każdemu z tych sygnałów oraz pojedynczej wartości wyjściowej. Jak wielkie jest to uproszczenie widać przy porównaniu ryskunku prawdziwego neuronu (w uproszczeniu) \figure{mózgowyNeuron} oraz sztucznego neuronu \fig{sztucznyNeuron}. Taka budowa choć bardzo banalna, daje wiele możliwości. Podstawową zaletą jest prostota odwzorowania w urządzeniach elektronicznych. Przed nadejściem ery komputerów klasy PC, stosowano maszyny nazwywane perceptronami, dlatego obecnie można używać nazwy sztuczny neuron i perceptron prosty zamiennie.
 
-\section{Model neuronu prostego}
+Model obliczeniowy został stworzony na podstawie algorytmu logiki progowej. 
+Nazwa neuronu sztucznego została przyjęta w kręgach akademickich i biznesowych, stąd często osoby nie znające budowy mózgu ani działania sieci neuronowych mylnie nazywają zagadnienie Sztuczną Inteligencją, uproszczając skomplikowane procesy biologiczne do wzmaczniania lub osłabiania sygnałów przekazywanych przez synapsy. Sieci neuronowe naśladują tylko jeden rodzaj pamięci, pamięć deklaratywną i w odosobnieniu nie tworzy inteligencji.
+
+%Opiszę w jaki sposób stworzyć sieć neuronową oraz przedstawię wszystkie elementy potrzebne do zbudowania funkcjonalnej i wydajnej architektury sieci.
+
+\section{Model perceptronu prostego}
+% Matematyczny model perceptronu, opis jak to działa, dlaczego to działa i jakie są ograniczenia takiego modelu.
+Podstawowym elementem z których buduje się sieci neuronowe są sztuczne neurony, nazywane również perceptronami. Mają one być w rzeczywistości bardzo uproszczonym odwzorowaniem komórek nerwowych występujących w mózgu. Jak wielkie jest to uproszczenie widać na rysunkach, gdzie widać reprezentację prawdziwego neuronu  oraz schemat sztucznego. Takie uproszczenia pozwalają na łatwą implementację modelu matematycznego, który ma reprezentować nasz obiekt. Nawet po takim uproszczeniu są w stanie skutecznie naśladować \"uczenie się\". 
+Sztuczny neuron jest funkcją matematyczną.  otrzymuje jedną lub więcej wartości jako argument (dane wejściowe), następnie je sumuje z osobnymi wagami dla każdego wejścia. Dane wejściowe oraz wyjściowe mogą przyjmować wartości z ograniczonego przedziału. Na koniec wartość jest wejściem dla funkcji aktywacji neuronu. Funkcja aktywacji zwyczajowo ma kształt sygmoidy, ale stosowane są obecnie również funkcje nazywane rektyfikownymi jednostkami liniowymi. Funkcja progorwa ma za zadanie symulację zachowania. Po przekroczeniu określonego progu aktywuje się dane zachowanie lub jak na przykładzie obrazów rozpoznanie cechy.
+
+Elementy z których buduje się sieci, charakteryzują się wieloma wejściami i jednym wyjściem. Wartości przekazywane na wejściu i wyjście zazwyczaj przyjmują znormalizowane wartości z przedziału xE [-1, 1] dla każdego z wejść oraz y E[-1,1] dla wyjścia. W uproszczeniu można przyjąć y = SUM (wi * xi). wi są nazywane wagami (dawniej wagami synaptycznymi) i podlegają zmianom w trakcie uczenia neuronu. Wagi te stanowią zasadniczą cechę sieci neuronowych działających jako adapcyjne systemy przetwarzania informacji.
+
+składa się funkcja f(x, w) -> x - wejście, w - waga. Ta prosta jednostka stanowi dziś podstawę budowy każdej sieci neuronowej. Aby funkcja zwracała oczekiwane wyniki, wagi powinny być poprawnie ustawione. Początkowo wagi ustawiano ręcznie za pomocą operatora, który wcześniej przeliczał je dla odpowiednich parametrów wejścia\\wyjścia. W latach 50tych perceptron stał się pierwszym modelem umiejącym samodzielnie wyliczyć poprawnie wagi definiujące zadaną klasę na podstawie przykładów. Już kilka lat po wynalezieniu sieci neuronowych, okazało się że neurony mózgowe działają zupełnie inaczej, nomenklatura nawołująca do neuronów mózgowych jakkolwiek błędna, pozwala wprowadzić prostą abstrakcję na modele matematyczne.
+
 \begin{figure}[h]
 	\centering
-			\includegraphics[resolution=120]{Neuron.png}
+			\includegraphics[resolution=100]{Neuron.png}
 		\caption{Prosta reprezentacja neuronu.}
 \end{figure}
 
 
 \section{Co to jest sieć neuronowa?}
-Koncepcja sieci neuronowej to luźne połączenie wielu pojedynczych neuronów. Pozwala to na rozpoznawanie bardziej skomplikowanych wzorców niż klasyfikacja binarna. 
+% Pierwsza sieć neuronowa, to będzie połączenie wielu warstw neuronów w jedną całość. Opis losowania wag, przekazanie wyjścia z jednej warstwy na drugą.
+Koncepcja sieci neuronowej to połączenie wielu pojedynczych neuronów w jeden obiekt. Pozwala to na rozpoznawanie bardziej skomplikowanych wzorców niż klasyfikacja binarna. 
 
 \begin{figure}[h]
 	\centering
-			\includegraphics[resolution=120]{SiecNeuronowa.png}
+			\includegraphics[resolution=100]{SiecNeuronowa.png}
 		\caption{Prosta sieć neuronowa.}
 \end{figure}
 
 \section{Jak uczyć sieci neuronowe}
+% Procesy nauczania -- nie wiem dokładnie co mogę tutaj opisać.
 W obecnym momencie istnieją dwie możliwości by sieć posiadła umiejętność poprawnej klasyfikacji. 
 
 \subsection*{Uczenie nadzorowane}
 \subsection*{Uczenie nienadzorowane}
 
 
-\section{Elementy sieci neuronowych}
+\section{Elementy sieci neuronowych} 
 
 \subsection{Metoda gradientu prostego}
 \subsection{Funkcje aktywacji}
@@ -285,17 +305,16 @@ W obecnym momencie istnieją dwie możliwości by sieć posiadła umiejętność
 % ################################
 
 \chapter{Deep Learning}
-
+%Rozdział opisujący różnicę między deep learningiem a zwykłymi sieciami. Osiągnięcia związane z Deep Learningiem i boom na AI.
 \section{Techniki tworzenia głębokich sieci}
-W tym rozdzial przybliżę trzy interesujące techniki głębokiego uczenia. Wybrałem je ze względu na ich obszerną ilość zastosowań. Następnie opiszę kilka bibliotek implementujących wsparcie dla większości architektur sieci przedstawionych w pracy. Biblioteki są wybrane na podstawie przekroju platform i języków mi znanych. 
+W tym rozdzial zostają przybliżone trzy interesujące techniki głębokiego uczenia. Zostały wybrane ze względu na ich obszerną ilość zastosowań oraz potencjał, który można wykorzystać przy rozpoznawaniu wzorców na obrazach. Następnie opiszę kilka bibliotek implementujących wsparcie dla większości architektur sieci przedstawionych w pracy. Biblioteki są wybrane na podstawie przekroju platform i języków mi znanych. 
 
 \subsection{Sieci neuronowe}
 \subsection{Convolutional Neural Networks}
 Inaczej znane jako
-\subsection{Recurrent Neural Networks}
+\subsection{Recurrent Neural Networks
 \subsection{Fully Convolutional Networks}
 
-\chapter{Deep Learning}
 \chapter{Biblioteki implementujące uczenie głębokie}
 
 \subsection{Tensorflow}
@@ -505,51 +524,4 @@ Cały przepływ danych do wykrycia obiektów jest jedną siecią, dlatego może 
 \bibliographystyle{plain}
 \bibliography{bibliography/alexnetNips,bibliography/deeplearningbook,bibliography/dropout,bibliography/fastAI,bibliography/ganArxiv,bibliography/googleNet,bibliography/lecun,bibliography/medicalImage,bibliography/microsoftResNet,bibliography/rCNN,bibliography/relu,bibliography/resnextArxiv,bibliography/VGGNet,bibliography/ZFNet,bibliography/ResNeXt,bibliography/YOLO,bibliography/SqueezeNet,bibliography/SegNet} 
 
-% \addcontentsline{toc}{chapter}{Bibliografia}
-% \begin{thebibliography}{99}
-
-%\bibitem{deeplearningbook} \textsc{Goodfellow I., Bengio Y, Courville A.:}
-%\textit{Deep Learning (Adaptive Computation and Machine Learning series)}, The MIT Press, 2016, ISBN 978-0262035613.
-
-%\bibitem{medicalImage} \textit{Medical Image Retrieval using Deep Convolutional Neural Network}, 
-%\texttt{https://arxiv.org/pdf/1703.08472.pdf}, \\dostęp: 10.04.2018.
-
-%\bibitem{fastAI} \textit{Practical Deep Learning for Coders}, 
-%\texttt{http://course.fast.ai}, \\dostęp: 10.04.2018.
-
-%\bibitem{resnextArxiv} \textit{Aggregated Residual Transformations for Deep Neural Networks}, 
-%\texttt{https://arxiv.org/pdf/1611.05431.pdf}, \\dostęp: 10.04.2018.
-
-%\bibitem{alexnetNips} \textit{ImageNet Classification with Deep Convolutional Neural Networks}, 
-%\texttt{https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf}, \\dostęp: 10.04.2018.
-
-%\bibitem{lecun} \textit{Gradient-Based Learning Applied to Document Recognition}, 
-%\texttt{http://yann.lecun.com/exdb/publis/pdf/lecun-01a.pdf}, \\dostęp: 10.04.2018.
-
-%\bibitem{ganArxiv} \textit{Generative Adversarial Nets}, 
-%\texttt{https://arxiv.org/pdf/1406.2661v1.pdf}, \\dostęp: 10.04.2018.
-
-%\bibitem{dropout} \textit{Dropout: A Simple Way to Prevent Neural Networks from Overfitting}, 
-%\texttt{https://www.cs.toronto.edu/~hinton/absps/JMLRdropout.pdf}, \\dostęp: 10.04.2018.
-
-%\bibitem{relu} \textit{Rectified Linear Units Improve Restricted Boltzmann Machines
-%}, 
-%\texttt{http://www.cs.toronto.edu/~fritz/absps/reluICML.pdf}, \\dostęp: 10.04.2018.
-
-%\bibitem{rCNN} \textit{Faster R-CNN: Towards Real-Time Object Detection with Region Proposal Networks}, 
-%\texttt{https://arxiv.org/pdf/1506.01497v3.pdf}, \\dostęp: 10.04.2018.
-
-%\bibitem{ZFNet} \textit{Practical Deep Learning for Coders}, 
-%\texttt{https://arxiv.org/pdf/1311.2901v3.pdf}, \\dostęp: 10.04.2018.
-
-%\bibitem{VGGNet} \textit{VERY DEEP CONVOLUTIONAL NETWORKS FOR LARGE-SCALE IMAGE RECOGNITION}, 
-%\texttt{https://arxiv.org/pdf/1409.1556v6.pdf}, \\dostęp: 10.04.2018.
-
-%\bibitem{googleNet} \textit{Going Deeper with Convolutions}, 
-%\texttt{https://www.cv-foundation.org/openaccess/content\_cvpr\_2015/papers/Szegedy\_Going\_Deeper\_With\_2015\_CVPR\_paper.pdf}, \\dostęp: 10.04.2018.
-
-%\bibitem{microsoftResNet} \textit{Deep Residual Learning for Image Recognition}, 
-%\texttt{https://arxiv.org/pdf/1512.03385v1.pdf}, \\dostęp: 10.04.2018.
-
-% \end{thebibliography}
 \end{document}
