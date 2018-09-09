@@ -254,16 +254,19 @@ Pierwszy model sztucznego neuronu był wyobrażeniem biologicznej reprezentacji 
 Model obliczeniowy został stworzony na podstawie algorytmu logiki progowej. 
 Nazwa neuronu sztucznego została przyjęta w kręgach akademickich i biznesowych, stąd często osoby nie znające budowy mózgu ani działania sieci neuronowych mylnie nazywają zagadnienie Sztuczną Inteligencją, uproszczając skomplikowane procesy biologiczne do wzmaczniania lub osłabiania sygnałów przekazywanych przez synapsy. Sieci neuronowe naśladują tylko jeden rodzaj pamięci, pamięć deklaratywną i w odosobnieniu nie tworzy inteligencji.
 
-%Opiszę w jaki sposób stworzyć sieć neuronową oraz przedstawię wszystkie elementy potrzebne do zbudowania funkcjonalnej i wydajnej architektury sieci.
 
 \section{Model perceptronu prostego}
-% Matematyczny model perceptronu, opis jak to działa, dlaczego to działa i jakie są ograniczenia takiego modelu.
-Podstawowym elementem z których buduje się sieci neuronowe są sztuczne neurony, nazywane również perceptronami. Mają one być w rzeczywistości bardzo uproszczonym odwzorowaniem komórek nerwowych występujących w mózgu. Jak wielkie jest to uproszczenie widać na rysunkach, gdzie widać reprezentację prawdziwego neuronu  oraz schemat sztucznego. Takie uproszczenia pozwalają na łatwą implementację modelu matematycznego, który ma reprezentować nasz obiekt. Nawet po takim uproszczeniu są w stanie skutecznie naśladować \"uczenie się\". 
-Sztuczny neuron jest funkcją matematyczną.  otrzymuje jedną lub więcej wartości jako argument (dane wejściowe), następnie je sumuje z osobnymi wagami dla każdego wejścia. Dane wejściowe oraz wyjściowe mogą przyjmować wartości z ograniczonego przedziału. Na koniec wartość jest wejściem dla funkcji aktywacji neuronu. Funkcja aktywacji zwyczajowo ma kształt sygmoidy, ale stosowane są obecnie również funkcje nazywane rektyfikownymi jednostkami liniowymi. Funkcja progorwa ma za zadanie symulację zachowania. Po przekroczeniu określonego progu aktywuje się dane zachowanie lub jak na przykładzie obrazów rozpoznanie cechy.
+Podstawowym elementem z których buduje się sieci neuronowe są sztuczne neurony, nazywane również perceptronami. Mają one być w rzeczywistości bardzo uproszczonym odwzorowaniem komórek nerwowych występujących w mózgu. Takie uproszczenia pozwalają na łatwą implementację modelu matematycznego, który ma reprezentować nasz obiekt i być tani w replikacji. Nawet po takim uproszczeniu jest on w stanie skutecznie naśladować \"uczenie\".
+Sztuczny neuron jest funkcją matematyczną f(x,w) -> y. Można go opisać za pomocą modelu złożonego z:
+-- określonej liczby wejść n E N,
+-- wagi, skojarzonej z każdym z wejść wi E R, i=1..n,
+-- wybranej funkcji aktywacji FI: R -> R
+Charakterystycznym elementem budulca sieci jest wiele wejść i tylko jedno wyjście, dlatego tak łatwo stworzyć model będący funkcją matematyczną.
+Dane wejściowe oraz wyjściowe mogą przyjmować wartości z ograniczonego przedziału. Wartości przekazywane na wejściu i wartość wyjściowa zazwyczaj przyjmują znormalizowane wartości z przedziału xE [-1, 1] dla każdego z wejść, oraz y E[-1,1] dla wyjścia. W uproszczeniu można przyjąć y = SUM (wi * xi). wi są nazywane wagami (dawniej wagami synaptycznymi) i podlegają zmianom w trakcie uczenia neuronu. Wagi stanowią zasadniczą cechę sieci neuronowych działających jako adapcyjne systemy przetwarzania informacji. Zsumowana wartość jest wejściem dla funkcji aktywacji neuronu. Funkcja aktywacji zwyczajowo ma kształt sygmoidy, ale stosowane są obecnie również funkcje nazywane rektyfikownymi jednostkami liniowymi. Funkcja progorwa ma za zadanie symulację zachowania przekaźnika synapsy, po przekroczeniu określonego progu aktywuje się dane zachowanie lub jak na przykładzie obrazów rozpoznanie cechy.
+Ta prosta jednostka stanowi dziś podstawę budowy każdej sieci neuronowej. Aby funkcja zwracała oczekiwane wyniki, wagi powinny być poprawnie ustawione. Początkowo wagi ustawiano ręcznie za pomocą operatora (osoby przełączającej fizyczne kable), który wcześniej przeliczał je dla odpowiednich parametrów wejścia\\wyjścia. W latach 50tych perceptron stał się pierwszym modelem umiejącym samodzielnie wyliczyć poprawnie wagi definiujące zadaną klasę na podstawie przykładów. Wagi w zależności od wartości mogą sygnał wejściowy wzmocnić gdy waga jest większa od 1, lub stłumić gdy waga jest mniejsza niż 1. To pozwala wyuczonemu już perceptronowi na porównanie cechy obiektu wejściowego z tym co potrafi rozpoznać. 
 
-Elementy z których buduje się sieci, charakteryzują się wieloma wejściami i jednym wyjściem. Wartości przekazywane na wejściu i wyjście zazwyczaj przyjmują znormalizowane wartości z przedziału xE [-1, 1] dla każdego z wejść oraz y E[-1,1] dla wyjścia. W uproszczeniu można przyjąć y = SUM (wi * xi). wi są nazywane wagami (dawniej wagami synaptycznymi) i podlegają zmianom w trakcie uczenia neuronu. Wagi te stanowią zasadniczą cechę sieci neuronowych działających jako adapcyjne systemy przetwarzania informacji.
-
-składa się funkcja f(x, w) -> x - wejście, w - waga. Ta prosta jednostka stanowi dziś podstawę budowy każdej sieci neuronowej. Aby funkcja zwracała oczekiwane wyniki, wagi powinny być poprawnie ustawione. Początkowo wagi ustawiano ręcznie za pomocą operatora, który wcześniej przeliczał je dla odpowiednich parametrów wejścia\\wyjścia. W latach 50tych perceptron stał się pierwszym modelem umiejącym samodzielnie wyliczyć poprawnie wagi definiujące zadaną klasę na podstawie przykładów. Już kilka lat po wynalezieniu sieci neuronowych, okazało się że neurony mózgowe działają zupełnie inaczej, nomenklatura nawołująca do neuronów mózgowych jakkolwiek błędna, pozwala wprowadzić prostą abstrakcję na modele matematyczne.
+W jaki sposób sztuczny neuron jest w stanie rozpoznać sygnał wejściowy? Do wyjaśnienia zjawiska w literaturze zazwyczaj prezentuje się przedstawienie moedelu w notacji wektorowej.
+X = [x1,x2,...,xn] - wektor wyznaczający punkt w n-wymiarowej przestrzeni, nazwywanej przestrzenią wejść oraz , W = [w1, w2, ..., wn] - wektor wyznaczający punkt w n-wymiarowej przestrzeni, nazwywanej przestrzenią wag. W ten notacji można wyrazić wyjście neuronu jako y= W(Transponowane) X. Wartość wyjściowa neuronu y, będzie wyższa im bliższe będzie położenie wektorów.
 
 \begin{figure}[h]
 	\centering
@@ -273,17 +276,20 @@ składa się funkcja f(x, w) -> x - wejście, w - waga. Ta prosta jednostka stan
 
 
 \section{Co to jest sieć neuronowa?}
-% Pierwsza sieć neuronowa, to będzie połączenie wielu warstw neuronów w jedną całość. Opis losowania wag, przekazanie wyjścia z jednej warstwy na drugą.
-Koncepcja sieci neuronowej to połączenie wielu pojedynczych neuronów w jeden obiekt. Pozwala to na rozpoznawanie bardziej skomplikowanych wzorców niż klasyfikacja binarna. 
+Koncepcja sztucznej sieci neuronowej to połączenie wielu neuronów w jeden obiekt. Pozwala to na rozpoznawanie bardziej skomplikowanych wzorców i większej różnorodności typów obiektów niż klasyfikacja binarna. Zwykła sieć neuronowa składa się z trzech warstw węzłów. Warstwa pierwsza stanowi warstwę wejściową sieci i składa się z sygnału wejściowego.
+Kolejna warstwa jest nazywana warstwą ukrytą, użytkownik nie ma dostępu do niej, przypomina czarną skrzynkę. Nie można zaobserwować co się wewnątrz niej dzieje, użytkownik widzi jakie są dane wejściowe, wartości które powinny zostać zwrócone (w ostatniej warstwie), ale nie ma informacji co jest i powinno się znajdować w tej warstwie podczas trenowania sieci.
+Ostatnia warstwa, pojedynczy węzeł nazywany jest warstwą wyjściową. Pobiera wektor wartości wyjściowych z poprzedniej warstwy (ukrytej) i na nim zostaje obliczona wartość wyjściowa (odpowiedź).
+Taka architektura nazywa sie siecią dwuwarstwową. Dane wejściowe, mimo że tworzą pierwszą warstwę nie są liczone w nazewnictwie.
+Z warstwami ukrytą i wyjściową powiązane są parametry w (ang. weight) oraz b (bias), oznaczające kolejno: macierz wag oraz wektor progów.
+
 
 \begin{figure}[h]
 	\centering
 			\includegraphics[resolution=100]{SiecNeuronowa.png}
-		\caption{Prosta sieć neuronowa.}
+		\caption{Prosta sieć neuronowa złożona z dwóch warstw.}
 \end{figure}
 
 \section{Jak uczyć sieci neuronowe}
-% Procesy nauczania -- nie wiem dokładnie co mogę tutaj opisać.
 W obecnym momencie istnieją dwie możliwości by sieć posiadła umiejętność poprawnej klasyfikacji. 
 
 \subsection*{Uczenie nadzorowane}
@@ -293,11 +299,27 @@ W obecnym momencie istnieją dwie możliwości by sieć posiadła umiejętność
 \section{Elementy sieci neuronowych} 
 
 \subsection{Metoda gradientu prostego}
+Algorytm stosowany do szukania minimum lokalnego płaszczyzny wyznaczonej funkcją. Jest to bardzo prosta metoda optymalizacji stosowana do 
 \subsection{Funkcje aktywacji}
 \subsection{Wykres obliczeniowy}
 \subsection{Propagacja i wsteczna propagacja błędu}
+
+
 \subsection{Parametry}
+Najważniejszy element sieci neuronowej. Składa się na niego zbiór wag i progów (bias). Wagi wyznaczają sposób działania sieci, która ma nauczyć się dobrać odpowiednie parametry przy pomocy algorytmu uczącego, odpowiednio dobranych hiperparametrów oraz zbioru danych uczących. Wagi muszą być dobrane w sposób umożliwiający neuronom wykonanie czynności, których sie od nich wymaga. Ze względu na ilość wag w głębokich sieciach, gdzie dla każdego z tysięcy neuronów może istnieć kilkaset wejść, proces musi być automatyczny. Sieć musi wiedzieć kiedy każdy z neuronów zwiększa swoją dokładność czy nie. Wagi i progi powinny być elastyczne i zmieniać się bardo szybko na początku procesu uczenia i tylko w niewielkim stopniu zmieniać wartości kiedy algorytm kończy proces uczenia.
+
 \subsection{Hiperparametry}
+Tworzenie dobrej sieci neuronowej wymaga nie tylko parametrów ale również dobrego doboru hiperparametrów. Elementy "ręcznie" dobierane dla algorytmu uczenia. Najczęściej ustawiane parametry dla sieci neuronowej to:
+- stała uczenia,
+- ilość iteracji uczenia w jednej epoce,
+- ilość ukrytych warst,
+- ilość ukrytych jednostek,
+- wybór funkcji aktywacji (ReLU, tangens, sigmoida),
+- parametry regularyzacji,
+- rozmiary próbek uczących,
+i wiele innych mniej ważnych hiperparametrów
+Są to parametry kontrolujące sposób wykonania algorytmu uczącego i w ostateczności to one mają największy wpływ na zwykłe parametry wagi i progi (bias). Nie został ustalony jednolity sposób doboru hiperparametrów. Zwyczajowo stosuje się metodę prób i błędów na podstawie tego jak algorytm się zachowuje.\cite{deeplearningAI} Za każdą zmianą wartości należy uruchomić algorytm i sprawdzić jak zachowuje się funkcja kosztu, jeśli maleje lepiej niż przy porpzednich wartościach można stroić dalej w tym kierunku. Dopieranie odpowiednich wartości niestety jest procesem empirycznym i należy wyrobić odpowiednią intuicję aby jak najtrafniej dobierać parametry od początku. Wartości te też nie są stałe, zmieniają się w zależności od dziedziny badanego zagadnienia. Być może najbliższe lata przyniosą dobry i spójny przewodnik dobierania najlepszych wartości, pozwoli to znacznie zautomatyzować proces.
+
 \subsection{Jak zbudować sieć neuronową}
 
 % ################################
@@ -315,7 +337,7 @@ Inaczej znane jako
 \subsection{Recurrent Neural Networks
 \subsection{Fully Convolutional Networks}
 
-\chapter{Biblioteki implementujące uczenie głębokie}
+\chapter{Biblioteki implementujące uczenie głębokich sieci neuronowych}
 
 \subsection{Tensorflow}
 \begin{figure}[h]
