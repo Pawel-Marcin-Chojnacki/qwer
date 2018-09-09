@@ -293,6 +293,19 @@ Z warstwami ukrytą i wyjściową powiązane są parametry w (ang. weight) oraz 
 W obecnym momencie istnieją dwie możliwości by sieć posiadła umiejętność poprawnej klasyfikacji. 
 
 \subsection*{Uczenie nadzorowane}
+Jest to typ uczenia maszynowego, które zakłada obecność ludzkiego nauczyciela. Nauczyciel zobowiązany jest stworzyć odpowiednie dane uczące. Takie dane są parą danych, wejściowego obiektu uczącego oraz prawidłową odpowiedź wyjściową do tej danej. System na podstawie tych danych ma nauczyć się przewidywać poprawną odpowiedź dla nowych danych, ze znanej mu domeny.
+Zadania uczenie nadzorowanego dzielą się na dwie kategorie, regresję i klasyfikację. W problemie regresji próbuje się przewidzieć wyniki, które są wartościami ciągłymi, czyli mając jakieś dane próbuje się je mapować na funkcję ciągłą. W problemie klasyfikacji algorytm ma za zadanie przewidzieć wyniki będące wartościami dyskretnymi, uściślając jest to znajdowanie klas obiektów, na podstawie danych wejściowych.
+Uczenie nadzorowane ma wiele zastosowań, do głównych należą (wraz z używanym typem sieci):
+- przewidywanie cen nieruchomości (zwykła sieć neuronowa),
+- reklamy internetowe (zwykła sieć neuronowa),
+- rozpoznawanie mowy (rekurencyjna sieć neuronowa),
+- tłumaczenie maszynowe w translatorach (rekurencyjna sieć neuronowa),
+- samochody autonomiczne (sieci hybrydowe lub inne niestandardowe sieci),
+- rozpoznawanie obiektów na obrazach (konwolucyjna sieć neuronowa).
+Ostatnie z wyżej wymienionych zastosowań jest tematem badanym w tej pracy.
+
+Uczenie nadzorowane dzieli się również binarnie ze względu na strukturę dostarczonych danych. Pierwszy rodzaj danych, dane zawierające konkretną strukturę, zazwyczaj tabela, są bardzo dobrze obsługiwane przez większość znanych wcześniej algorytmów uczenia maszynowego i nie wymagają ogromnej mocy obliczeniowej. Choć sieci neuronowe świetnie się sprawdzają przy tego typu danych, używanie ich ma sens dopiero gdy danych jest bardzo dużo (wielkość tabel przekraczające miliony rekordów). Drugi typ danych, nieustrukturyzowane zdjęcia, pliki audio, tekst, jest znacznie trudniejszy do rozpoznania przez komputer, za to dużo bardziej naturalny dla ludzi. Dzięki głębokim sieciom neuronowym i wielkiej mocy obliczeniowej komputerów, dokładność algorymtów uczących się na tego typu danych znacząco wzrosła, z 70\% do ok 95-99\% dokładności zależnie od ilości danych.
+
 \subsection*{Uczenie nienadzorowane}
 
 
@@ -334,7 +347,7 @@ W tym rozdzial zostają przybliżone trzy interesujące techniki głębokiego uc
 \subsection{Sieci neuronowe}
 \subsection{Convolutional Neural Networks}
 Inaczej znane jako
-\subsection{Recurrent Neural Networks
+\subsection{Recurrent Neural Networks}
 \subsection{Fully Convolutional Networks}
 
 \chapter{Biblioteki implementujące uczenie głębokich sieci neuronowych}
