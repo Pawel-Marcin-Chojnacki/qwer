@@ -214,12 +214,12 @@ Do wygenerowania wyjścia, wystarczy obliczyć y = wT (wagi transponowane) * x (
 	\item[Funkcja kosztu] Funkcja do trenowania modelu regresji logistycznej. Mając zestawy treningowe, można wytrenować algorytm tak, aby podawał wartości prawdopodobieństwa jak najbliższe zestawu treningowego. Chcemy ustawić wagi i bias tak, aby te parametry dawały prawidłową odpowiedź dla każdego przykładu uczącego. Funkcja kosztu ma następujący wzór:
 	\item[Metoda gradientu prostego] Algorytm pozwalający znaleźć minimum funkcji. Wyobrażając sobie płaszczyznę funkcji dla wszystkich możliwych argumentów, algorytm przechodzi z losowo rozpoczętego miejsca w miejsce gdzie jest najgłębiej. Mając funkcję kosztu J(w,b) szukamy miejsca w którym błąd algorytmu jest jak najmniejszy.
 	\item[Wykres obliczeniowy] (ang. Computation graph). Dekompozycja wyrażenia w pojedyncze atomowe kroki. Używany do optymalizowania funkcji. Przydaje się podczas ręcznej analizy funkcji błędu.
-	\item[Funkcje aktywacji] - funkcja definiująca 
+	%\item[Funkcje aktywacji] - funkcja definiująca 
 	\item[Pooling] - technika polegająca na zmniejszeniu danych wejściowych. Aby zmniejszyć obraz ustala się rozmiar filtra oraz wielkość kroku. Następuje przejscie po całym obrazie (po nałożeniu filtra) i wybiera się max z całego obszaru filtra do nowej macierzy. Pozwala to ograniczyć ilość parametrów i wyodrębnić konkretne cechy obiektu.
 	\item[Konwolucja]
 	\item[Wsteczna propagacja błędu] 
 	\item[Dropout]
-	\item[Rektyfikowana jednostka liniowa (ReLU)] 
+	%\item[Rektyfikowana jednostka liniowa (ReLU)] 
 	\item[Softmax]
 	\item[Epoka]
 	\item[Model]
@@ -232,12 +232,22 @@ Do wygenerowania wyjścia, wystarczy obliczyć y = wT (wagi transponowane) * x (
 \chapter*{Wstęp}
 \markboth{}{Wstęp}
 \addcontentsline{toc}{chapter}{Wstęp}
-Celem niniejszej pracy magisterskiej jest przedstawienie nowoczesnych (czyli z ostatnich pięciu lat) architektur sieci neuronowych oraz przegląd najpopularniejszych bibliotek implementujących algorytmy uczenia maszynowego, a w szczególności zoptymalizowanych do pracy z uczeniem głębokim na wielu procesorach graficznych. Głębokie sieci neuronowe, czyli zawierające więcej niż jedną warstwę ukrytą, znane są już od wczesnych lat 60tych XX wieku. Algorytmy uczenia maszynowego były bardzo aktywnie rozwijane w latach 1950 - 1971, fundusze na badania w czasach zimnej wojny były w USA kilkukrotnie wyższe w udziale PKB. W czasie kryzysu z roku 1981, nadzieje wojska amerykańskiego na sztuczną inteligencję wygasły powodując epokę znaną jako drugą zimę SI (ang. second AI winter). Brak funduszy na badania znacząco zachamował rozwój systemów samouczących i do 2012 roku była to dziedzina zarezerwowana głównie dla doktorów matematyki i informatyki (głównie statystyków). Powrót na pierwsze strony gazet popularnonaukowych spowodował Geoffrey Hinton, wykorzystując swoje idee sprzed lat na bardzo wydajnym sprzęcie. Mowa o dwóch kartach graficznych GeForce GTX 580 3GB\cite{NIPS2012_4824}, które przez tydzień trenowały architekturę do rozpoznania obrazów pod zawody ImageNet Competition 2012. Wcześniej takie zawody wygrywało oprogramowanie łączące wiele algorytmów uczenia maszynowego, stąd nagły zwrot w kierunku jednolitego narzędzia dającego tym lepsze rezultaty im więcej danych do uczenia dostanie. Pierwszy raz można było zobaczyć głębokie sieci neuronowe mające trafność powyżej 80\%. Po publikacji dokumentu \"ImageNet Classification with Deep Convolutional Neural Networks\" nastąpił gwałtowny rozwój start-upów związanych z Deep Learningiem. Moc obliczeniowa kart graficznych i dedykowanych układów tanieje z każdym rokiem. Kluczowe dla rozwoju dziedziny są karty graficzne firmy NVidia. Firma chcąc być liderem w rewolucji SI, zmieniła swój wizerunek z dostawcy rozrywki dla graczy na lidera urządzeń i oprogramowania stanowiącego podstawę systemów uczących. Przez nagłą modę, wszystkie obecnie używane narzędzia mają nie więcej niż 5 lat. Dziedzina jest tak dynamiczna że zdaża się iż literatura w czasie publikacji papierowej staje się nieaktualna. Dlatego wykorzystana w tej pracy literatura to głównie publikacje elektroniczne z serwisu arXiv, będące zazwyczaj jeszcze bez recenzji naukowej. 
+Celem niniejszej pracy magisterskiej jest przedstawienie nowoczesnych (czyli z ostatnich pięciu lat) architektur sieci neuronowych oraz przegląd najpopularniejszych bibliotek implementujących algorytmy uczenia maszynowego, a w szczególności zoptymalizowanych do pracy z uczeniem głębokim na wielu procesorach graficznych. 
+
+Głębokie sieci neuronowe, czyli zawierające więcej niż jedną warstwę ukrytą, znane są już od wczesnych lat 60tych XX wieku. Algorytmy uczenia maszynowego były bardzo aktywnie rozwijane w latach 1950 - 1971, fundusze na badania w czasach zimnej wojny były w USA kilkukrotnie wyższe w udziale PKB. W czasie kryzysu z roku 1981, nadzieje wojska amerykańskiego na sztuczną inteligencję wygasły powodując epokę znaną jako drugą zimę SI (ang. second AI winter). Brak funduszy na badania znacząco zachamował rozwój systemów samouczących i do 2012 roku była to dziedzina zarezerwowana głównie dla doktorów matematyki i informatyki (głównie statystyków). 
+
+Powrót na pierwsze strony gazet popularnonaukowych spowodował Geoffrey Hinton, wykorzystując swoje idee sprzed lat na bardzo wydajnym sprzęcie. Mowa o dwóch kartach graficznych GeForce GTX 580 3GB\cite{NIPS2012_4824}, które przez tydzień trenowały architekturę do rozpoznania obrazów pod zawody ImageNet Competition 2012. Wcześniej takie zawody wygrywało oprogramowanie łączące wiele algorytmów uczenia maszynowego, stąd nagły zwrot w kierunku jednolitego narzędzia dającego tym lepsze rezultaty im więcej danych do uczenia dostanie. Pierwszy raz można było zobaczyć głębokie sieci neuronowe mające trafność powyżej 80\%. Po publikacji dokumentu \"ImageNet Classification with Deep Convolutional Neural Networks\" nastąpił gwałtowny rozwój start-upów związanych z Deep Learningiem. Moc obliczeniowa kart graficznych i dedykowanych układów tanieje z każdym rokiem. 
+
+Kluczowe dla rozwoju dziedziny są karty graficzne firmy NVidia. Firma chcąc być liderem w rewolucji SI, zmieniła swój wizerunek z dostawcy rozrywki dla graczy na lidera urządzeń i oprogramowania stanowiącego podstawę systemów uczących. Przez nagłą modę, wszystkie obecnie używane narzędzia mają nie więcej niż 5 lat. Dziedzina jest tak dynamiczna że zdaża się iż literatura w czasie publikacji papierowej staje się nieaktualna. Dlatego wykorzystana w tej pracy literatura to głównie publikacje elektroniczne z serwisu arXiv, będące zazwyczaj jeszcze bez recenzji naukowej. 
 
 Intensywność obliczeń potrzebnych do stworzenia dobrego modelu wytwarza konieczność przedstawienia problemów osób praktykujących Deep Learning. W rozdziale poświęconym wydajności architektur przedstawiono sposoby na uniknięcie najczęściej popełnianych błedów oraz zbiór powszechnie przyjętych praktyk. Wydajność jest rozumiana zarówno jako czas obliczeń potrzebny do uczenia modelu rozpoznawania danego mu zagadnienia oraz dokładność z jaką już nauczony program potrafi rozpoznać niespotkane wcześniej dane. Oba te parametry są od siebie zależne, koszt poprawy jakości predykcji algorytmu o ostatnie 1-2\% może wynosić setki tysięcy złotych. Składa się na to energia elektryczna, farma serwerów wyposażonych w karty graficzne oraz tygodnie czekania na wynik. Zmiany zachodzące w rozwoju sprzętu i technik przenoszenia cech między modelami powzwolą na tworzenie aplikacji w czasie rzeczywistym już za kilka do kilkunastu lat.
+
 Architektury posiadają wiele hiperparametrów, które wpływają na precyzję, po zmianie wartości dowolnego należy zacząć pracę algorytmu od początku. Dlatego dobór odpowiednio bliskich ideałowi wartości na start jest niezwykle cenny. Na rok 2017, żadna biblioteka nie posiada wbudowanych automatów do poszukiwania optymalnych hiperparametrów, dobieranie ich dzieje się na intuicję wyrobioną dziesiątkami prób. Istnieje kilka nowatorskich technik strojenia hiperparametrów, które ze względu na to że zostały odkryte przez mało znanych badaczy, nie zostały jeszcze rozpowszechnione w dużych ośrodkach badawczych, te techniki również są na tyle nowe, że nie ma wydawnictwa branżowego opisującego ich użycia dla praktyków. Techniki strojenia to algorytmy pozwalajce efektywnie zmniejszyć błąd klasyfikatora o 10-20\%, co wiąże się z dużo wyższą wydajnością, przy znikomym nakładzie pracy. 
+
 Do prezentacji działania bibliotek, architektur i algorytmów użyty został gotowy zbiór danych. Zestaw danych prezentacyjnych pochodzi z serwisu Kaggle. Jest to zbiór zdjęć z prześwietleń rentgenowskich podzielony na dwie kategorie: płuca zdrowe i płuca z zapaleniem płuc. Dane są anonimowe i zostały zweryfikowane przez Kaggle. Na końcu pracy z danymi znajduje się porównanie z osiągnięciami społeczności. Badanym obszarem są zagadnienia klasyfikacji obrazów, przy pomocy tworzenia map cech każdej z klas. Na przykładzie zbioru zdjęć, prezentowany jest sposób wykorzystania gotowych moedeli i metody optymalizacji je pod wybraną domenę. Takie podejście pozwala uniknąć wysokich kosztów tworzenia własnych modeli (co kosztuje kilka do kilkunastu tygodni obliczeń na wielu kartach GPU). 
+
 Głębokie sieci neuronowe również świetnie się sprawdzają przy zadaniach rozpoznawania mowy, przetwarzaniu języka naturalnego i systemach rekomendacji, zagadnienia zbyt obszerne by zostały opisane razem.
+
 Praca jest podzielona na etapy tworzenia modelu od dołu struktury sieci neuronowych. Rozpoczyna się od przedstawienia pojedynczych elementów i struktury matematycznej sieci. Następnie opisany jest każdy element tworzący gotową architekturę.
 Wszystkie przedstawione kody źródłowe zostały napisane w języku Python 3.6. Staje się on dominującym językiem w uczeniu maszynowym, kosztem języka R. Python składnią jest zbliżony do pseudokodu, dodatkowo wszystkie popularne biblioteki udostępniają nakładki API dla Pythona. Książki wykorzystane w tworzeniu tego tekstu, zawierają wyłącznie kod Pythonowy (z kilkoma nawiązaniami do języków R i C++).
 
@@ -246,10 +256,21 @@ Wszystkie przedstawione kody źródłowe zostały napisane w języku Python 3.6.
 % ################################
 
 \chapter{Neurony}
-%Tutaj opisuję bardzo ogólnym językiem co jest w rozdziale, co to jest neuron i sieć neuronowa. Tak około 1-2 strony.
 W niniejszym rozdziale została przedstawiona idea sztucznego neuronu McCullocha i Pittsa. Opracowany model biologicznego neuronu z 1943 roku jest tak uniwersalny że do dziś stanowi podstawę budowy sieci neuronowych. Przedstawiono tutaj również w jaki sposób znaleźć mapę cech, czy mówiąc prościej jak nauczyć neurony rozpoznawać wzorce. Na końcu rozdziału opisane są możliwości jakie daje łączenie sztucznych neuronów w sieć.
 
-Pierwszy model sztucznego neuronu był wyobrażeniem biologicznej reprezentacji neuronu mózgowego z lat 40tych XX wieku. Była to bardziej próba implementacji idei niż odwzorowanie prawdziwego odpowiednika, który jest bardziej złożony i nie do końca znany jest sposób jego zachowania. Zdefiniowany przez noblistę Ramon y Cajal'a w 1906 roku neuron jest specjalistycznym nośnikiem wszelkich informacji, a także elementem przetwarzającym wszystkie doznania, emocje, a także sterownikiem całego ciała. Uproszczeniem które pozwoliło na sprawną implementację jest wyodrębnienie zasady przetwarzania informacji bioelektrycznej do kilku prostszych operacji. Takie uproszczenie składa się z wielu sygnałów wejściowych, wagi przypisanej każdemu z tych sygnałów oraz pojedynczej wartości wyjściowej. Jak wielkie jest to uproszczenie widać przy porównaniu ryskunku prawdziwego neuronu (w uproszczeniu) \figure{mózgowyNeuron} oraz sztucznego neuronu \fig{sztucznyNeuron}. Taka budowa choć bardzo banalna, daje wiele możliwości. Podstawową zaletą jest prostota odwzorowania w urządzeniach elektronicznych. Przed nadejściem ery komputerów klasy PC, stosowano maszyny nazwywane perceptronami, dlatego obecnie można używać nazwy sztuczny neuron i perceptron prosty zamiennie.
+Pierwszy model sztucznego neuronu był wyobrażeniem biologicznej reprezentacji neuronu mózgowego z lat 40tych XX wieku. Była to bardziej próba implementacji idei niż odwzorowanie prawdziwego odpowiednika, który jest bardziej złożony i nie do końca znany jest sposób jego zachowania. Zdefiniowany przez noblistę Ramon y Cajal'a w 1906 roku neuron jest specjalistycznym nośnikiem wszelkich informacji, a także elementem przetwarzającym wszystkie doznania, emocje, a także sterownikiem całego ciała. Uproszczeniem które pozwoliło na sprawną implementację jest wyodrębnienie zasady przetwarzania informacji bioelektrycznej do kilku prostszych operacji. Takie uproszczenie składa się z wielu sygnałów wejściowych, wagi przypisanej każdemu z tych sygnałów oraz pojedynczej wartości wyjściowej. Jak wielkie jest to uproszczenie widać przy porównaniu ryskunku prawdziwego neuronu (w uproszczeniu) oraz sztucznego neuronu. Taka budowa choć bardzo banalna, daje wiele możliwości. Podstawową zaletą jest prostota odwzorowania w urządzeniach elektronicznych. Przed nadejściem ery komputerów klasy PC, stosowano maszyny nazwywane perceptronami, dlatego obecnie można używać nazwy sztuczny neuron i perceptron prosty zamiennie. 
+
+\begin{figure}[h]
+	\centering
+			\includegraphics[resolution=100, scale=0.7]{neuronMozgowy.png}
+		\caption{Wizualizacja uproszczonego modelu neuronu mózgowego.}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+			\includegraphics[resolution=100, scale=0.7]{sztucznyNeuron.png}
+		\caption{Wizualizacja prostego sztucznego neuronu.}
+\end{figure}
 
 Model obliczeniowy został stworzony na podstawie algorytmu logiki progowej. 
 Nazwa neuronu sztucznego została przyjęta w kręgach akademickich i biznesowych, stąd często osoby nie znające budowy mózgu ani działania sieci neuronowych mylnie nazywają zagadnienie Sztuczną Inteligencją, uproszczając skomplikowane procesy biologiczne do wzmaczniania lub osłabiania sygnałów przekazywanych przez synapsy. Sieci neuronowe naśladują tylko jeden rodzaj pamięci, pamięć deklaratywną i w odosobnieniu nie tworzy inteligencji.
@@ -290,7 +311,7 @@ Z warstwami ukrytą i wyjściową powiązane są parametry w (ang. weight) oraz 
 \end{figure}
 
 \section{Jak uczyć sieci neuronowe}
-W obecnym momencie istnieją dwie możliwości by sieć posiadła umiejętność poprawnej klasyfikacji. 
+W obecnym momencie istnieją dwie możliwości by sieć posiadła umiejętność poprawnej klasyfikacji. Można wyznaczyć dla algorytmu zbiór opisanych sygnałów wejściowych wraz z oczekiwanym sygnałem wyjściowym, ten typ tworzenia modelu sieci jest uczeniem nadzorowanym, co jest szczegółowo omawiane w tej pracy. Drugim podejściem jest podanie sygnałów wejściowych bez opisów i oczekiwanych wartości wyjściowych, to podejście nazwya się uczeniem nienadzorowanym.
 
 \subsection*{Uczenie nadzorowane}
 Jest to typ uczenia maszynowego, które zakłada obecność ludzkiego nauczyciela. Nauczyciel zobowiązany jest stworzyć odpowiednie dane uczące. Takie dane są parą danych, wejściowego obiektu uczącego oraz prawidłową odpowiedź wyjściową do tej danej. System na podstawie tych danych ma nauczyć się przewidywać poprawną odpowiedź dla nowych danych, ze znanej mu domeny.
@@ -307,14 +328,64 @@ Ostatnie z wyżej wymienionych zastosowań jest tematem badanym w tej pracy.
 Uczenie nadzorowane dzieli się również binarnie ze względu na strukturę dostarczonych danych. Pierwszy rodzaj danych, dane zawierające konkretną strukturę, zazwyczaj tabela, są bardzo dobrze obsługiwane przez większość znanych wcześniej algorytmów uczenia maszynowego i nie wymagają ogromnej mocy obliczeniowej. Choć sieci neuronowe świetnie się sprawdzają przy tego typu danych, używanie ich ma sens dopiero gdy danych jest bardzo dużo (wielkość tabel przekraczające miliony rekordów). Drugi typ danych, nieustrukturyzowane zdjęcia, pliki audio, tekst, jest znacznie trudniejszy do rozpoznania przez komputer, za to dużo bardziej naturalny dla ludzi. Dzięki głębokim sieciom neuronowym i wielkiej mocy obliczeniowej komputerów, dokładność algorymtów uczących się na tego typu danych znacząco wzrosła, z 70\% do ok 95-99\% dokładności zależnie od ilości danych.
 
 \subsection*{Uczenie nienadzorowane}
-
+Uczenie maszynowe bez nadzoru nauczyciela jest drugim typem uczenia maszynowego polegającym na wyciąganiu wniosków z danych bez informacji zwrotnej o poprawności wniosków oraz bez określania etykiety danych. W algorytmach tego typu nie ma funkcji wyznaczającej poprawność utworzonego modelu. Najczęstszym zadaniem stawianym algorytmom uczenia nienadzorowanego jest wyznaczanie klastrów ze zbioru danych. W tej pracy temat uczenia bez nauczyciela nie jest poruszany.
 
 \section{Elementy sieci neuronowych} 
 
 \subsection{Metoda gradientu prostego}
-Algorytm stosowany do szukania minimum lokalnego płaszczyzny wyznaczonej funkcją. Jest to bardzo prosta metoda optymalizacji stosowana do 
+Algorytm stosowany do szukania minimum lokalnego płaszczyzny wyznaczonej funkcją. Jest to bardzo prosta metoda optymalizacji stosowana do wyznaczania wag i progów. Płaszczyzna złożona z osi poziomych w i b oraz oś pionowa będąca wartością funkcji kosztu J(w,b). Algorytm mając początkowo losowe wagi i progi, rozpoczyna w tym losowym miejscu sprawdza wartość funkcji kosztu, następnie wykonuje małe przesunięcie w najbardziej stromym kierunku w dół płaszczyzny. Operacja zejścia powtarzana jest do zejścia do minimum lokalnego.
+
+Schemat algorytmu:
+Oznaczenia: 
+Powtarzaj x razy {
+	$w = w - \alpha * (dJ(w, b) / dw);
+	 b = b - \alpha * (dJ(w, b) / db);$
+}
+
 \subsection{Funkcje aktywacji}
+Budując sieć neuronową należy funkcje aktywacji dla warst ukrytych oraz warstwy wyjściowej. Funkcje aktywacji są znane również jako charakterystyka neuronu. Charakterystyka neuronu jest elementem, który pośredniczy między zsumowanym pobudzeniem neuronu, a jego danymi wejściowymi. 
+
+Najczęściej używaną charakterystyką była do niedawna funkcja sigmoidalna ponieważ ma wiele zalet:
+- zapewnia łagodny gradient między wartościami 0 a 1,
+- ma gładką i prostą do liczenia pochodną,
+- jednym parametrem można dobrać kształt krzywej.
+Definicja funkcji sigmoidalnej $ f(x) = 1 / (1+e^-z)$ .
+Obecnie nie jest zalecane używanie funkcji sigmoidalnej poza przypadkami na warstwie wyjściowej w przypadku klasyfikacji binarnej, kiedy należy stwierdzić prawdopodobieństwo klasy obiektu. Dużo wydajniejszym odpowiednikiem jest następna funkcja.
+
+Sprawną funkcją aktywacji jest tangens hiperboliczny. Jego wartości zawierają się między -1 i 1. Definicja funkcji tangensu hiperbolicznego $tanh(z) = (e^z - e^-z) / (e^z + e^-z)$. Jak widać na załączonych rycinach ta funkcja jest przesunięciem sigmoidy względem osi y, tak że przechodzi przez punkt (0,0). Dla warst ukrytych charakterystyka neuronu będąca tangensem hiperbolicznym ma lepszą skuteczność. Mediana wartości wychodzących z warst ukrytych wynosi 0. Nie trzeba wtedy stosować skalowania względem sigmoidy, co znacząco ułatwia uczenie.
+
+Najczęściej używaną charakterystyką neuronu w dużych architekturach jest Rektyfikowana jednostka liniowa. Definicja funkcji jest w porównaniu do pozostałych jest banalna $relu(z) = max(0,z)$. Jedynym problemem przy używaniu ReLU jest wyliczenie pochodnej kiedy argument z jest mniejszy od 0. W praktyce nie sprawia to większych problemów bo wartość zostanie ustawiona na 0, ale opracowano funkcję która jest pozbawiona tej niedogodności.
+
+Nieszczelna liniowa jednostka rektyfikowana (ang. leaky Rectified Linear Unit) definiowana $f(x) = max(x, 0.01x)$. Pozwala to zmniejszyć efekt kiedy pochyła funkcji schodzi do 0, spowalniając uczenie. Niestety ta funkcja nie jest powszechnie używana w praktyce.
+
+Należy podkreślić że w nowoczesnych sieciach neuronowych każda warstwa może posiadać indywidualnie ustanowioną funkcję aktywacji w zależności od architektury. Domyślnym wyborem funkcji aktywacji jest ReLU. 
+
+\begin{figure}[h]
+	\centering
+			\includegraphics[resolution=100, scale=0.3]{Sigmoid.png}
+		\caption{Wykres funkcji sigmoidalnej}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+			\includegraphics[resolution=100, scale=0.3]{Tangens.png}
+		\caption{Wykres funkcji tangensu hiperbolicznego}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+			\includegraphics[resolution=100, scale=0.3]{ReLU.png}
+		\caption{Wykres Rektyfikowanej jednostki liniowej}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+			\includegraphics[resolution=100, scale=0.3]{leakyReLU.png}
+		\caption{Wykres Nieszczelnej rektyfikowanej jednostki liniowej}
+\end{figure}
+
 \subsection{Wykres obliczeniowy}
+
 \subsection{Propagacja i wsteczna propagacja błędu}
 
 
@@ -331,7 +402,8 @@ Tworzenie dobrej sieci neuronowej wymaga nie tylko parametrów ale również dob
 - parametry regularyzacji,
 - rozmiary próbek uczących,
 i wiele innych mniej ważnych hiperparametrów
-Są to parametry kontrolujące sposób wykonania algorytmu uczącego i w ostateczności to one mają największy wpływ na zwykłe parametry wagi i progi (bias). Nie został ustalony jednolity sposób doboru hiperparametrów. Zwyczajowo stosuje się metodę prób i błędów na podstawie tego jak algorytm się zachowuje.\cite{deeplearningAI} Za każdą zmianą wartości należy uruchomić algorytm i sprawdzić jak zachowuje się funkcja kosztu, jeśli maleje lepiej niż przy porpzednich wartościach można stroić dalej w tym kierunku. Dopieranie odpowiednich wartości niestety jest procesem empirycznym i należy wyrobić odpowiednią intuicję aby jak najtrafniej dobierać parametry od początku. Wartości te też nie są stałe, zmieniają się w zależności od dziedziny badanego zagadnienia. Być może najbliższe lata przyniosą dobry i spójny przewodnik dobierania najlepszych wartości, pozwoli to znacznie zautomatyzować proces.
+
+Są to parametry kontrolujące sposób wykonania algorytmu uczącego i w ostateczności to one mają największy wpływ na zwykłe parametry wagi i progi (bias). Nie został ustalony jednolity sposób doboru hiperparametrów. Zwyczajowo stosuje się metodę prób i błędów na podstawie tego jak algorytm się zachowuje.\cite{deeplearningAI} Za każdą zmianą wartości należy uruchomić algorytm i sprawdzić jak zachowuje się funkcja kosztu, jeśli maleje lepiej niż przy poprzednich wartościach można stroić dalej w tym kierunku. Dopieranie odpowiednich wartości niestety jest procesem empirycznym i należy wyrobić odpowiednią intuicję aby jak najtrafniej dobierać parametry od początku. Wartości te też nie są stałe, zmieniają się w zależności od dziedziny badanego zagadnienia. Być może najbliższe lata przyniosą dobry i spójny przewodnik dobierania najlepszych wartości, pozwoli to znacznie zautomatyzować proces.
 
 \subsection{Jak zbudować sieć neuronową}
 
@@ -345,17 +417,23 @@ Są to parametry kontrolujące sposób wykonania algorytmu uczącego i w ostatec
 W tym rozdzial zostają przybliżone trzy interesujące techniki głębokiego uczenia. Zostały wybrane ze względu na ich obszerną ilość zastosowań oraz potencjał, który można wykorzystać przy rozpoznawaniu wzorców na obrazach. Następnie opiszę kilka bibliotek implementujących wsparcie dla większości architektur sieci przedstawionych w pracy. Biblioteki są wybrane na podstawie przekroju platform i języków mi znanych. 
 
 \subsection{Sieci neuronowe}
+Sztuczne sieci neuronowe zostały opisane w poprzednim rozdziale, tutaj uwaga skupia się na podziale na różne architektury, głębokości oraz rodzaj dodatkowych warstw, takich jak filtr cech.
+
 \subsection{Convolutional Neural Networks}
-Inaczej znane jako
+Inaczej znane jako 
 \subsection{Recurrent Neural Networks}
 \subsection{Fully Convolutional Networks}
 
+
+% ################################
+%        BIBLIOTEKI
+% ################################
 \chapter{Biblioteki implementujące uczenie głębokich sieci neuronowych}
 
 \subsection{Tensorflow}
 \begin{figure}[h]
 	\centering
-			\includegraphics[resolution=120]{Tensorflow.png}
+			\includegraphics[resolution=100]{Tensorflow.png}
 		\caption{Logo biblioteki Tensorflow}
 \end{figure}
 Pierwsza otwarta biblioteka od Google. Obecnie najczęściej używana podczas prac naukowych, o czym świadczy ilość cytowań[1]. Od 2018 roku dostępna również pod nazwą Tensorflow.js jako biblioteka javascript, udostępniające ten sam interfejs programistyczny.
@@ -363,7 +441,7 @@ Pierwsza otwarta biblioteka od Google. Obecnie najczęściej używana podczas pr
 \subsection{Keras}
 \begin{figure}[h]
 	\centering
-			\includegraphics[resolution=120]{Keras.png}
+			\includegraphics[resolution=100]{Keras.png}
 		\caption{Logo biblioteki Keras}
 \end{figure}
 Keras jest frameworkiem udostępniającym wysokopoziomowe API sieci neuronowych. Działanie opiera się na wykorzystaniu Tensorflow, CNTK lub Theano jako bibliotek wykonujących obliczenia. Głównym założeniem tego oprogramowania jest możliwość szybkiego wykonywania eksperymentów, co ma się przełożyć na lepsze badanie uczenia maszynowego.
@@ -371,14 +449,14 @@ Keras jest frameworkiem udostępniającym wysokopoziomowe API sieci neuronowych.
 \subsection{PyTorch}
 \begin{figure}[h]
 	\centering
-			\includegraphics[resolution=120]{PyTorch.png}
+			\includegraphics[resolution=100]{PyTorch.png}
 		\caption{Logo biblioteki PyTorch}
 \end{figure}
 
 \subsection{Tensorflow.js [Deeplearn.js]}
 \begin{figure}[h]
 	\centering
-			\includegraphics[resolution=120]{TensorflowJS.png}
+			\includegraphics[resolution=100]{TensorflowJS.png}
 		\caption{Logo biblioteki Tensorflow.js}
 \end{figure}
 Znany dawniej jako DeepLearning.js Pierwszy zestaw uczenia maszynowego do użycia w przeglądarce. Działa w oparciu o WebGL. Dostarcza calej mocy Tensorflow do przeglądarki czy dowolnego interpretera kodu Javascript.
@@ -386,7 +464,7 @@ Znany dawniej jako DeepLearning.js Pierwszy zestaw uczenia maszynowego do użyci
 \subsection{PaddlePaddle}
 \begin{figure}[h]
 	\centering
-			\includegraphics[resolution=120]{PaddlePaddle.png}
+			\includegraphics[resolution=100]{PaddlePaddle.png}
 		\caption{Logo biblioteki Paddle}
 \end{figure}
 Chińskie oprogramowanie, mało znane w Europie / USA, za to jest to najpopularniejszy framework w Chinach. Uważam że zasługuje na wyróżnienie ze względu na unikalny charakter. Paddle jest open-source, jednak większość dokumentacji jest w języku kantońskim.
@@ -394,21 +472,21 @@ Chińskie oprogramowanie, mało znane w Europie / USA, za to jest to najpopularn
 \subsection{MXNet}
 \begin{figure}[h]
 	\centering
-			\includegraphics[resolution=120]{MXNet.png}
+			\includegraphics[resolution=100]{MXNet.png}
 		\caption{Logo biblioteki MXNet}
 \end{figure}
 
 \subsection{Caffe2}
 \begin{figure}[h]
 	\centering
-			\includegraphics[resolution=120]{Caffe2.png}
+			\includegraphics[resolution=100]{Caffe2.png}
 		\caption{Logo biblioteki Caffe2}
 \end{figure}
 
 \subsection{ML.NET}
 \begin{figure}[h]
 	\centering
-			\includegraphics[resolution=120]{ML_NET.png}
+			\includegraphics[resolution=100]{ML_NET.png}
 		\caption{Logo biblioteki ML.NET}
 \end{figure}
 Nowe oprogramowanie od Microsoftu, udostępnione na licencji [licencja], głównie polecane programistom w środowisku .NET. Docelowo ma stać się częścią .NET Core. Nastawione na łatwość integracji z oprogramowaniem biznesowym, chmurą Azure oraz łatwość obsługi przez programistów pracujących w technologiach Microsoftu.
@@ -416,10 +494,9 @@ Nowe oprogramowanie od Microsoftu, udostępnione na licencji [licencja], główn
 \subsection{PyBrain}
 \begin{figure}[h]
 	\centering
-			\includegraphics[resolution=120]{PyBrain.png}
+			\includegraphics[resolution=100]{PyBrain.png}
 		\caption{Logo biblioteki PyBrain}
 \end{figure}
-
 
 \subsection{CNTK}
 [Microsoft Research, 2016] - nazwa kompletna Microsoft Cognitive Toolkit. Jest to zestaw narzędzi z działu badawczego Microsoftu, zajmującego sie Deep Learningiem. Narzędzie opisuje sieci neuronowe jako szereg obliczeń na grafie skierowanym. W tym grafie węzły (liście) reprezentują wartości wejściowe oraz parametry sieci, zaś pozostałe węzły są operacjami macierzowymi na ich wejściu. Cognitive Toolkit pozwala użytkownikom w prosty sposób tworzyć i łączyć popularne modele jak (ang. fast-forward Deep Neural Networks), konwolucyjne sieci neuronowe, rekurencyjne sieci neuronowe. Implementuje algorytm spadku gradientowego, wsteczną propagację błędów z automatycznym skalowaniem na wiele urządzeń GPU rozproszonych na różnych serwerach.
@@ -427,7 +504,7 @@ CNTK działa na systemach operacyjnych Windows i GNU\\Linux.
 \begin{figure}[h]
 	\centering
 			\includegraphics[resolution=120]{CNTK.png}
-		\caption{Architektura sieci CNTK}
+		\caption{Logo biblioteki CNTK}
 \end{figure}
 
 % ################################
@@ -557,6 +634,6 @@ Cały przepływ danych do wykrycia obiektów jest jedną siecią, dlatego może 
 %        BIBLIOGRAFIA
 % ################################
 \bibliographystyle{plain}
-\bibliography{bibliography/alexnetNips,bibliography/deeplearningbook,bibliography/dropout,bibliography/fastAI,bibliography/ganArxiv,bibliography/googleNet,bibliography/lecun,bibliography/medicalImage,bibliography/microsoftResNet,bibliography/rCNN,bibliography/relu,bibliography/resnextArxiv,bibliography/VGGNet,bibliography/ZFNet,bibliography/ResNeXt,bibliography/YOLO,bibliography/SqueezeNet,bibliography/SegNet} 
+\bibliography{bibliography/alexnetNips,bibliography/deeplearningbook,bibliography/dropout,bibliography/fastAI,bibliography/ganArxiv,bibliography/googleNet,bibliography/lecun,bibliography/medicalImage,bibliography/microsoftResNet,bibliography/rCNN,bibliography/relu,bibliography/resnextArxiv,bibliography/VGGNet,bibliography/ZFNet,bibliography/YOLO,bibliography/SqueezeNet,bibliography/SegNet,bibliography/deeplearningAI} 
 
 \end{document}
