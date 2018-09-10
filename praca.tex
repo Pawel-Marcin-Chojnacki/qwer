@@ -275,15 +275,16 @@ Pierwszy model sztucznego neuronu był wyobrażeniem biologicznej reprezentacji 
 Model obliczeniowy został stworzony na podstawie algorytmu logiki progowej. 
 Nazwa neuronu sztucznego została przyjęta w kręgach akademickich i biznesowych, stąd często osoby nie znające budowy mózgu ani działania sieci neuronowych mylnie nazywają zagadnienie Sztuczną Inteligencją, uproszczając skomplikowane procesy biologiczne do wzmaczniania lub osłabiania sygnałów przekazywanych przez synapsy. Sieci neuronowe naśladują tylko jeden rodzaj pamięci, pamięć deklaratywną i w odosobnieniu nie tworzy inteligencji.
 
-
 \section{Model perceptronu prostego}
 Podstawowym elementem z których buduje się sieci neuronowe są sztuczne neurony, nazywane również perceptronami. Mają one być w rzeczywistości bardzo uproszczonym odwzorowaniem komórek nerwowych występujących w mózgu. Takie uproszczenia pozwalają na łatwą implementację modelu matematycznego, który ma reprezentować nasz obiekt i być tani w replikacji. Nawet po takim uproszczeniu jest on w stanie skutecznie naśladować \"uczenie\".
 Sztuczny neuron jest funkcją matematyczną f(x,w) -> y. Można go opisać za pomocą modelu złożonego z:
 -- określonej liczby wejść n E N,
 -- wagi, skojarzonej z każdym z wejść wi E R, i=1..n,
 -- wybranej funkcji aktywacji FI: R -> R
+
 Charakterystycznym elementem budulca sieci jest wiele wejść i tylko jedno wyjście, dlatego tak łatwo stworzyć model będący funkcją matematyczną.
 Dane wejściowe oraz wyjściowe mogą przyjmować wartości z ograniczonego przedziału. Wartości przekazywane na wejściu i wartość wyjściowa zazwyczaj przyjmują znormalizowane wartości z przedziału xE [-1, 1] dla każdego z wejść, oraz y E[-1,1] dla wyjścia. W uproszczeniu można przyjąć y = SUM (wi * xi). wi są nazywane wagami (dawniej wagami synaptycznymi) i podlegają zmianom w trakcie uczenia neuronu. Wagi stanowią zasadniczą cechę sieci neuronowych działających jako adapcyjne systemy przetwarzania informacji. Zsumowana wartość jest wejściem dla funkcji aktywacji neuronu. Funkcja aktywacji zwyczajowo ma kształt sygmoidy, ale stosowane są obecnie również funkcje nazywane rektyfikownymi jednostkami liniowymi. Funkcja progorwa ma za zadanie symulację zachowania przekaźnika synapsy, po przekroczeniu określonego progu aktywuje się dane zachowanie lub jak na przykładzie obrazów rozpoznanie cechy.
+
 Ta prosta jednostka stanowi dziś podstawę budowy każdej sieci neuronowej. Aby funkcja zwracała oczekiwane wyniki, wagi powinny być poprawnie ustawione. Początkowo wagi ustawiano ręcznie za pomocą operatora (osoby przełączającej fizyczne kable), który wcześniej przeliczał je dla odpowiednich parametrów wejścia\\wyjścia. W latach 50tych perceptron stał się pierwszym modelem umiejącym samodzielnie wyliczyć poprawnie wagi definiujące zadaną klasę na podstawie przykładów. Wagi w zależności od wartości mogą sygnał wejściowy wzmocnić gdy waga jest większa od 1, lub stłumić gdy waga jest mniejsza niż 1. To pozwala wyuczonemu już perceptronowi na porównanie cechy obiektu wejściowego z tym co potrafi rozpoznać. 
 
 W jaki sposób sztuczny neuron jest w stanie rozpoznać sygnał wejściowy? Do wyjaśnienia zjawiska w literaturze zazwyczaj prezentuje się przedstawienie moedelu w notacji wektorowej.
@@ -298,11 +299,12 @@ X = [x1,x2,...,xn] - wektor wyznaczający punkt w n-wymiarowej przestrzeni, nazw
 
 \section{Co to jest sieć neuronowa?}
 Koncepcja sztucznej sieci neuronowej to połączenie wielu neuronów w jeden obiekt. Pozwala to na rozpoznawanie bardziej skomplikowanych wzorców i większej różnorodności typów obiektów niż klasyfikacja binarna. Zwykła sieć neuronowa składa się z trzech warstw węzłów. Warstwa pierwsza stanowi warstwę wejściową sieci i składa się z sygnału wejściowego.
+
 Kolejna warstwa jest nazywana warstwą ukrytą, użytkownik nie ma dostępu do niej, przypomina czarną skrzynkę. Nie można zaobserwować co się wewnątrz niej dzieje, użytkownik widzi jakie są dane wejściowe, wartości które powinny zostać zwrócone (w ostatniej warstwie), ale nie ma informacji co jest i powinno się znajdować w tej warstwie podczas trenowania sieci.
 Ostatnia warstwa, pojedynczy węzeł nazywany jest warstwą wyjściową. Pobiera wektor wartości wyjściowych z poprzedniej warstwy (ukrytej) i na nim zostaje obliczona wartość wyjściowa (odpowiedź).
+
 Taka architektura nazywa sie siecią dwuwarstwową. Dane wejściowe, mimo że tworzą pierwszą warstwę nie są liczone w nazewnictwie.
 Z warstwami ukrytą i wyjściową powiązane są parametry w (ang. weight) oraz b (bias), oznaczające kolejno: macierz wag oraz wektor progów.
-
 
 \begin{figure}[h]
 	\centering
@@ -315,7 +317,13 @@ W obecnym momencie istnieją dwie możliwości by sieć posiadła umiejętność
 
 \subsection*{Uczenie nadzorowane}
 Jest to typ uczenia maszynowego, które zakłada obecność ludzkiego nauczyciela. Nauczyciel zobowiązany jest stworzyć odpowiednie dane uczące. Takie dane są parą danych, wejściowego obiektu uczącego oraz prawidłową odpowiedź wyjściową do tej danej. System na podstawie tych danych ma nauczyć się przewidywać poprawną odpowiedź dla nowych danych, ze znanej mu domeny.
-Zadania uczenie nadzorowanego dzielą się na dwie kategorie, regresję i klasyfikację. W problemie regresji próbuje się przewidzieć wyniki, które są wartościami ciągłymi, czyli mając jakieś dane próbuje się je mapować na funkcję ciągłą. W problemie klasyfikacji algorytm ma za zadanie przewidzieć wyniki będące wartościami dyskretnymi, uściślając jest to znajdowanie klas obiektów, na podstawie danych wejściowych.
+
+Zadania uczenie nadzorowanego dzielą się na dwie kategorie, regresję i klasyfikację. 
+
+W problemie regresji próbuje się przewidzieć wyniki, które są wartościami ciągłymi, czyli mając jakieś dane próbuje się je mapować na funkcję ciągłą. 
+
+W problemie klasyfikacji algorytm ma za zadanie przewidzieć wyniki będące wartościami dyskretnymi, uściślając jest to znajdowanie klas obiektów, na podstawie danych wejściowych.
+
 Uczenie nadzorowane ma wiele zastosowań, do głównych należą (wraz z używanym typem sieci):
 - przewidywanie cen nieruchomości (zwykła sieć neuronowa),
 - reklamy internetowe (zwykła sieć neuronowa),
@@ -331,6 +339,7 @@ Uczenie nadzorowane dzieli się również binarnie ze względu na strukturę dos
 Uczenie maszynowe bez nadzoru nauczyciela jest drugim typem uczenia maszynowego polegającym na wyciąganiu wniosków z danych bez informacji zwrotnej o poprawności wniosków oraz bez określania etykiety danych. W algorytmach tego typu nie ma funkcji wyznaczającej poprawność utworzonego modelu. Najczęstszym zadaniem stawianym algorytmom uczenia nienadzorowanego jest wyznaczanie klastrów ze zbioru danych. W tej pracy temat uczenia bez nauczyciela nie jest poruszany.
 
 \section{Elementy sieci neuronowych} 
+Sieci neuronowe do poprawnego działania potrzebują więcej niż tylko połączenia ze sobą neuronów. Należy dobrać odpowiednie algorytmy korygujące błędy. Aby algorytm zatrzymał się w odpowiednim momencie z osobna trzeba zdefiniować warunki stopu dla epoki, ilość epok, rozmiar danych. Każda warstwa musi posiadać określoną funkcję aktywacji. Ostatnim opisanym elementem sieci są hiperparametry, czyli właściwości sterujące algorytmem by wiedzieł w jaki sposób wyznaczać pozostałe parametry.
 
 \subsection{Metoda gradientu prostego}
 Algorytm stosowany do szukania minimum lokalnego płaszczyzny wyznaczonej funkcją. Jest to bardzo prosta metoda optymalizacji stosowana do wyznaczania wag i progów. Płaszczyzna złożona z osi poziomych w i b oraz oś pionowa będąca wartością funkcji kosztu J(w,b). Algorytm mając początkowo losowe wagi i progi, rozpoczyna w tym losowym miejscu sprawdza wartość funkcji kosztu, następnie wykonuje małe przesunięcie w najbardziej stromym kierunku w dół płaszczyzny. Operacja zejścia powtarzana jest do zejścia do minimum lokalnego.
@@ -354,7 +363,7 @@ Obecnie nie jest zalecane używanie funkcji sigmoidalnej poza przypadkami na war
 
 Sprawną funkcją aktywacji jest tangens hiperboliczny. Jego wartości zawierają się między -1 i 1. Definicja funkcji tangensu hiperbolicznego $tanh(z) = (e^z - e^-z) / (e^z + e^-z)$. Jak widać na załączonych rycinach ta funkcja jest przesunięciem sigmoidy względem osi y, tak że przechodzi przez punkt (0,0). Dla warst ukrytych charakterystyka neuronu będąca tangensem hiperbolicznym ma lepszą skuteczność. Mediana wartości wychodzących z warst ukrytych wynosi 0. Nie trzeba wtedy stosować skalowania względem sigmoidy, co znacząco ułatwia uczenie.
 
-Najczęściej używaną charakterystyką neuronu w dużych architekturach jest Rektyfikowana jednostka liniowa. Definicja funkcji jest w porównaniu do pozostałych jest banalna $relu(z) = max(0,z)$. Jedynym problemem przy używaniu ReLU jest wyliczenie pochodnej kiedy argument z jest mniejszy od 0. W praktyce nie sprawia to większych problemów bo wartość zostanie ustawiona na 0, ale opracowano funkcję która jest pozbawiona tej niedogodności.
+Zalecaną charakterystyką neuronu w dużych architekturach jest rektyfikowana jednostka liniowa. Definicja funkcji jest w porównaniu do pozostałych jest banalna $relu(z) = max(0,z)$. Jedynym problemem przy używaniu ReLU jest wyliczenie pochodnej kiedy argument z jest mniejszy od 0. W praktyce nie sprawia to większych problemów bo wartość zostanie ustawiona na 0, ale opracowano funkcję która jest pozbawiona tej niedogodności.
 
 Nieszczelna liniowa jednostka rektyfikowana (ang. leaky Rectified Linear Unit) definiowana $f(x) = max(x, 0.01x)$. Pozwala to zmniejszyć efekt kiedy pochyła funkcji schodzi do 0, spowalniając uczenie. Niestety ta funkcja nie jest powszechnie używana w praktyce.
 
@@ -405,7 +414,7 @@ i wiele innych mniej ważnych hiperparametrów
 
 Są to parametry kontrolujące sposób wykonania algorytmu uczącego i w ostateczności to one mają największy wpływ na zwykłe parametry wagi i progi (bias). Nie został ustalony jednolity sposób doboru hiperparametrów. Zwyczajowo stosuje się metodę prób i błędów na podstawie tego jak algorytm się zachowuje.\cite{deeplearningAI} Za każdą zmianą wartości należy uruchomić algorytm i sprawdzić jak zachowuje się funkcja kosztu, jeśli maleje lepiej niż przy poprzednich wartościach można stroić dalej w tym kierunku. Dopieranie odpowiednich wartości niestety jest procesem empirycznym i należy wyrobić odpowiednią intuicję aby jak najtrafniej dobierać parametry od początku. Wartości te też nie są stałe, zmieniają się w zależności od dziedziny badanego zagadnienia. Być może najbliższe lata przyniosą dobry i spójny przewodnik dobierania najlepszych wartości, pozwoli to znacznie zautomatyzować proces.
 
-\subsection{Jak zbudować sieć neuronową}
+%\subsection{Jak zbudować sieć neuronową}
 
 % ################################
 %        DEEP LEARNING
@@ -433,7 +442,7 @@ Inaczej znane jako
 \subsection{Tensorflow}
 \begin{figure}[h]
 	\centering
-			\includegraphics[resolution=100]{Tensorflow.png}
+			\includegraphics[resolution=100, scale=0.5]{Tensorflow.png}
 		\caption{Logo biblioteki Tensorflow}
 \end{figure}
 Pierwsza otwarta biblioteka od Google. Obecnie najczęściej używana podczas prac naukowych, o czym świadczy ilość cytowań[1]. Od 2018 roku dostępna również pod nazwą Tensorflow.js jako biblioteka javascript, udostępniające ten sam interfejs programistyczny.
@@ -441,7 +450,7 @@ Pierwsza otwarta biblioteka od Google. Obecnie najczęściej używana podczas pr
 \subsection{Keras}
 \begin{figure}[h]
 	\centering
-			\includegraphics[resolution=100]{Keras.png}
+			\includegraphics[resolution=100, scale=0.25]{Keras.png}
 		\caption{Logo biblioteki Keras}
 \end{figure}
 Keras jest frameworkiem udostępniającym wysokopoziomowe API sieci neuronowych. Działanie opiera się na wykorzystaniu Tensorflow, CNTK lub Theano jako bibliotek wykonujących obliczenia. Głównym założeniem tego oprogramowania jest możliwość szybkiego wykonywania eksperymentów, co ma się przełożyć na lepsze badanie uczenia maszynowego.
@@ -449,14 +458,14 @@ Keras jest frameworkiem udostępniającym wysokopoziomowe API sieci neuronowych.
 \subsection{PyTorch}
 \begin{figure}[h]
 	\centering
-			\includegraphics[resolution=100]{PyTorch.png}
+			\includegraphics[resolution=100, scale=0.3]{PyTorch.png}
 		\caption{Logo biblioteki PyTorch}
 \end{figure}
 
 \subsection{Tensorflow.js [Deeplearn.js]}
 \begin{figure}[h]
 	\centering
-			\includegraphics[resolution=100]{TensorflowJS.png}
+			\includegraphics[resolution=100, scale=0.5]{TensorflowJS.png}
 		\caption{Logo biblioteki Tensorflow.js}
 \end{figure}
 Znany dawniej jako DeepLearning.js Pierwszy zestaw uczenia maszynowego do użycia w przeglądarce. Działa w oparciu o WebGL. Dostarcza calej mocy Tensorflow do przeglądarki czy dowolnego interpretera kodu Javascript.
@@ -479,14 +488,14 @@ Chińskie oprogramowanie, mało znane w Europie / USA, za to jest to najpopularn
 \subsection{Caffe2}
 \begin{figure}[h]
 	\centering
-			\includegraphics[resolution=100]{Caffe2.png}
+			\includegraphics[resolution=100, scale=0.35]{Caffe2.png}
 		\caption{Logo biblioteki Caffe2}
 \end{figure}
 
 \subsection{ML.NET}
 \begin{figure}[h]
 	\centering
-			\includegraphics[resolution=100]{ML_NET.png}
+			\includegraphics[resolution=100, scale=0.8]{ML_NET.png}
 		\caption{Logo biblioteki ML.NET}
 \end{figure}
 Nowe oprogramowanie od Microsoftu, udostępnione na licencji [licencja], głównie polecane programistom w środowisku .NET. Docelowo ma stać się częścią .NET Core. Nastawione na łatwość integracji z oprogramowaniem biznesowym, chmurą Azure oraz łatwość obsługi przez programistów pracujących w technologiach Microsoftu.
@@ -494,7 +503,7 @@ Nowe oprogramowanie od Microsoftu, udostępnione na licencji [licencja], główn
 \subsection{PyBrain}
 \begin{figure}[h]
 	\centering
-			\includegraphics[resolution=100]{PyBrain.png}
+			\includegraphics[resolution=100, scale=0.5]{PyBrain.png}
 		\caption{Logo biblioteki PyBrain}
 \end{figure}
 
