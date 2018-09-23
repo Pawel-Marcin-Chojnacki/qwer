@@ -856,9 +856,12 @@ Licencja: MIT
 
 \chapter{Architektura}
 \section{Znaczenie architektury dla wydajności sieci}
-Sieci neuronowe można ułożyć na nieskończenie wiele sposobów. Aby uzyskać dobre rezultaty należy sprawdzić kilka architektur i jak się zachowują dla dla posiadanych zbiorów danych i zadanych hiperparametrów.
-W zależności od typu architektury sieci można osiągnąć zupełnie inne wyniki uczenia dla tych samych algorytmów. 
-Architektury różnią się właściwie wszystkim, ilością warstw ukrytych ilością neuronów w warstwie ukrytej. 
+Elementy sieci neuronowych można ułożyć na nieskończenie wiele sposobów, wystarczy dodać kolejną warstę neuronów lub zmodyfikować wielkość warstwy i wyniki będą zgoła inne. Celem szukania odpowiedniej dla danego zadania architektury jest otrzymanie najlepszej wydajności klasyfikacji przy skończonym i możliwie jak najkrótszym czasie uczenia.   uzyskać dobre rezultaty należy wybrać architekturę która została przetrenowana dla podobnego zadania bądź przetestować kilka architektur z pretrenowanymi modelami i sprawdzić jak się zachowują dla posiadanych zbiorów danych na różnych hiperparametrach. Ułożenie odpowiedniej architektury przesądza o wynikach ImageNet Competition od 2012 roku, kiedy to po raz pierwszy zastosowanie głębokiej sieci neuronowej zagwarantowało Geoffreyowi Hintonowi wraz z zespołem pierwsze miejsce. 
+
+Obecnie wyróżniane typy sieci neuronowych zostały sklasyfikowane wzgledem typu danych wejściowych i tak dla zastosowań obróbki sygnału wejściowego w postaci pikseli najlepiej sprawdza się konwolucyjna sieć neuronowa. Konwolucje to idealny kandydat do ekstrakcji cech obrazu.
+
+%opisać lepiej tadeusiewicza i czym się różnią architektury i typy sieci
+Architektury różnią się właściwie , ilością warstw ukrytych ilością neuronów w warstwie ukrytej. 
 Poglądy Tadeusiewicza na architekturę sieci neuronowych.
 
 “Właśnie taka (warstwowa) struktura sieci wyjątkowo łatwo i wygodnie da się wytwarzać zarówno w formie modelu elektronicznego, jak i da się symulować w formie programu komputerowego. Dlatego badacze przyjęli właśnie strukturę warstwową i od tej pory stosują ją we wszystkich sztucznych sieciach neuronowych. Z pełną wiernością biologicznemu oryginałowi ma to niewiele wspólnego, ale jest praktyczne i wygodne. W związku z tym wszyscy tak postępują, nie martwiąc się ani przesłankami biologicznymi, ani dowodami wskazującymi, że architektura sieci bardziej wymyślnie dostosowanej do charakteru zadania może znacznie lepiej realizować stawiane zadania.”
