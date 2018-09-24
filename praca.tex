@@ -206,23 +206,22 @@ Toruń 2018
 \markboth{}{Słownik pojęć}
 \addcontentsline{toc}{chapter}{Słownik pojęć}
 \begin{description}[style=nextline]
-	\item[Klasyfikacja binarna] Klasyfikacja binarna polega na jak najdokładniejszym stwierdzeniu posiadania cechy lub przynależności do kategorii danego obiektu.
-Najczęściej używane metody do klasyfikacji binarnej to: drzewa decyzyjne 
-Dane wejściowe należy przedstawić w formie macierzy. Każdy przykład do treningu i później klasyfikacji, musi być tych samych wymiarów. Wyjściem algorytmu klasyfikacji binarnej jest wektor z prawdopodobieństwem klasyfikacji każdego z przykładów. Wizualizacja funkcji, klasyfikującej czerwone i zielone kółka.
-	\item[Regresja logistyczna] Metoda statystyczna używana do analizy zbioru danych, w którym mam więcej niż jedną zmienną determinującą wyjście. Wyjściem jest prawdopodobieństwo wystąpienia klasyfikowanego elementu. Algorytm regresji logistycznej przyjmuje na wejściu dane: n-wymiarowy wektor liczb rzeczywistych [np. Obraz], zestaw wag o tych samych wymiarach, liczba rzeczywista, bias.
-Do wygenerowania wyjścia, wystarczy obliczyć y = wT (wagi transponowane) * x (wejście) + b (bias). Należy jeszcze zastosować operację, która pozwoli na ustawienie parametrów w przedziale 0-1. Całe powyższe równanie użyć jako wejście do funkcji sigmoidy. Sigm(z) = 1 / 1 + e-z. Jeśli z jest duże, sigmoida będzie bliska 1, jeśli z jest liczbą ujemną, sigmoida zbliży się do 0.
-	\item[Funkcja kosztu] Funkcja do trenowania modelu regresji logistycznej. Mając zestawy treningowe, można wytrenować algorytm tak, aby podawał wartości prawdopodobieństwa jak najbliższe zestawu treningowego. Chcemy ustawić wagi i bias tak, aby te parametry dawały prawidłową odpowiedź dla każdego przykładu uczącego. Funkcja kosztu ma następujący wzór:
-	\item[Metoda gradientu prostego] Algorytm pozwalający znaleźć minimum funkcji. Wyobrażając sobie płaszczyznę funkcji dla wszystkich możliwych argumentów, algorytm przechodzi z losowo rozpoczętego miejsca w miejsce gdzie jest najgłębiej. Mając funkcję kosztu J(w,b) szukamy miejsca w którym błąd algorytmu jest jak najmniejszy.
-	\item[Wykres obliczeniowy] (ang. Computation graph). Dekompozycja wyrażenia w pojedyncze atomowe kroki. Używany do optymalizowania funkcji. Przydaje się podczas ręcznej analizy funkcji błędu.
-	%\item[Funkcje aktywacji] - funkcja definiująca 
-	\item[Pooling] - technika polegająca na zmniejszeniu danych wejściowych. Aby zmniejszyć obraz ustala się rozmiar filtra oraz wielkość kroku. Następuje przejscie po całym obrazie (po nałożeniu filtra) i wybiera się max z całego obszaru filtra do nowej macierzy. Pozwala to ograniczyć ilość parametrów i wyodrębnić konkretne cechy obiektu.
-	\item[Konwolucja]
-	\item[Wsteczna propagacja błędu] 
-	\item[Dropout]
-	%\item[Rektyfikowana jednostka liniowa (ReLU)] 
-	\item[Softmax]
-	\item[Epoka]
-	\item[Model]
+	\item[Klasyfikacja binarna] Typ zadania klasyfikacji, którego wyjście stanowi jedna z dwóch wzajemnie wykluczających się klas. Prostym przykładem jest system rozpoznający wiadomości email podzielone na dwie klasy "spam" oraz "nie spam".
+%	Klasyfikacja binarna polega na jak najdokładniejszym stwierdzeniu posiadania cechy lub przynależności do kategorii danego obiektu.
+%Najczęściej używane metody do klasyfikacji binarnej to: drzewa decyzyjne 
+%Dane wejściowe należy przedstawić w formie macierzy. Każdy przykład do treningu i później klasyfikacji, musi być tych samych wymiarów. Wyjściem algorytmu klasyfikacji binarnej jest wektor z prawdopodobieństwem klasyfikacji każdego z przykładów. Wizualizacja funkcji, klasyfikującej czerwone i zielone kółka.
+	\item[Regresja logistyczna] Metoda statystyczna używana do analizy zbioru danych, w którym istnieje więcej niż jedna zmienna determinująca wyjście. Wyjście jest prawdopodobieństwem na ile obiekt wejściowy przypomina każdą z klas modelu. Regresja logistyczna jest zazwyczaj używana do klasyfikacji binarnej. %Algorytm regresji logistycznej przyjmuje na wejściu dane: n-wymiarowy wektor liczb rzeczywistych [np. Obraz], zestaw wag o tych samych wymiarach, liczba rzeczywista, bias.
+%Do wygenerowania wyjścia, wystarczy obliczyć y = wT (wagi transponowane) * x (wejście) + b (bias). Należy jeszcze zastosować operację, która pozwoli na ustawienie parametrów w przedziale 0-1. Całe powyższe równanie użyć jako wejście do funkcji sigmoidy. Sigm(z) = 1 / 1 + e-z. Jeśli z jest duże, sigmoida będzie bliska 1, jeśli z jest liczbą ujemną, sigmoida zbliży się do 0.
+	\item[Funkcja kosztu] Funkcja służąca trenowaniu modelu regresji logistycznej. Pozwala na określenie odległości wartości wyjściowej sieci od celu (prawidłowej odpowiedzi). Celem sieci neuronowej jest zminimalizowanie funkcji kosztu dla sygnałów wejściowych nie spotkanych wcześniej.% Mając zestawy treningowe, można wytrenować algorytm tak, aby podawał wartości prawdopodobieństwa jak najbliższe zestawu treningowego. Chcemy ustawić wagi i bias tak, aby te parametry dawały prawidłową odpowiedź dla każdego przykładu uczącego. Funkcja kosztu ma następujący wzór:
+	\item[Metoda gradientu prostego (ang. gradient descent algorithm)] Algorytm pozwalający znaleźć minimum funkcji kosztu. Technika ta minimalizuje błąd w odniesieniu do parametrów modelu zadanych do trenowania przez wyliczenie optymalnych wartości wag oraz progów.% płaszczyzna funkcji dla wszystkich możliwych argumentów, algorytm przechodzi z losowo rozpoczętego miejsca w miejsce gdzie jest najgłębiej. Mając funkcję kosztu J(w,b) szukamy miejsca w którym błąd algorytmu jest jak najmniejszy.
+	\item[Wykres obliczeniowy (ang. computation graph)] Dekompozycja wyrażenia (matematycznego) w pojedynczych atomowych krokach. Używany do szukania miejsc możliwego zoptymalizowania funkcji. Każdą operację wyrażenia przedstawia się jako osobny węzeł w grafie skierowanym. Wykresów obliczeniowych używa się podczas ręcznej analizy funkcji błędu oraz jako wizualizacji obliczeń w wielu bibliotekach głębokiego uczenia maszynowego.
+	\item[Funkcja aktywacji] Jedna z funkcji (zazwyzaj sigmoidalna lub rektyfikowalna jednostka liniowa) która przyjmuje zsumowaną wartość wszystkich wejść z poprzedniej warstwy sieci neuronowej i propaguje wartość wynikową do następnej warstwy.
+	\item[Konwolucja] Termin w kontekście uczenia maszynowego odwołuje się do operacji konwolucji lub warstwy konwolucyjnej. Konwolucja polega na stworzeniu macierzy będącej mieszanką macierzy wejściowej z filtrem konwolucyjnym dając zestaw wag mniejszy od orginalnego wejścia i tworząc mapę cech.
+	\item[Łączenie (ang. pooling)] Technika polegająca na redukcji danych wejściowych z poprzedniej warstwy konwolucyjnej. W łączeniu zazwyczaj używa się maksymalną wartość lub średnią z obszaru puli, który z kolei jest macierzą kwadratową o zadanym rozmiarze (2x2, 3x3 lub 5x5). Aby zmniejszyć obraz należy ustalić rozmiar filtra oraz wielkość kroku. Następnie wykonuje się przejscie po całym obrazie z nałożonym filtrem. Każde przesunięcie po sygnałach z warstwy poprzedniej zwraca nową wartość dla warstwy łączącej. Pozwala to ograniczyć ilość parametrów i wyodrębnić konkretne cechy obiektu.
+	\item[Wsteczna propagacja błędu] Najważniejszy algorytm dla znajdowania optymalnych wag w sieciach neuronowych. Przechodzi on w dwie strony sieci, pierw od warstwy wejściowej do wyjściowej wyliczane są wartości każdego neuronu. Nastepnie wykonywany jest powrót z ostatniej warstwy do pierwszej wyliczając pochodne cząstkowe błędu w stosunku do każdego parametru (wagi i progu).
+	\item[Wyrzucanie połączeń (ang. dropout)] Sposób na redukcję przeuczenia modelu względem danych treningowych przez regularyzację danych. Dokładniej polega na deaktywacji losowych neuronów w trakcie uczenia, zapobiega to sytuacjom kiedy dane treningowe są rozpoznawane zbyt dobrze, a nowe sygnały nieznane wcześniej mają dużo niższą jakość rozpoznania.
+	\item[Epoka] Pełne przejście przez zestaw danych treningowych, tak że każdy element został przekazany do sieci jeden raz.
+	\item[Model] Reprezentacja obiektu utworzonego w wyniku uczenia sieci neuronowej. Z założenia model jest tym lepszy im dokładniej przewiduje klasę obiektu, którego wcześniej nie spotkał.
 \end{description}
  
 % ################################
@@ -871,8 +870,16 @@ Tak napisał w 2007 roku, kiedy nie istniały jeszcze złożone głębokie sieci
 
 Dowodem na znaczenie ułożenia neuronów w poprawnej strukturze jest ich rosnąca skuteczność od kiedy badacze bardzo dużo eksperymentują z różnymi kombinacjami. Coroczne zawody ImageNet, w których udowadnia się że struktura sieci ma znaczenie są świetnym przykładem że jest to proces iteracyjny i jak podkreślano wcześniej, metoda empiryczna jest obecnie jedynym sposobem na znalezienie idealnego modelu.
 
-
 \section{Przegląd najbardziej efektywnych architektur}
+
+\subsection{LeNet}
+[Yann LeCun, Leon Bottou, Yoshua Bengio, Patrick Haffner, 1998] - . Pierwsze praktyczne zastosowanie sieci konwolucyjnych jeszcze w latach 90’tych. Używana była do prostych zadań: czytanie kodów pocztowych, liczb.\cite{Lecun98gradient-basedlearning}
+
+\begin{figure}[h]
+	\centering
+			\includegraphics[resolution=100, scale=0.6]{LeNet.png}
+		\caption{Architektura sieci LeNet}
+\end{figure}
 
 \subsection{AlexNet}
  [Alex Krizhevsky, Ilya Sutskever, Geoffrey E. Hinton, 2012] - pierwsza prawdziwa konwolucyjna sieć neuronowa (CNN), która pomogła zmienić opinię na temat uczenia głębokiego. Została zaimplementowana z użyciem biblioteki CUDA. Pierwsza sieć neuronowa, ucząca się z powodzeniem dla dużego zbioru danych.
@@ -886,14 +893,7 @@ Dowodem na znaczenie ułożenia neuronów w poprawnej strukturze jest ich rosną
 		\caption{Architektura sieci AlexNet}
 \end{figure}
 
-\subsection{LeNet}
-[Authors, Year] - Jest to obecnie mało znacząca architektura. Pierwsze praktyczne zastosowanie sieci konwolucyjnych jeszcze w latach 90’tych. Używana była do prostych zadań: czytanie kodów pocztowych, liczb.\cite{Lecun98gradient-basedlearning}
 
-\begin{figure}[h]
-	\centering
-			\includegraphics[resolution=100, scale=0.6]{LeNet.png}
-		\caption{Architektura sieci LeNet}
-\end{figure}
 
 \subsection{VGG Net}
  [Simoyan i Zisserman, 2014] - sieć złożona z 16 warstw konwolucyjnych, która charakteryzuje się małymi filtrami i duża głębokość sieci.
