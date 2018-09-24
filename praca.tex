@@ -265,9 +265,11 @@ Wszystkie przedstawione kody źródłowe zostały napisane w języku Python 3.6 
 % ################################
 
 \chapter{Neurony}
-W niniejszym rozdziale została przedstawiona idea sztucznego neuronu McCullocha i Pittsa. Opracowany model biologicznego neuronu z 1943 roku jest tak uniwersalny że do dziś stanowi podstawę budowy sieci neuronowych. Przedstawiono tutaj również w jaki sposób znaleźć mapę cech, czy mówiąc prościej jak nauczyć neurony rozpoznawać wzorce. Na końcu rozdziału opisane są możliwości jakie daje łączenie sztucznych neuronów w sieć.
+W niniejszym rozdziale została przedstawiona idea sztucznego neuronu McCullocha i Pittsa. Opracowany model biologicznego neuronu z 1943 roku jest tak uniwersalny, że do dziś stanowi podstawę budowy sieci neuronowych. Przedstawiono tu również w jaki sposób znaleźć mapę cech, czy mówiąc prościej jak nauczyć neurony rozpoznawać wzorce. Na końcu rozdziału opisane są możliwości jakie daje łączenie sztucznych neuronów w sztuczną sieć neuronową.
 
-Pierwszy model sztucznego neuronu był wyobrażeniem biologicznej reprezentacji neuronu mózgowego z lat 40tych XX wieku. Była to bardziej próba implementacji idei niż odwzorowanie prawdziwego odpowiednika, który jest bardziej złożony i nie do końca znany jest sposób jego zachowania. Zdefiniowany przez noblistę Ramon y Cajal'a w 1906 roku neuron jest specjalistycznym nośnikiem wszelkich informacji, a także elementem przetwarzającym wszystkie doznania, emocje, a także sterownikiem całego ciała. Uproszczeniem które pozwoliło na sprawną implementację jest wyodrębnienie zasady przetwarzania informacji bioelektrycznej do kilku prostszych operacji. Takie uproszczenie składa się z wielu sygnałów wejściowych, wagi przypisanej każdemu z tych sygnałów oraz pojedynczej wartości wyjściowej. Jak wielkie jest to uproszczenie widać przy porównaniu rysunku prawdziwego neuronu (w uproszczeniu) oraz sztucznego neuronu. Taka budowa choć bardzo banalna, daje wiele możliwości. Podstawową zaletą jest prostota odwzorowania w urządzeniach elektronicznych. Przed nadejściem ery komputerów klasy PC, stosowano maszyny nazywane perceptronami, dlatego obecnie można używać nazwy sztuczny neuron i perceptron prosty zamiennie. 
+Pierwszy model sztucznego neuronu był wyobrażeniem uproszczonej biologicznej reprezentacji neuronu mózgowego z lat 40tych XX wieku. Model ten stanowił bardziej próbę implementacji idei, niż odwzorowanie prawdziwego neuronu, który jest wielokrotnie bardziej złożony, a jego zachowanie nie jest jeszcze w pełni znane. Zdefiniowany przez noblistę Ramon y Cajal'a w 1906 roku neuron jest specjalistycznym nośnikiem wszelkich informacji, a także elementem przetwarzającym wszystkie doznania i emocje, oraz sterownikiem całego ciała. 
+
+Uproszczeniem które pozwala na sprawną implementację, jest wyodrębnienie zasady przetwarzania informacji bioelektrycznej do kilku prostszych operacji. Takie uproszczenie składa się z wielu sygnałów wejściowych, wagi przypisanej każdemu z tych sygnałów, oraz pojedynczej wartości wyjściowej. Jak wielkie jest to uproszczenie widać przy porównaniu rysunku prawdziwego neuronu (również w uproszczeniu) oraz sztucznego neuronu. Taka budowa choć bardzo banalna, daje wiele możliwości. Podstawową zaletą jest prostota odwzorowania w urządzeniach elektronicznych. Przed nadejściem ery komputerów osobistych, stosowano maszyny nazywane perceptronami. Nazwa perceptron jest obecnie używana zamiennie z neuronem.
 
 \begin{figure}[h]
 	\centering
@@ -277,7 +279,7 @@ Pierwszy model sztucznego neuronu był wyobrażeniem biologicznej reprezentacji 
 
 \begin{figure}[h]
 	\centering
-			\includegraphics[resolution=100, scale=0.7]{sztucznyNeuron.png}
+			\includegraphics[resolution=100, scale=0.8]{sztucznyNeuron.png}
 		\caption{Wizualizacja prostego sztucznego neuronu.}
 \end{figure}
 
@@ -303,7 +305,7 @@ X = [x1,x2,...,xn] - wektor wyznaczający punkt w n-wymiarowej przestrzeni, nazy
 
 \begin{figure}[h]
 	\centering
-			\includegraphics[resolution=100]{Neuron.png}
+			\includegraphics[resolution=90]{Neuron.png}
 		\caption{Prosta reprezentacja neuronu.}
 \end{figure}
 
@@ -319,7 +321,7 @@ Z warstwami ukrytą i wyjściową powiązane są parametry w (ang. weight) oraz 
 
 \begin{figure}[h]
 	\centering
-			\includegraphics[resolution=100]{SiecNeuronowa.png}
+			\includegraphics[resolution=100, scale=1.2]{SiecNeuronowa.png}
 		\caption{Prosta sieć neuronowa złożona z dwóch warstw.}
 \end{figure}
 
@@ -386,26 +388,26 @@ Należy podkreślić że w nowoczesnych sieciach neuronowych każda warstwa moż
 
 \begin{figure}[h]
 	\centering
-			\includegraphics[resolution=100, scale=0.3]{Sigmoid.png}
+			\includegraphics[resolution=100, scale=0.7]{Sigmoid.png}
 		\caption{Wykres funkcji sigmoidalnej}
 \end{figure}
 
 \begin{figure}[h]
 	\centering
-			\includegraphics[resolution=100, scale=0.3]{Tangens.png}
+			\includegraphics[resolution=100, scale=0.7]{Tangens.png}
 		\caption{Wykres funkcji tangensu hiperbolicznego}
 \end{figure}
 
 \begin{figure}[h]
 	\centering
-			\includegraphics[resolution=100, scale=0.3]{ReLU.png}
-		\caption{Wykres Rektyfikowanej jednostki liniowej}
+			\includegraphics[resolution=100, scale=0.8]{ReLU.png}
+		\caption{Wykres rektyfikowanej jednostki liniowej}
 \end{figure}
 
 \begin{figure}[h]
 	\centering
-			\includegraphics[resolution=100, scale=0.3]{leakyReLU.png}
-		\caption{Wykres Nieszczelnej rektyfikowanej jednostki liniowej}
+			\includegraphics[resolution=100, scale=0.8]{leakyReLU.png}
+		\caption{Wykres nieszczelnej rektyfikowanej jednostki liniowej}
 \end{figure}
 
 \subsection{Parametry}
