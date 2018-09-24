@@ -1,3 +1,5 @@
+praca.bbl
+praca.blg
 praca.aux
 praca.dvi
 praca.dcb_latexmk
@@ -7,5 +9,4 @@ praca.log
 praca.synctex.gz
 praca.tex.orig
 praca.toc
-praca.bbl
-praca.blg
+papers/
