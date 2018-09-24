@@ -3,10 +3,12 @@
 \usepackage[utf8]{inputenc}
 \usepackage{enumitem} % słownik pojęć
 \usepackage{amsmath}
+\usepackage{amssymb}
 \usepackage{tabularx} % tabele
 \usepackage[usenames,dvipsnames,svgnames,table]{xcolor} % kolory jak~się chce gdzieś użyć
 \usepackage{graphicx} % żeby ryciny i~zdjęcia były
 \usepackage{listings} % syntax highlighting
+\usepackage[]{algorithm2e}
 \usepackage{verbatimbox} % marginesy dla~tabel
 \usepackage{emptypage} % usuwa nagłówki i~numery stron z~pustych stron
 \usepackage{afterpage} % to zapobiega ustawianiu obrazka PO tym
@@ -287,25 +289,27 @@ Model obliczeniowy został stworzony na podstawie algorytmu logiki progowej.
 Nazwa neuronu sztucznego została przyjęta w kręgach akademickich i biznesowych, stąd często osoby nie znające budowy mózgu ani działania sieci neuronowych mylnie nazywają zagadnienie Sztuczną Inteligencją, uproszczając skomplikowane procesy biologiczne do wzmacniania lub osłabiania sygnałów przekazywanych przez synapsy. Sieci neuronowe naśladują tylko jeden rodzaj pamięci, pamięć deklaratywną i w odosobnieniu nie tworzy inteligencji.
 
 \section{Model perceptronu prostego}
-Podstawowym elementem z których buduje się sieci neuronowe są sztuczne neurony, nazywane również perceptronami. Mają one być w rzeczywistości bardzo uproszczonym odwzorowaniem komórek nerwowych występujących w mózgu. Takie uproszczenia pozwalają na łatwą implementację modelu matematycznego, który ma reprezentować nasz obiekt i być tani w replikacji. Nawet po takim uproszczeniu jest on w stanie skutecznie naśladować \"uczenie\".
-Sztuczny neuron jest funkcją matematyczną f(x,w) -> y. Można go opisać za pomocą modelu złożonego z:
+Podstawowym elementem z których buduje się sieci neuronowe są sztuczne neurony, nazywane również perceptronami. Mają one być w rzeczywistości bardzo uproszczonym odwzorowaniem komórek nerwowych występujących w mózgu. Takie uproszczenia pozwalają na łatwą implementację modelu matematycznego, który ma reprezentować nasz obiekt i być tani w replikacji. Nawet po takim uproszczeniu jest on w stanie skutecznie naśladować ''uczenie''.
+Sztuczny neuron jest funkcją matematyczną $$f(x,w) \to y$$. Można go opisać za pomocą modelu złożonego z:
 \begin{itemize}
-\item określonej liczby wejść n E N,
-\item wagi, skojarzonej z każdym z wejść wi E R, i=1..n,
-\item wybranej funkcji aktywacji FI: R -> R
+\item określonej liczby wejść \(n \in \mathbb{N}\),
+\item wagi, skojarzonej z każdym z wejść \(w_i \in \mathbb{R}, i=1..n\),
+\item wybranej funkcji aktywacji \(\phi: \mathbb{R} \to \mathbb{R} \)
 \end{itemize}
 
 Charakterystycznym elementem budulca sieci jest wiele wejść i tylko jedno wyjście, dlatego tak łatwo stworzyć model będący funkcją matematyczną.
-Dane wejściowe oraz wyjściowe mogą przyjmować wartości z ograniczonego przedziału. Wartości przekazywane na wejściu i wartość wyjściowa zazwyczaj przyjmują znormalizowane wartości z przedziału xE [-1, 1] dla każdego z wejść, oraz y E[-1,1] dla wyjścia. W uproszczeniu można przyjąć y = SUM (wi * xi). wi są nazywane wagami (dawniej wagami synaptycznymi) i podlegają zmianom w trakcie uczenia neuronu. Wagi stanowią zasadniczą cechę sieci neuronowych działających jako adapcyjne systemy przetwarzania informacji. Zsumowana wartość jest wejściem dla funkcji aktywacji neuronu. Funkcja aktywacji zwyczajowo ma kształt sygmoidy, ale stosowane są obecnie również funkcje nazywane rektyfikownymi jednostkami liniowymi. Funkcja progowa ma za zadanie symulację zachowania przekaźnika synapsy, po przekroczeniu określonego progu aktywuje się dane zachowanie lub jak na przykładzie obrazów rozpoznanie cechy.
+Dane wejściowe oraz wyjściowe mogą przyjmować wartości z ograniczonego przedziału. Wartości przekazywane na wejściu i wartość wyjściowa zazwyczaj przyjmują znormalizowane wartości z przedziału \(x \in [-1, 1]\) dla każdego z wejść, oraz \(y \in [-1,1]\) dla wyjścia. W uproszczeniu można przyjąć \(y = \sum\limits_{i=1}^n (w_i * x_i)\). \(w_i\) są nazywane wagami (dawniej wagami synaptycznymi) i podlegają zmianom w trakcie uczenia neuronu. Wagi stanowią zasadniczą cechę sieci neuronowych działających jako adapcyjne systemy przetwarzania informacji. Zsumowana wartość jest wejściem dla funkcji aktywacji neuronu. Funkcja aktywacji zwyczajowo ma kształt sygmoidy, ale stosowane są obecnie również funkcje nazywane rektyfikownymi jednostkami liniowymi. Funkcja progowa ma za zadanie symulację zachowania przekaźnika synapsy, po przekroczeniu określonego progu aktywuje się dane zachowanie lub jak na przykładzie obrazów rozpoznanie cechy.
 
 Ta prosta jednostka stanowi dziś podstawę budowy każdej sieci neuronowej. Aby funkcja zwracała oczekiwane wyniki, wagi powinny być poprawnie ustawione. Początkowo wagi ustawiano ręcznie za pomocą operatora (osoby przełączającej fizyczne kable), który wcześniej przeliczał je dla odpowiednich parametrów wejścia\\wyjścia. W latach 50tych perceptron stał się pierwszym modelem umiejącym samodzielnie wyliczyć poprawnie wagi definiujące zadaną klasę na podstawie przykładów. Wagi w zależności od wartości mogą sygnał wejściowy wzmocnić gdy waga jest większa od 1, lub stłumić gdy waga jest mniejsza niż 1. To pozwala wyuczonemu już perceptronowi na porównanie cechy obiektu wejściowego z tym co potrafi rozpoznać. 
 
 W jaki sposób sztuczny neuron jest w stanie rozpoznać sygnał wejściowy? Do wyjaśnienia zjawiska w literaturze zazwyczaj prezentuje się przedstawienie modelu w notacji wektorowej.
-X = [x1,x2,...,xn] - wektor wyznaczający punkt w n-wymiarowej przestrzeni, nazywanej przestrzenią wejść oraz , W = [w1, w2, ..., wn] - wektor wyznaczający punkt w n-wymiarowej przestrzeni, nazywanej przestrzenią wag. W ten notacji można wyrazić wyjście neuronu jako y= W(Transponowane) X. Wartość wyjściowa neuronu y, będzie wyższa im bliższe będzie położenie wektorów.
+\newline
+\(X = \begin{bmatrix} x_{1} \\ x_{2} \\ \dots \\ x_{n} \end{bmatrix} \) - wektor wyznaczający przestrzeń wejść, oraz \newline
+\(W = \begin{bmatrix} w_{1} \\ w_{2} \\ \dots \\ w_{n} \end{bmatrix} \) - wektor wyznaczający przestrzeń wag. \newline W ten notacji można wyrazić wyjście neuronu jako \(y= W^T * X\). Wartość wyjściowa neuronu y, będzie wyższa im bliższe będzie położenie wektorów.
 
 \begin{figure}[h]
 	\centering
-			\includegraphics[resolution=90]{Neuron.png}
+			\includegraphics[resolution=100, scale=0.7]{Neuron.png}
 		\caption{Prosta reprezentacja neuronu.}
 \end{figure}
 
@@ -317,11 +321,11 @@ Kolejna warstwa jest nazywana warstwą ukrytą, użytkownik nie ma dostępu do n
 Ostatnia warstwa, pojedynczy węzeł nazywany jest warstwą wyjściową. Pobiera wektor wartości wyjściowych z poprzedniej warstwy (ukrytej) i na nim zostaje obliczona wartość wyjściowa (odpowiedź).
 
 Taka architektura nazywa się siecią dwuwarstwową. Dane wejściowe, mimo że tworzą pierwszą warstwę nie są liczone w nazewnictwie.
-Z warstwami ukrytą i wyjściową powiązane są parametry w (ang. weight) oraz b (bias), oznaczające kolejno: macierz wag oraz wektor progów.
+Z warstwami ukrytą i wyjściową powiązane są parametry \(w\) (ang. weight) oraz \(b\) (ang. bias), oznaczające kolejno: macierz wag oraz wektor progów.
 
 \begin{figure}[h]
 	\centering
-			\includegraphics[resolution=100, scale=1.2]{SiecNeuronowa.png}
+			\includegraphics[resolution=100, scale=0.2]{SiecNeuronowa.png}
 		\caption{Prosta sieć neuronowa złożona z dwóch warstw.}
 \end{figure}
 
@@ -357,14 +361,17 @@ Uczenie maszynowe bez nadzoru nauczyciela jest drugim typem uczenia maszynowego 
 Sieci neuronowe do poprawnego działania potrzebują więcej niż tylko połączenia ze sobą neuronów. Należy dobrać odpowiednie algorytmy korygujące błędy. Aby algorytm zatrzymał się w odpowiednim momencie z osobna trzeba zdefiniować warunki stopu dla epoki, ilość epok, rozmiar danych. Każda warstwa musi posiadać określoną funkcję aktywacji. Ostatnim opisanym elementem sieci są hiperparametry, czyli właściwości sterujące algorytmem by wiedział w jaki sposób wyznaczać pozostałe parametry.
 
 \subsection{Metoda gradientu prostego}
-Algorytm stosowany do szukania minimum lokalnego płaszczyzny wyznaczonej funkcją. Jest to bardzo prosta metoda optymalizacji stosowana do wyznaczania wag i progów. Płaszczyzna złożona z osi poziomych w i b oraz oś pionowa będąca wartością funkcji kosztu J(w,b). Algorytm mając początkowo losowe wagi i progi, rozpoczyna w tym losowym miejscu sprawdza wartość funkcji kosztu, następnie wykonuje małe przesunięcie w najbardziej stromym kierunku w dół płaszczyzny. Operacja zejścia powtarzana jest do zejścia do minimum lokalnego.
+Algorytm stosowany do szukania minimum lokalnego płaszczyzny wyznaczonej funkcją. Jest to bardzo prosta metoda optymalizacji stosowana do wyznaczania wag i progów. Płaszczyzna złożona z osi poziomych \(w\) i \(b\) oraz oś pionowa będąca wartością funkcji kosztu \(J(w,b)\). Algorytm mając początkowo losowe wagi i progi, rozpoczyna w tym losowym miejscu sprawdza wartość funkcji kosztu, następnie wykonuje małe przesunięcie w najbardziej stromym kierunku w dół płaszczyzny. Operacja zejścia powtarzana jest do zejścia do minimum lokalnego.
 
-Schemat algorytmu:
-Oznaczenia: 
-Powtarzaj x razy {
-	$w = w - \alpha * (dJ(w, b) / dw);
-	 b = b - \alpha * (dJ(w, b) / db);$
+\begin{algorithm}
+i = 0\;
+\While{i \textless x}{
+	\(w = w - \alpha * \frac{\partial J(w,b)}{\partial w}\)\;
+	\(b = b - \alpha * \frac{\partial J(w,b)}{\partial b}\)\;
+	\(i++\)\;
 }
+\caption{Schemat algorytmu}
+\end{algorithm}
 
 \subsection{Funkcje aktywacji}
 Budując sieć neuronową należy funkcje aktywacji dla warstw ukrytych oraz warstwy wyjściowej. Funkcje aktywacji są znane również jako charakterystyka neuronu. Charakterystyka neuronu jest elementem, który pośredniczy między zsumowanym pobudzeniem neuronu, a jego danymi wejściowymi. 
@@ -375,14 +382,14 @@ Najczęściej używaną charakterystyką była do niedawna funkcja sigmoidalna p
 \item ma gładką i prostą do liczenia pochodną,
 \item jednym parametrem można dobrać kształt krzywej.
 \end{itemize}
-Definicja funkcji sigmoidalnej $ f(x) = 1 / (1+e^-z)$ .
+Definicja funkcji sigmoidalnej \(f(x) = \frac{1}{1+e^{-z}}\).
 Obecnie nie jest zalecane używanie funkcji sigmoidalnej poza przypadkami na warstwie wyjściowej w przypadku klasyfikacji binarnej, kiedy należy stwierdzić prawdopodobieństwo klasy obiektu. Dużo wydajniejszym odpowiednikiem jest następna funkcja.
 
-Sprawną funkcją aktywacji jest tangens hiperboliczny. Jego wartości zawierają się między -1 i 1. Definicja funkcji tangensu hiperbolicznego $tanh(x) = (e^x - e^-x) / (e^x + e^-x)$. Jak widać na załączonych rycinach ta funkcja jest przesunięciem sigmoidy względem osi y, tak że przechodzi przez punkt (0,0). Dla warstw ukrytych charakterystyka neuronu będąca tangensem hiperbolicznym ma lepszą skuteczność. Mediana wartości wychodzących z warstw  ukrytych wynosi 0. Nie trzeba wtedy stosować skalowania względem sigmoidy, co znacząco ułatwia uczenie.
+Sprawną funkcją aktywacji jest tangens hiperboliczny. Jego wartości zawierają się między -1 i 1. Definicja funkcji tangensu hiperbolicznego \(tanh(x) = \frac{e^{x} - e^{-x}}{e^{x} + e^{-x}}\). Jak widać na załączonych rycinach ta funkcja jest przesunięciem sigmoidy względem osi y, tak że przechodzi przez punkt \((0,0)\). Dla warstw ukrytych charakterystyka neuronu będąca tangensem hiperbolicznym ma lepszą skuteczność. Mediana wartości wychodzących z warstw  ukrytych wynosi 0. Nie trzeba wtedy stosować skalowania względem sigmoidy, co znacząco ułatwia uczenie.
 
-Zalecaną charakterystyką neuronu w dużych architekturach jest rektyfikowana jednostka liniowa. Definicja funkcji jest w porównaniu do pozostałych jest banalna $relu(z) = max(0,z)$. Jedynym problemem przy używaniu ReLU jest wyliczenie pochodnej kiedy argument z jest mniejszy od 0. W praktyce nie sprawia to większych problemów bo wartość zostanie ustawiona na 0, ale opracowano funkcję która jest pozbawiona tej niedogodności.
+Zalecaną charakterystyką neuronu w dużych architekturach jest rektyfikowana jednostka liniowa. Definicja funkcji jest w porównaniu do pozostałych jest banalna \(relu(z) = max(0,z)\). Jedynym problemem przy używaniu ReLU jest wyliczenie pochodnej kiedy argument z jest mniejszy od 0. W praktyce nie sprawia to większych problemów bo wartość zostanie ustawiona na 0, ale opracowano funkcję która jest pozbawiona tej niedogodności.
 
-Nieszczelna liniowa jednostka rektyfikowana (ang. leaky Rectified Linear Unit) definiowana $f(x) = max(x, 0.01x)$. Pozwala to zmniejszyć efekt kiedy pochyła funkcji schodzi do 0, spowalniając uczenie. Niestety ta funkcja nie jest powszechnie używana w praktyce.
+Nieszczelna liniowa jednostka rektyfikowana (ang. leaky Rectified Linear Unit) definiowana \(f(x) = max(x, 0.01x)\). Pozwala to zmniejszyć efekt kiedy pochyła funkcji schodzi do 0, spowalniając uczenie. Niestety ta funkcja nie jest powszechnie używana w praktyce.
 
 Należy podkreślić że w nowoczesnych sieciach neuronowych każda warstwa może posiadać indywidualnie ustanowioną funkcję aktywacji w zależności od architektury. Domyślnym wyborem funkcji aktywacji jest ReLU. 
 
@@ -431,11 +438,11 @@ Są to parametry kontrolujące sposób wykonania algorytmu uczącego i w ostatec
 \subsection{Wykres obliczeniowy}
 Aby opisać organizację obliczeń podsekcję o wstecznej propagacji błędu, należy zformalizować operacje obliczeń. Robi się to za pomocą wykresu obliczeniowego. Węzły w grafie reprezentują skalary, wektory, macierze i tensory. Drugim elementem w grafie są operacje czyli proste funkcje z jedną lub większą ilością zmiennych. Graf obliczeniowy przydaje się kiedy istnieje zdefinowana funkcja bądź zmienna, którą należy zoptymalizować, w przypadku sieci neuronowych oczywistą jest funkcja kosztu.
 
-Dla przykładu chcę obliczyć funkcję kosztu J o zmiennych a,b,c zdefiniowaną J(a,b,c) = 3(a+bc). Obliczenie tej funkcji składa się z trzech kroków, pierwszym jest policzenie b*c.
-i = b * c
+Dla przykładu chcę obliczyć funkcję kosztu \(J\) o zmiennych \(a,b,c\) zdefiniowaną \(J(a,b,c) = 3(a+bc)\). Obliczenie tej funkcji składa się z trzech kroków, pierwszym jest policzenie \(b*c\).
+$$i = b * c$$
 Następnym krokiem jest dodanie zmiennej a.
-k = a + i
-Trzecim i ostatnim krokiem jest wyjście funkcji kosztu J = 3k.
+$$k = a + i$$
+Trzecim i ostatnim krokiem jest wyjście funkcji kosztu \(J = 3k\).
 Graf obliczeniowy powyższej funkcji znajduje się na rysunku poniżej.
 
 Do minimalizowania funkcji kosztu algorytm obliza pochodne w odwrotnej kolejności do przedstawionej na poprzednim przykładzie grafu.
@@ -443,7 +450,7 @@ Do minimalizowania funkcji kosztu algorytm obliza pochodne w odwrotnej kolejnoś
 \begin{figure}[h]
 	\centering
 			\includegraphics[resolution=100, scale=0.5]{ComputationGraph.png}
-		\caption{Wykres obliczeniowy dla funkcji J(a,b,c) = 3(a+bc)}
+		\caption{Wykres obliczeniowy dla funkcji \(J(a,b,c) = 3(a+bc)\)}
 \end{figure}
 
 \subsection{Wsteczna propagacja błędu}
@@ -452,8 +459,6 @@ Algorytm wstecznej propagacji błędu został opracowany w latach 70tych, jednak
 Przekazując sygnał na wejście sieci zostaje on propagowany w przód przez wszystkie warsty do warstwy wyjściowej. Losowy neuron w warstwie ukrytej otrzymuje wartości wyjściowe z neuronów poprzedniej warstwy, mnoży każdy otrzymany sygnał z wagą przypisaną danemu wejściu i przekazuje zsumowany wynik do funkcji aktywacji. Każdy neuron wykonuje takie operacje do czasu trafienia na ostatnią warstwę gdzie sieć podaje juz oczekiwany wynik. Cały ten proces nazywa się propagacją w przód. Mając oczekiwany wynik na warstwie wyjściowej, zazwyczaj prawdopodobieństwo przynależności do każdej z uczonych klas należy wyliczyć funkcję błędu (ang. loss function). Funkcja ta pozwala określać odchylenie wyliczonego wyniku od właściwej odpowiedzi. Celem sieci jest zminimalizowanie błędu przez wyliczenie pochodnej z funkcji kosztu w stosunku do wag modelu.
 
 Wsteczna propagacja błędu jest narzędziem używanym przez algorytm gradientu spadkowego aby wyliczyć gradient funkcji błędu. W trakcie przejścia wstecz przez sieć neuronową następuje korekcja wag. Przechodząc od wartości wyjściowej należy zmodyfikować wagi warstwy poprzedzającej tak by zmniejszyć wartość funkcji błędu.
-
-
 
 Istnieją również analogiczne metod korekcji wag, jak szybka propagacja (ang. quick-propagation) oraz bardziej skomplikowane i ograniczone założeniami matematycznymi metoda gradientów sprzężonych i metoda Levenberga-Marquardta. Metody te są dużo szybsze od wstecznej propagacji błędu, ale przez swoje ograniczenia prawie nigdy nie są używane w praktyce. \cite{odkrywanieSieci}
 
@@ -795,7 +800,7 @@ Caffe2 jest rozwinięciem tego modelu, również pracuje na GPU, CPU, jest skalo
 
 Cała baza została napisana w języku C++ i była testowana latami przez Facebook'a do rozpoznawania obiektów na obrazie, analizy wiadomości do rekomendowania reklam, systemów rekomendujących na podstawie profilu użytkownika. Wydajność jest to jedną z największych zalet, po opracowaniu odpowiedniej architektury, cały kod wdrożeniowy na produkcję może być napisany w C++. Na jednym procesorze NVIDIA DGX-1 prędkość przetwarznia wynosi 231 obrazów na sekundę.\cite{NvidiaCaffe2(https://developer.nvidia.com/caffe2)}
 
-Caffe2 posiada \"Model ZOO\", gotowe do użycia pretrenowane modele dla najczęściej spotykanych zastosowań bez potrzeby wydawania zasobów na tworzenie modelu od zera. Pełna lista modeli, z którymi można eksperymentować jest pokaźna (na dzień obecny największa ze wszystkich dostępnych \"zwierząt w ZOO\"):
+Caffe2 posiada zoo modeli, gotowe do użycia pretrenowane modele dla najczęściej spotykanych zastosowań bez potrzeby wydawania zasobów na tworzenie modelu od zera. Pełna lista modeli, z którymi można eksperymentować jest pokaźna (na dzień obecny największa ze wszystkich dostępnych zwierząt w ZOO):
 \begin{itemize}
 \item AlexNet,
 \item GoogleNet,
