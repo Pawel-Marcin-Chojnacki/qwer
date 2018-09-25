@@ -39,7 +39,6 @@
 \addbibresource{bibliography/YOLO}
 \addbibresource{bibliography/SqueezeNet}
 \addbibresource{bibliography/SegNet}
-\addbibresource{bibliography/deeplearningAI}
 \addbibresource{bibliography/deeplearningTensorflow}
 \addbibresource{bibliography/odkrywanieSieci}
 \addbibresource{bibliography/benchmarks}
@@ -474,7 +473,7 @@ Tworzenie dobrej sieci neuronowej wymaga nie tylko parametrów ale również dob
 \end{itemize}
 i wiele innych mniej ważnych hiperparametrów
 
-Są to parametry kontrolujące sposób wykonania algorytmu uczącego i w ostateczności to one mają największy wpływ na zwykłe parametry wagi i progi (bias). Nie został ustalony jednolity sposób doboru hiperparametrów. Zwyczajowo stosuje się metodę prób i błędów na podstawie tego jak algorytm się zachowuje.\cite{deeplearningAI} Za każdą zmianą wartości należy uruchomić algorytm i sprawdzić jak zachowuje się funkcja kosztu, jeśli maleje lepiej niż przy poprzednich wartościach można stroić dalej w tym kierunku. Dopieranie odpowiednich wartości niestety jest procesem empirycznym i należy wyrobić odpowiednią intuicję aby jak najtrafniej dobierać parametry od początku. Wartości te też nie są stałe, zmieniają się w zależności od dziedziny badanego zagadnienia. Być może najbliższe lata przyniosą dobry i spójny przewodnik dobierania najlepszych wartości, pozwoli to znacznie zautomatyzować proces.
+Są to parametry kontrolujące sposób wykonania algorytmu uczącego i w ostateczności to one mają największy wpływ na zwykłe parametry wagi i progi (bias). Nie został ustalony jednolity sposób doboru hiperparametrów. Zwyczajowo stosuje się metodę prób i błędów na podstawie tego jak algorytm się zachowuje.\cite{sitefastAI} Za każdą zmianą wartości należy uruchomić algorytm i sprawdzić jak zachowuje się funkcja kosztu, jeśli maleje lepiej niż przy poprzednich wartościach można stroić dalej w tym kierunku. Dopieranie odpowiednich wartości niestety jest procesem empirycznym i należy wyrobić odpowiednią intuicję aby jak najtrafniej dobierać parametry od początku. Wartości te też nie są stałe, zmieniają się w zależności od dziedziny badanego zagadnienia. Być może najbliższe lata przyniosą dobry i spójny przewodnik dobierania najlepszych wartości, pozwoli to znacznie zautomatyzować proces.
 
 \subsection{Wykres obliczeniowy}
 Aby opisać organizację obliczeń podsekcję o wstecznej propagacji błędu, należy sformalizować operacje obliczeń. Robi się to za pomocą wykresu obliczeniowego. Węzły w grafie reprezentują skalary, wektory, macierze i tensory. Drugim elementem w grafie są operacje czyli proste funkcje z jedną lub większą ilością zmiennych. Graf obliczeniowy przydaje się kiedy istnieje zdefiniowana funkcja bądź zmienna, którą należy zoptymalizować, w przypadku sieci neuronowych oczywistą jest funkcja kosztu.
@@ -1050,7 +1049,5 @@ Cały przepływ danych do wykrycia obiektów jest jedną siecią, dlatego może 
 
 \selectlanguage{polish}
 \printbibliography
-%\bibliographystyle{plain}
-%\bibliography{bibliography/alexnetNips,bibliography/deeplearningbook,bibliography/dropout,bibliography/fastAI,bibliography/ganArxiv,bibliography/googleNet,bibliography/lecun,bibliography/medicalImage,bibliography/microsoftResNet,bibliography/rCNN,bibliography/relu,bibliography/resnextArxiv,bibliography/VGGNet,bibliography/ZFNet,bibliography/YOLO,bibliography/SqueezeNet,bibliography/SegNet,bibliography/deeplearningAI,bibliography/deeplearningTensorflow,bibliography/odkrywanieSieci,bibliography/benchmarks,bibliography/MXNet,bibliography/CaffePerformance,bibliography/caffe} 
 
 \end{document}
