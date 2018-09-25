@@ -1,5 +1,6 @@
 \documentclass[12pt,a4paper,twoside,titlepage,openright]{book}
 \usepackage[MeX]{polski}
+\usepackage[polish]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{enumitem} % słownik pojęć
 \usepackage{amsmath}
@@ -14,9 +15,53 @@
 \usepackage{afterpage} % to zapobiega ustawianiu obrazka PO tym
 \usepackage{filecontents} % pozwala na wstawienie bibliografi
 \usepackage{setspace} % interlinia
+
 \onehalfspacing
 \graphicspath{{figures/}} %Setting the graphicspath
 % PAGE LAYOUT
+
+\usepackage[backend=bibtex8,sorting=none,isbn=false]{biblatex}
+\nocite{*}
+\addbibresource{bibliography/alexnetNips}
+\addbibresource{bibliography/deeplearningbook}
+\addbibresource{bibliography/dropout}
+\addbibresource{bibliography/sitefastAI}
+\addbibresource{bibliography/ganArxiv}
+\addbibresource{bibliography/googleNet}
+\addbibresource{bibliography/lecun}
+\addbibresource{bibliography/medicalImage}
+\addbibresource{bibliography/microsoftResNet}
+\addbibresource{bibliography/rCNN}
+\addbibresource{bibliography/relu}
+\addbibresource{bibliography/resnextArxiv}
+\addbibresource{bibliography/VGGNet}
+\addbibresource{bibliography/ZFNet}
+\addbibresource{bibliography/YOLO}
+\addbibresource{bibliography/SqueezeNet}
+\addbibresource{bibliography/SegNet}
+\addbibresource{bibliography/deeplearningAI}
+\addbibresource{bibliography/deeplearningTensorflow}
+\addbibresource{bibliography/odkrywanieSieci}
+\addbibresource{bibliography/benchmarks}
+\addbibresource{bibliography/MXNet}
+\addbibresource{bibliography/CaffePerformance}
+\addbibresource{bibliography/caffe}
+\addbibresource{bibliography/sieciNeuronowe}
+\addbibresource{bibliography/siteAIhistory}
+\addbibresource{bibliography/siteJia}
+\addbibresource{bibliography/siteMendeley}
+\addbibresource{bibliography/siteNvidiaCaffe2}
+\addbibresource{bibliography/sitePythonvR}
+\addbibresource{bibliography/siteSlowJavaScript}
+\addbibresource{bibliography/siteTensorflowCitations}
+\addbibresource{bibliography/siteMLNet}
+\addbibresource{bibliography/siteDLByLanguage}
+\addbibresource{bibliography/bookDeepLearningKeras}
+\addbibresource{bibliography/deepLearningWithPyTorch}
+\addbibresource{bibliography/siteTensorflowJSConcepts}
+\addbibresource{bibliography/bookDeepLearningMXNet}
+\addbibresource{bibliography/bookCNTK}
+
 %\usepackage{showframe} % debug
 \marginparwidth 0pt
 \marginparsep 0pt
@@ -33,7 +78,7 @@
 
 % CHAPTER TITLE
 
-%kropki po~tytułach rodziałów
+%kropki po~tytułach rozdziałów
 \makeatletter
 \def\@makechapterhead#1{%
   \vspace*{50\p@}%
@@ -53,7 +98,7 @@
 
 % SPIS TREŚCI
 
-%kropki w~spisie tresci
+%kropki w~spisie treści
 \makeatletter
 \def\numberline#1{\hb@xt@\@tempdima{#1.\hfil}}
 \makeatother
@@ -209,19 +254,15 @@ Toruń 2018
 \addcontentsline{toc}{chapter}{Słownik pojęć}
 \begin{description}[style=nextline]
 	\item[Klasyfikacja binarna] Typ zadania klasyfikacji, którego wyjście stanowi jedna z dwóch wzajemnie wykluczających się klas. Prostym przykładem jest system rozpoznający wiadomości email podzielone na dwie klasy "spam" oraz "nie spam".
-%	Klasyfikacja binarna polega na jak najdokładniejszym stwierdzeniu posiadania cechy lub przynależności do kategorii danego obiektu.
-%Najczęściej używane metody do klasyfikacji binarnej to: drzewa decyzyjne 
-%Dane wejściowe należy przedstawić w formie macierzy. Każdy przykład do treningu i później klasyfikacji, musi być tych samych wymiarów. Wyjściem algorytmu klasyfikacji binarnej jest wektor z prawdopodobieństwem klasyfikacji każdego z przykładów. Wizualizacja funkcji, klasyfikującej czerwone i zielone kółka.
-	\item[Regresja logistyczna] Metoda statystyczna używana do analizy zbioru danych, w którym istnieje więcej niż jedna zmienna determinująca wyjście. Wyjście jest prawdopodobieństwem na ile obiekt wejściowy przypomina każdą z klas modelu. Regresja logistyczna jest zazwyczaj używana do klasyfikacji binarnej. %Algorytm regresji logistycznej przyjmuje na wejściu dane: n-wymiarowy wektor liczb rzeczywistych [np. Obraz], zestaw wag o tych samych wymiarach, liczba rzeczywista, bias.
-%Do wygenerowania wyjścia, wystarczy obliczyć y = wT (wagi transponowane) * x (wejście) + b (bias). Należy jeszcze zastosować operację, która pozwoli na ustawienie parametrów w przedziale 0-1. Całe powyższe równanie użyć jako wejście do funkcji sigmoidy. Sigm(z) = 1 / 1 + e-z. Jeśli z jest duże, sigmoida będzie bliska 1, jeśli z jest liczbą ujemną, sigmoida zbliży się do 0.
-	\item[Funkcja kosztu] Funkcja służąca trenowaniu modelu regresji logistycznej. Pozwala na określenie odległości wartości wyjściowej sieci od celu (prawidłowej odpowiedzi). Celem sieci neuronowej jest zminimalizowanie funkcji kosztu dla sygnałów wejściowych nie spotkanych wcześniej.% Mając zestawy treningowe, można wytrenować algorytm tak, aby podawał wartości prawdopodobieństwa jak najbliższe zestawu treningowego. Chcemy ustawić wagi i bias tak, aby te parametry dawały prawidłową odpowiedź dla każdego przykładu uczącego. Funkcja kosztu ma następujący wzór:
-	\item[Metoda gradientu prostego (ang. gradient descent algorithm)] Algorytm pozwalający znaleźć minimum funkcji kosztu. Technika ta minimalizuje błąd w odniesieniu do parametrów modelu zadanych do trenowania przez wyliczenie optymalnych wartości wag oraz progów.% płaszczyzna funkcji dla wszystkich możliwych argumentów, algorytm przechodzi z losowo rozpoczętego miejsca w miejsce gdzie jest najgłębiej. Mając funkcję kosztu J(w,b) szukamy miejsca w którym błąd algorytmu jest jak najmniejszy.
+	\item[Regresja logistyczna] Metoda statystyczna używana do analizy zbioru danych, w którym istnieje więcej niż jedna zmienna determinująca wyjście. Wyjście jest prawdopodobieństwem na ile obiekt wejściowy przypomina każdą z klas modelu. Regresja logistyczna jest zazwyczaj używana do klasyfikacji binarnej.
+	\item[Funkcja kosztu] Funkcja służąca trenowaniu modelu regresji logistycznej. Pozwala na określenie odległości wartości wyjściowej sieci od celu (prawidłowej odpowiedzi). Celem sieci neuronowej jest zminimalizowanie funkcji kosztu dla sygnałów wejściowych nie spotkanych wcześniej.
+	\item[Metoda gradientu prostego (ang. gradient descent algorithm)] Algorytm pozwalający znaleźć minimum funkcji kosztu. Technika ta minimalizuje błąd w odniesieniu do parametrów modelu zadanych do trenowania przez wyliczenie optymalnych wartości wag oraz progów.
 	\item[Wykres obliczeniowy (ang. computation graph)] Dekompozycja wyrażenia (matematycznego) w pojedynczych atomowych krokach. Używany do szukania miejsc możliwego zoptymalizowania funkcji. Każdą operację wyrażenia przedstawia się jako osobny węzeł w grafie skierowanym. Wykresów obliczeniowych używa się podczas ręcznej analizy funkcji błędu oraz jako wizualizacji obliczeń w wielu bibliotekach głębokiego uczenia maszynowego.
-	\item[Funkcja aktywacji] Jedna z funkcji (zazwyzaj sigmoidalna lub rektyfikowalna jednostka liniowa) która przyjmuje zsumowaną wartość wszystkich wejść z poprzedniej warstwy sieci neuronowej i propaguje wartość wynikową do następnej warstwy.
-	\item[Konwolucja] Termin w kontekście uczenia maszynowego odwołuje się do operacji konwolucji lub warstwy konwolucyjnej. Konwolucja polega na stworzeniu macierzy będącej mieszanką macierzy wejściowej z filtrem konwolucyjnym dając zestaw wag mniejszy od orginalnego wejścia i tworząc mapę cech.
-	\item[Łączenie (ang. pooling)] Technika polegająca na redukcji danych wejściowych z poprzedniej warstwy konwolucyjnej. W łączeniu zazwyczaj używa się maksymalną wartość lub średnią z obszaru puli, który z kolei jest macierzą kwadratową o zadanym rozmiarze (2x2, 3x3 lub 5x5). Aby zmniejszyć obraz należy ustalić rozmiar filtra oraz wielkość kroku. Następnie wykonuje się przejscie po całym obrazie z nałożonym filtrem. Każde przesunięcie po sygnałach z warstwy poprzedniej zwraca nową wartość dla warstwy łączącej. Pozwala to ograniczyć ilość parametrów i wyodrębnić konkretne cechy obiektu.
-	\item[Wsteczna propagacja błędu] Najważniejszy algorytm dla znajdowania optymalnych wag w sieciach neuronowych. Przechodzi on w dwie strony sieci, pierw od warstwy wejściowej do wyjściowej wyliczane są wartości każdego neuronu. Nastepnie wykonywany jest powrót z ostatniej warstwy do pierwszej wyliczając pochodne cząstkowe błędu w stosunku do każdego parametru (wagi i progu).
-	\item[Wyrzucanie połączeń (ang. dropout)] Sposób na redukcję przeuczenia modelu względem danych treningowych przez regularyzację danych. Dokładniej polega na deaktywacji losowych neuronów w trakcie uczenia, zapobiega to sytuacjom kiedy dane treningowe są rozpoznawane zbyt dobrze, a nowe sygnały nieznane wcześniej mają dużo niższą jakość rozpoznania.
+	\item[Funkcja aktywacji] Jedna z funkcji (zazwyczaj sigmoidalna lub rektyfikowana jednostka liniowa) która przyjmuje zsumowaną wartość wszystkich wejść z poprzedniej warstwy sieci neuronowej i propaguje wartość wynikową do następnej warstwy.
+	\item[Konwolucja (ang. convolution)] Termin w kontekście uczenia maszynowego odwołuje się do operacji splotu lub warstwy splotowej. Splot polega na stworzeniu macierzy będącej mieszanką macierzy wejściowej z filtrem splotowym dając zestaw wag mniejszy od oryginalnego wejścia i tworząc mapę cech.
+	\item[Łączenie (ang. pooling)] Technika polegająca na redukcji danych wejściowych z poprzedniej warstwy splotowej. W łączeniu zazwyczaj używa się maksymalną wartość lub średnią z obszaru puli, który z kolei jest macierzą kwadratową o zadanym rozmiarze (2x2, 3x3 lub 5x5). Aby zmniejszyć obraz należy ustalić rozmiar filtra oraz wielkość kroku. Następnie wykonuje się przejście po całym obrazie z nałożonym filtrem. Każde przesunięcie po sygnałach z warstwy poprzedniej zwraca nową wartość dla warstwy łączącej. Pozwala to ograniczyć ilość parametrów i wyodrębnić konkretne cechy obiektu.
+	\item[Wsteczna propagacja błędu] Najważniejszy algorytm dla znajdowania optymalnych wag w sieciach neuronowych. Przechodzi on w dwie strony sieci, pierw od warstwy wejściowej do wyjściowej wyliczane są wartości każdego neuronu. Następnie wykonywany jest powrót z ostatniej warstwy do pierwszej wyliczając pochodne cząstkowe błędu w stosunku do każdego parametru (wagi i progu).
+	\item[Wyrzucanie połączeń (ang. dropout)] Sposób na redukcję przeuczenia modelu względem danych treningowych przez regularyzację danych. Dokładniej polega na wyłączeniu działania losowych neuronów w trakcie uczenia, zapobiega to sytuacjom kiedy dane treningowe są rozpoznawane zbyt dobrze, a nowe sygnały nieznane wcześniej mają dużo niższą jakość rozpoznania.
 	\item[Epoka] Pełne przejście przez zestaw danych treningowych, tak że każdy element został przekazany do sieci jeden raz.
 	\item[Model] Reprezentacja obiektu utworzonego w wyniku uczenia sieci neuronowej. Z założenia model jest tym lepszy im dokładniej przewiduje klasę obiektu, którego wcześniej nie spotkał.
 \end{description}
@@ -235,24 +276,24 @@ Toruń 2018
 \addcontentsline{toc}{chapter}{Wstęp}
 Celem niniejszej pracy magisterskiej jest przedstawienie nowoczesnych architektur sieci neuronowych oraz przegląd najpopularniejszych bibliotek implementujących algorytmy uczenia maszynowego, a w szczególności zoptymalizowanych do pracy z uczeniem głębokim na wielu procesorach graficznych. 
 
-Głębokie sieci neuronowe, zawierające więcej niż jedną warstwę ukrytą, zostały wynalezione we wczesnych latach 60tych XX wieku. Algorytmy uczenia maszynowego były bardzo aktywnie rozwijane w latach 1950 - 1971, fundusze na badania w czasach zimnej wojny były w USA kilkukrotnie wyższe w udziale PKB. W czasie kryzysu z roku 1981, nadzieje wojska amerykańskiego na sztuczną inteligencję wygasły powodując epokę znaną jako "drugą zimę SI" (ang. second AI winter). Brak funduszy na badania znacząco zahamował rozwój systemów samouczących i do 2012 roku była to dziedzina zarezerwowana głównie dla doktorów matematyki i informatyki (głównie statystyków). 
+Głębokie sieci neuronowe, zawierające więcej niż jedną warstwę ukrytą, zostały wynalezione we wczesnych latach 60tych XX wieku. Algorytmy uczenia maszynowego były bardzo aktywnie rozwijane w latach 1950 - 1971, fundusze na badania w czasach zimnej wojny były w USA kilkukrotnie wyższe w udziale PKB. W czasie kryzysu z roku 1981, nadzieje wojska amerykańskiego na sztuczną inteligencję wygasły powodując epokę znaną jako "drugą zimę SI" (ang. second AI winter). Brak funduszy na badania znacząco zahamował rozwój systemów samouczących i do 2012 roku była to dziedzina zarezerwowana głównie dla doktorów matematyki i informatyki (głównie statystyków).\cite{siteAIhistory}
 
-Powrót sieci neuronowych na pierwsze strony gazet popularnonaukowych spowodował Geoffrey Hinton. Wykorzystał swoje idee sprzed lat na nowym, bardzo wydajnym sprzęcie. Mowa o dwóch kartach graficznych GeForce GTX 580 3GB\cite{NIPS2012_4824}, które przez tydzień trenowały model do rozpoznania obrazów pod zawody ImageNet Competition 2012. Wcześniej zawody w ropoznawaniu obiektów na obrazach wygrywało oprogramowanie łączące wiele algorytmów uczenia maszynowego, ale głębokie sieci neuronowe nie osiągały tak dobrych wyników, stąd nagły zwrot w kierunku narzędzia dającego tym lepsze rezultaty im więcej danych treningowych dostanie. Pierwszy raz można było zobaczyć głębokie sieci neuronowe mające trafność powyżej 80\%. Po publikacji dokumentu \"ImageNet Classification with Deep Convolutional Neural Networks\" nastąpił gwałtowny rozwój start-upów związanych z Deep Learningiem, a firmy mające w nazwie słowa 'AI' lub 'Deep' zanotowały znaczne zwiększenie funduszy na rozwój.
+Powrót sieci neuronowych na pierwsze strony gazet popularnonaukowych spowodował Geoffrey Hinton. Wykorzystał swoje idee sprzed lat na nowym, bardzo wydajnym sprzęcie. Mowa o dwóch kartach graficznych GeForce GTX 580 3GB\cite{NIPS2012_4824}, które przez tydzień trenowały model do rozpoznania obrazów pod zawody ImageNet Competition 2012. Wcześniej zawody w rozpoznawaniu obiektów na obrazach wygrywało oprogramowanie łączące wiele algorytmów uczenia maszynowego, ale głębokie sieci neuronowe nie osiągały tak dobrych wyników, stąd nagły zwrot w kierunku narzędzia dającego tym lepsze rezultaty im więcej danych treningowych dostanie. Pierwszy raz można było zobaczyć głębokie sieci neuronowe mające trafność powyżej 80\%. Po publikacji dokumentu ''ImageNet Classification with Deep Convolutional Neural Networks'' nastąpił gwałtowny rozwój start-upów związanych z Deep Learningiem, a firmy mające w nazwie słowa 'AI' lub 'Deep' zanotowały znaczne zwiększenie funduszy na rozwój.
 
-Moc obliczeniowa kart graficznych i dedykowanych układów tanieje z każdym rokiem. A zapotrzebowanie na moc obliczeniową dało przyspieszenie usługom chmurowym sprzedającym moc obliczeniową na żądanie. Zajmują się tym już nie tylko największe korporacje, ale również małe startupy jak Paperspace, Crestle, NVIDIA GPU Cloud. Kluczowe dla rozwoju dziedziny okazały karty graficzne firmy NVIDIA. Firma chcąc być liderem w rewolucji Sztucznej Inteligencji, zmieniła swój wizerunek z dostawcy rozrywki dla graczy i grafików na lidera urządzeń i oprogramowania stanowiącego podstawę systemów uczących. Przez nagłą modę, wszystkie obecnie używane narzędzia mają nie więcej niż 5 lat, oczywiście nie powstały od zera, opierają się na dużo starszych bibliotekach dla obliczeń lub narzędziach wewnętrznych wielu firm. Akademicki ruch wolnego oprogramowania pozwolił na praktykowanie dziedziny głębokiego uczenia kompletnym laikom. Przykładem może być biblioteka Caffe, napisana przez doktoranta z uniwersytetu w Berkeley. Wielu entuzjastów pomagało przez lata tworzyć wydajne implementacje algorytmów w bibliotece, którą po latach Facebook zaczął używać jako podstawowego narzędzia do przetwarzania swoich zbiorów danych. Doktor, który ją rozwijał pracuje obecnie na stanowisku dyrektora działu sztucznej inteligencji i wyznacza dalszy rozwój następcy swojego dzieła Caffe2. 
+Moc obliczeniowa kart graficznych i dedykowanych układów tanieje z każdym rokiem. A zapotrzebowanie na moc obliczeniową dało przyspieszenie usługom chmurowym sprzedającym moc obliczeniową na żądanie. Zajmują się tym już nie tylko największe korporacje, ale również małe startupy jak Paperspace, Crestle, NVIDIA GPU Cloud. Kluczowe dla rozwoju dziedziny okazały karty graficzne firmy NVIDIA. Firma chcąc być liderem w rewolucji Sztucznej Inteligencji, zmieniła swój wizerunek z dostawcy rozrywki dla graczy i grafików na lidera urządzeń i oprogramowania stanowiącego podstawę systemów uczących. Przez nagłą modę, wszystkie obecnie używane narzędzia mają nie więcej niż 5 lat, oczywiście nie powstały od zera, opierają się na dużo starszych bibliotekach dla obliczeń lub narzędziach wewnętrznych wielu firm. Akademicki ruch wolnego oprogramowania pozwolił na praktykowanie dziedziny głębokiego uczenia kompletnym laikom. Przykładem może być biblioteka Caffe, napisana przez doktoranta z uniwersytetu w Berkeley. Wielu entuzjastów pomagało przez lata tworzyć wydajne implementacje algorytmów w bibliotece, którą po latach Facebook zaczął używać jako podstawowego narzędzia do przetwarzania swoich zbiorów danych. Doktor, który ją rozwijał pracuje obecnie na stanowisku dyrektora działu sztucznej inteligencji i wyznacza dalszy rozwój następcy swojego dzieła Caffe2.\cite{siteJia}
 
 Dziedzina jest tak dynamiczna, że zdarza się iż literatura w czasie publikacji papierowej książki staje się nieaktualna. Dlatego wykorzystana w tej pracy literatura to głównie publikacje elektroniczne z serwisu arXiv, będące zazwyczaj jeszcze bez recenzji naukowej oraz dokumentacja narzędzi wykorzystywanych do badania wydajności. 
 
 Ilość mocy obliczeniowej potrzebnej do stworzenia dobrego modelu powoduje konieczność przedstawienia największych problemów osób praktykujących uczenie głębokich sieci neuronowych w taki sposób by uniknąć kosztownego dochodzenia do zadowalających wyników metodą prób i błędów. W rozdziale poświęconym wydajności architektur przedstawiono sposoby na uniknięcie najczęściej popełnianych błędów oraz zbiór powszechnie przyjętych praktyk dla osiągnięcia optymalnej wydajności przy zaledwie kilku próbach. Wydajność jest tu rozumiana zarówno jako czas obliczeń potrzebny do wyuczenia modelu rozpoznawania danego zagadnienia, oraz dokładność z jaką już nauczony model potrafi rozpoznać niespotkane wcześniej dane. Oba te parametry są od siebie zależne, ponieważ koszt poprawy jakości predykcji algorytmu o ostatnie 1-2\% może wynosić setki tysięcy złotych, zakłada się oczekiwaną poprawność lub korzysta z gotowych modeli dodając tylko własne klasy obiektów. Na koszt składa się energia elektryczna, serwery wyposażone w karty graficzne oraz czas oczekiwania na zakończenie obliczeń. Zmiany zachodzące w rozwoju sprzętu, techniki przenoszenia cech między modelami, tzw. transfer uczenia, pozwolą na tworzenie aplikacji w czasie rzeczywistym już za kilka do kilkunastu lat.
 
-Architektury posiadają wiele hiperparametrów, które wpływają na precyzję modelu. Po modyfikacji wartości dowolnego należy rozpocząć pracę algorytmu od początku, dlatego dobór odpowiednich wartości na początku jest niezwykle cenny. Na rok 2017, żadna otwartoźródłowa biblioteka nie posiada wbudowanych automatów do poszukiwania optymalnych hiperparametrów. Dobieranie ich dzieje się na intuicję wyrobioną dziesiątkami prób. Istnieje kilka nowatorskich technik dobierania hiperparametrów, które ze względu na to że zostały odkryte przez mało znanych badaczy, nie są jeszcze powrzechnie stosowane w dużych ośrodkach badawczych. Te techniki również są na tyle nowe, że nie ma wydawnictwa branżowego opisującego ich użycie dla praktyków. Jedyny sposób na chwile obecną to śledzenie publikacji naukowych wydawanych w serwisie arXiv. Kilka technik strojenia stałej uczenia w tym cykliczna zmiana stałej uczenia pozwala efektywnie zmniejszyć błąd klasyfikatora o 10-20\%, co wiąże się z dużo wyższą wydajnością, przy znikomym nakładzie pracy. 
+Architektury posiadają wiele hiperparametrów, które wpływają na precyzję modelu. Po modyfikacji wartości dowolnego należy rozpocząć pracę algorytmu od początku, dlatego dobór odpowiednich wartości na początku jest niezwykle cenny. Na rok 2017, żadna otwartoźródłowa biblioteka nie posiada wbudowanych automatów do poszukiwania optymalnych hiperparametrów. Dobieranie ich dzieje się na intuicję wyrobioną dziesiątkami prób. Istnieje kilka nowatorskich technik dobierania hiperparametrów, które ze względu na to że zostały odkryte przez mało znanych badaczy, nie są jeszcze powszechnie stosowane w dużych ośrodkach badawczych. Te techniki również są na tyle nowe, że nie ma wydawnictwa branżowego opisującego ich użycie dla praktyków. Jedyny sposób na chwile obecną to śledzenie publikacji naukowych wydawanych w serwisie arXiv. Kilka technik strojenia stałej uczenia w tym cykliczna zmiana stałej uczenia pozwala efektywnie zmniejszyć błąd klasyfikatora o 10-20\%, co wiąże się z dużo wyższą wydajnością, przy znikomym nakładzie pracy. 
 
-Do prezentacji działania bibliotek, architektur i algorytmów użyty został gotowy zbiór danych. Zestaw danych treningowych pochodzi z serwisu Kaggle. Są to zdjęcia z prześwietleń rentgenowskich podzielone na dwie kategorie:
+Do prezentacji działania bibliotek, architektur i algorytmów użyty został gotowy zbiór danych. Zestaw danych treningowych pochodzi z serwisu Mendeley. Są to zdjęcia z prześwietleń rentgenowskich podzielone na dwie kategorie:
 \begin{itemize}
 \item zdrowe płuca,
 \item zapalenie płuc.
 \end{itemize} 
-Dane są anonimowe, więc zgodne z prawem europejskim i zostały zweryfikowane przez Kaggle. Po zakończeniu pracy z danymi znajduje się porównanie z najlepszymi wynikami społeczności serwisu. 
+Dane są anonimowe, więc zgodne z prawem europejskim i zostały zweryfikowane przez Kaggle. Po zakończeniu pracy z danymi znajduje się porównanie z najlepszymi wynikami społeczności serwisu.\cite{siteMendeley}
 
 Badanym obszarem jest zagadnienie klasyfikacji obrazów przy pomocy głębokich sieci neuronowych. Algorytm sieci tworzy mapę cech każdej z klas. Na przykładzie zbioru zdjęć, prezentowany jest sposób wykorzystania gotowych modeli i metody optymalizacji je pod wybraną domenę. Takie podejście pozwala uniknąć wysokich kosztów tworzenia własnych modeli od zera.
 
@@ -260,7 +301,7 @@ Głębokie sieci neuronowe również świetnie się sprawdzają przy zadaniach n
 
 Praca została podzielona na etapy tworzenia sieci neuronowej od dołu jej struktury, po wyższe poziomy abstrakcji. Rozpoczyna od przedstawienia pojedynczych elementów i struktury matematycznej sieci. Następnie opisany jest każdy element tworzący gotową architekturę. Kolejnym elementem są już gotowe architektury i biblioteki implementujące różne rodzaje algorytmów, ze wspomaganiem na programowanie rozproszone na wiele urządzeń wyposażonych w jednostki graficzne.
 
-Wszystkie przedstawione kody źródłowe zostały napisane w języku Python 3.6 (z wyjątkiem fragmentu porównawczego w JavaScript). Python staje on dominującym językiem w uczeniu maszynowym, kosztem najpopularniejszego na chwile obecną języka R. Python składnią jest zbliżony do pseudokodu, dodatkowo wszystkie popularne biblioteki udostępniają interfejs programistyczny dla Pythona. Książki wykorzystane w tworzeniu tego tekstu, zawierają wyłącznie kod Pythonowy (z kilkoma nawiązaniami do języków R i C++).
+Wszystkie przedstawione kody źródłowe zostały napisane w języku Python 3.6 (z wyjątkiem fragmentu porównawczego w JavaScript). Python staje on dominującym językiem w uczeniu maszynowym, kosztem najpopularniejszego na chwile obecną języka R.\cite{sitePythonvR} Python składnią jest zbliżony do pseudokodu, dodatkowo wszystkie popularne biblioteki udostępniają interfejs programistyczny dla Pythona. Książki wykorzystane w tworzeniu tego tekstu, zawierają wyłącznie kod w języku skryptowym Python (z kilkoma nawiązaniami do języków R i C++).
 
 % ################################
 %        NEURONY
@@ -269,9 +310,9 @@ Wszystkie przedstawione kody źródłowe zostały napisane w języku Python 3.6 
 \chapter{Neurony}
 W niniejszym rozdziale została przedstawiona idea sztucznego neuronu McCullocha i Pittsa. Opracowany model biologicznego neuronu z 1943 roku jest tak uniwersalny, że do dziś stanowi podstawę budowy sieci neuronowych. Przedstawiono tu również w jaki sposób znaleźć mapę cech, czy mówiąc prościej jak nauczyć neurony rozpoznawać wzorce. Na końcu rozdziału opisane są możliwości jakie daje łączenie sztucznych neuronów w sztuczną sieć neuronową.
 
-Pierwszy model sztucznego neuronu był wyobrażeniem uproszczonej biologicznej reprezentacji neuronu mózgowego z lat 40tych XX wieku. Model ten stanowił bardziej próbę implementacji idei, niż odwzorowanie prawdziwego neuronu, który jest wielokrotnie bardziej złożony, a jego zachowanie nie jest jeszcze w pełni znane. Zdefiniowany przez noblistę Ramon y Cajal'a w 1906 roku neuron jest specjalistycznym nośnikiem wszelkich informacji, a także elementem przetwarzającym wszystkie doznania i emocje, oraz sterownikiem całego ciała. 
+Pierwszy model sztucznego neuronu był wyobrażeniem uproszczonej biologicznej reprezentacji neuronu mózgowego z lat 40tych XX wieku. Model ten stanowił bardziej próbę implementacji idei, niż odwzorowanie prawdziwego neuronu, który jest wielokrotnie bardziej złożony, a jego zachowanie nie jest jeszcze w pełni znane. Zdefiniowany przez noblistę Ramon y Cajal'a w 1906 roku neuron jest specjalistycznym nośnikiem wszelkich informacji, a także elementem przetwarzającym wszystkie doznania i emocje, oraz sterownikiem całego ciała.
 
-Uproszczeniem które pozwala na sprawną implementację, jest wyodrębnienie zasady przetwarzania informacji bioelektrycznej do kilku prostszych operacji. Takie uproszczenie składa się z wielu sygnałów wejściowych, wagi przypisanej każdemu z tych sygnałów, oraz pojedynczej wartości wyjściowej. Jak wielkie jest to uproszczenie widać przy porównaniu rysunku prawdziwego neuronu (również w uproszczeniu) oraz sztucznego neuronu. Taka budowa choć bardzo banalna, daje wiele możliwości. Podstawową zaletą jest prostota odwzorowania w urządzeniach elektronicznych. Przed nadejściem ery komputerów osobistych, stosowano maszyny nazywane perceptronami. Nazwa perceptron jest obecnie używana zamiennie z neuronem.
+Uproszczeniem które pozwala na sprawną implementację, jest wyodrębnienie zasady przetwarzania informacji bioelektrycznej do kilku prostszych operacji. Takie uproszczenie składa się z wielu sygnałów wejściowych, wagi przypisanej każdemu z tych sygnałów, oraz pojedynczej wartości wyjściowej. Jak wielkie jest to uproszczenie widać przy porównaniu rysunku prawdziwego neuronu (również w uproszczeniu) oraz sztucznego neuronu. Taka budowa choć bardzo banalna, daje wiele możliwości. Podstawową zaletą jest prostota odwzorowania w urządzeniach elektronicznych. Przed nadejściem ery komputerów osobistych, stosowano maszyny nazywane perceptronami. Nazwa perceptron jest obecnie używana zamiennie z neuronem.\cite{odkrywanieSieci}
 
 \begin{figure}[h]
 	\centering
@@ -298,14 +339,14 @@ Sztuczny neuron jest funkcją matematyczną $$f(x,w) \to y$$. Można go opisać 
 \end{itemize}
 
 Charakterystycznym elementem budulca sieci jest wiele wejść i tylko jedno wyjście, dlatego tak łatwo stworzyć model będący funkcją matematyczną.
-Dane wejściowe oraz wyjściowe mogą przyjmować wartości z ograniczonego przedziału. Wartości przekazywane na wejściu i wartość wyjściowa zazwyczaj przyjmują znormalizowane wartości z przedziału \(x \in [-1, 1]\) dla każdego z wejść, oraz \(y \in [-1,1]\) dla wyjścia. W uproszczeniu można przyjąć \(y = \sum\limits_{i=1}^n (w_i * x_i)\). \(w_i\) są nazywane wagami (dawniej wagami synaptycznymi) i podlegają zmianom w trakcie uczenia neuronu. Wagi stanowią zasadniczą cechę sieci neuronowych działających jako adapcyjne systemy przetwarzania informacji. Zsumowana wartość jest wejściem dla funkcji aktywacji neuronu. Funkcja aktywacji zwyczajowo ma kształt sygmoidy, ale stosowane są obecnie również funkcje nazywane rektyfikownymi jednostkami liniowymi. Funkcja progowa ma za zadanie symulację zachowania przekaźnika synapsy, po przekroczeniu określonego progu aktywuje się dane zachowanie lub jak na przykładzie obrazów rozpoznanie cechy.
+Dane wejściowe oraz wyjściowe mogą przyjmować wartości z ograniczonego przedziału. Wartości przekazywane na wejściu i wartość wyjściowa zazwyczaj przyjmują znormalizowane wartości z przedziału \(x \in [-1, 1]\) dla każdego z wejść, oraz \(y \in [-1,1]\) dla wyjścia. W uproszczeniu można przyjąć \(y = \sum\limits_{i=1}^n (w_i * x_i)\). \(w_i\) są nazywane wagami (dawniej wagami synaptycznymi) i podlegają zmianom w trakcie uczenia neuronu. Wagi stanowią zasadniczą cechę sieci neuronowych działających jako adapcyjne systemy przetwarzania informacji. Zsumowana wartość jest wejściem dla funkcji aktywacji neuronu. Funkcja aktywacji zwyczajowo ma kształt sigmoidy, ale stosowane są obecnie również funkcje nazywane rektyfikowanymi jednostkami liniowymi. Funkcja progowa ma za zadanie symulację zachowania przekaźnika synapsy, po przekroczeniu określonego progu aktywuje się dane zachowanie lub jak na przykładzie obrazów rozpoznanie cechy.
 
-Ta prosta jednostka stanowi dziś podstawę budowy każdej sieci neuronowej. Aby funkcja zwracała oczekiwane wyniki, wagi powinny być poprawnie ustawione. Początkowo wagi ustawiano ręcznie za pomocą operatora (osoby przełączającej fizyczne kable), który wcześniej przeliczał je dla odpowiednich parametrów wejścia\\wyjścia. W latach 50tych perceptron stał się pierwszym modelem umiejącym samodzielnie wyliczyć poprawnie wagi definiujące zadaną klasę na podstawie przykładów. Wagi w zależności od wartości mogą sygnał wejściowy wzmocnić gdy waga jest większa od 1, lub stłumić gdy waga jest mniejsza niż 1. To pozwala wyuczonemu już perceptronowi na porównanie cechy obiektu wejściowego z tym co potrafi rozpoznać. 
+Ta prosta jednostka stanowi dziś podstawę budowy każdej sieci neuronowej. Aby funkcja zwracała oczekiwane wyniki, wagi powinny być poprawnie ustawione. Początkowo wagi ustawiano ręcznie za pomocą operatora (osoby przełączającej fizyczne kable), który wcześniej przeliczał je dla odpowiednich parametrów wejścia\\wyjścia. W latach 50tych perceptron stał się pierwszym modelem umiejącym samodzielnie wyliczyć poprawnie wagi definiujące zadaną klasę na podstawie przykładów. Wagi w zależności od wartości mogą sygnał wejściowy wzmocnić gdy waga jest większa od 1, lub stłumić gdy waga jest mniejsza niż 1. To pozwala wyuczonemu już perceptronowi na porównanie cechy obiektu wejściowego z tym co potrafi rozpoznać.
 
 W jaki sposób sztuczny neuron jest w stanie rozpoznać sygnał wejściowy? Do wyjaśnienia zjawiska w literaturze zazwyczaj prezentuje się przedstawienie modelu w notacji wektorowej.
 \newline
 \(X = \begin{bmatrix} x_{1} \\ x_{2} \\ \dots \\ x_{n} \end{bmatrix} \) - wektor wyznaczający przestrzeń wejść, oraz \newline
-\(W = \begin{bmatrix} w_{1} \\ w_{2} \\ \dots \\ w_{n} \end{bmatrix} \) - wektor wyznaczający przestrzeń wag. \newline W ten notacji można wyrazić wyjście neuronu jako \(y= W^T * X\). Wartość wyjściowa neuronu y, będzie wyższa im bliższe będzie położenie wektorów.
+\(W = \begin{bmatrix} w_{1} \\ w_{2} \\ \dots \\ w_{n} \end{bmatrix} \) - wektor wyznaczający przestrzeń wag. \newline W ten notacji można wyrazić wyjście neuronu jako \(y= W^T * X\). Wartość wyjściowa neuronu y, będzie wyższa im bliższe będzie położenie wektorów.\cite{sieciNeuronowe}
 
 \begin{figure}[h]
 	\centering
@@ -436,7 +477,7 @@ i wiele innych mniej ważnych hiperparametrów
 Są to parametry kontrolujące sposób wykonania algorytmu uczącego i w ostateczności to one mają największy wpływ na zwykłe parametry wagi i progi (bias). Nie został ustalony jednolity sposób doboru hiperparametrów. Zwyczajowo stosuje się metodę prób i błędów na podstawie tego jak algorytm się zachowuje.\cite{deeplearningAI} Za każdą zmianą wartości należy uruchomić algorytm i sprawdzić jak zachowuje się funkcja kosztu, jeśli maleje lepiej niż przy poprzednich wartościach można stroić dalej w tym kierunku. Dopieranie odpowiednich wartości niestety jest procesem empirycznym i należy wyrobić odpowiednią intuicję aby jak najtrafniej dobierać parametry od początku. Wartości te też nie są stałe, zmieniają się w zależności od dziedziny badanego zagadnienia. Być może najbliższe lata przyniosą dobry i spójny przewodnik dobierania najlepszych wartości, pozwoli to znacznie zautomatyzować proces.
 
 \subsection{Wykres obliczeniowy}
-Aby opisać organizację obliczeń podsekcję o wstecznej propagacji błędu, należy zformalizować operacje obliczeń. Robi się to za pomocą wykresu obliczeniowego. Węzły w grafie reprezentują skalary, wektory, macierze i tensory. Drugim elementem w grafie są operacje czyli proste funkcje z jedną lub większą ilością zmiennych. Graf obliczeniowy przydaje się kiedy istnieje zdefinowana funkcja bądź zmienna, którą należy zoptymalizować, w przypadku sieci neuronowych oczywistą jest funkcja kosztu.
+Aby opisać organizację obliczeń podsekcję o wstecznej propagacji błędu, należy sformalizować operacje obliczeń. Robi się to za pomocą wykresu obliczeniowego. Węzły w grafie reprezentują skalary, wektory, macierze i tensory. Drugim elementem w grafie są operacje czyli proste funkcje z jedną lub większą ilością zmiennych. Graf obliczeniowy przydaje się kiedy istnieje zdefiniowana funkcja bądź zmienna, którą należy zoptymalizować, w przypadku sieci neuronowych oczywistą jest funkcja kosztu.
 
 Dla przykładu chcę obliczyć funkcję kosztu \(J\) o zmiennych \(a,b,c\) zdefiniowaną \(J(a,b,c) = 3(a+bc)\). Obliczenie tej funkcji składa się z trzech kroków, pierwszym jest policzenie \(b*c\).
 $$i = b * c$$
@@ -445,7 +486,7 @@ $$k = a + i$$
 Trzecim i ostatnim krokiem jest wyjście funkcji kosztu \(J = 3k\).
 Graf obliczeniowy powyższej funkcji znajduje się na rysunku poniżej.
 
-Do minimalizowania funkcji kosztu algorytm obliza pochodne w odwrotnej kolejności do przedstawionej na poprzednim przykładzie grafu.
+Do minimalizowania funkcji kosztu algorytm oblicza pochodne w odwrotnej kolejności do przedstawionej na poprzednim przykładzie grafu.
 
 \begin{figure}[h]
 	\centering
@@ -456,11 +497,11 @@ Do minimalizowania funkcji kosztu algorytm obliza pochodne w odwrotnej kolejnoś
 \subsection{Wsteczna propagacja błędu}
 Algorytm wstecznej propagacji błędu został opracowany w latach 70tych, jednak używany dopiero ponad 10 lat później kiedy Rumelhart, Hinton i Williams wykazali skuteczność metody w strojeniu wag w ukrytych warstwach sieci.
 
-Przekazując sygnał na wejście sieci zostaje on propagowany w przód przez wszystkie warsty do warstwy wyjściowej. Losowy neuron w warstwie ukrytej otrzymuje wartości wyjściowe z neuronów poprzedniej warstwy, mnoży każdy otrzymany sygnał z wagą przypisaną danemu wejściu i przekazuje zsumowany wynik do funkcji aktywacji. Każdy neuron wykonuje takie operacje do czasu trafienia na ostatnią warstwę gdzie sieć podaje juz oczekiwany wynik. Cały ten proces nazywa się propagacją w przód. Mając oczekiwany wynik na warstwie wyjściowej, zazwyczaj prawdopodobieństwo przynależności do każdej z uczonych klas należy wyliczyć funkcję błędu (ang. loss function). Funkcja ta pozwala określać odchylenie wyliczonego wyniku od właściwej odpowiedzi. Celem sieci jest zminimalizowanie błędu przez wyliczenie pochodnej z funkcji kosztu w stosunku do wag modelu.
+Przekazując sygnał na wejście sieci zostaje on propagowany w przód przez wszystkie warstwy do warstwy wyjściowej. Losowy neuron w warstwie ukrytej otrzymuje wartości wyjściowe z neuronów poprzedniej warstwy, mnoży każdy otrzymany sygnał z wagą przypisaną danemu wejściu i przekazuje zsumowany wynik do funkcji aktywacji. Każdy neuron wykonuje takie operacje do czasu trafienia na ostatnią warstwę gdzie sieć podaje juz oczekiwany wynik. Cały ten proces nazywa się propagacją w przód. Mając oczekiwany wynik na warstwie wyjściowej, zazwyczaj prawdopodobieństwo przynależności do każdej z uczonych klas należy wyliczyć funkcję błędu (ang. loss function). Funkcja ta pozwala określać odchylenie wyliczonego wyniku od właściwej odpowiedzi. Celem sieci jest zminimalizowanie błędu przez wyliczenie pochodnej z funkcji kosztu w stosunku do wag modelu.
 
 Wsteczna propagacja błędu jest narzędziem używanym przez algorytm gradientu spadkowego aby wyliczyć gradient funkcji błędu. W trakcie przejścia wstecz przez sieć neuronową następuje korekcja wag. Przechodząc od wartości wyjściowej należy zmodyfikować wagi warstwy poprzedzającej tak by zmniejszyć wartość funkcji błędu.
 
-Istnieją również analogiczne metod korekcji wag, jak szybka propagacja (ang. quick-propagation) oraz bardziej skomplikowane i ograniczone założeniami matematycznymi metoda gradientów sprzężonych i metoda Levenberga-Marquardta. Metody te są dużo szybsze od wstecznej propagacji błędu, ale przez swoje ograniczenia prawie nigdy nie są używane w praktyce. \cite{odkrywanieSieci}
+Istnieją również analogiczne metod korekcji wag, jak szybka propagacja (ang. quick-propagation) oraz bardziej skomplikowane i ograniczone założeniami matematycznymi metoda gradientów sprzężonych i metoda Levenberga-Marquardta. Metody te są dużo szybsze od wstecznej propagacji błędu, ale przez swoje ograniczenia prawie nigdy nie są używane w praktyce.\cite{odkrywanieSieci}
 
 %\subsection{Jak zbudować sieć neuronową}
 
@@ -486,20 +527,20 @@ Sieci konwolucyjne stosowane głównie do sygnałów wejściowych będących obr
 %        BIBLIOTEKI
 % ################################
 \chapter{Biblioteki implementujące uczenie głębokich sieci neuronowych}
-Nagły wzrost zainteresowania sieciami neuronowymi, spowodował pojawienie się wielu bibliotek implementujących Deep Learning i przy okazji wiele pobocznych zadań Machine Learningu. Obecnie wiele z największych firm technologicznych próbuje wypromować własny stos technologiczny oparty o licencję Open Source. Otwartość nie wynika z dobroduszności i chęci dzielenia się ze społecznością, a  Wspólnym mianownikiem wszystkich narzędzi jest kompletne API dla użytkowników języka Python. Jest to język w którym najszybciej można znaleźć literaturę wprowadzającą w zagadnienie.
+Nagły wzrost zainteresowania sieciami neuronowymi, spowodował pojawienie się wielu bibliotek implementujących algorytmy do pracy z głębokimi sieciami neuronowymi, a także przy okazji wiele pobocznych zadań Machine Learningu. Obecnie wiele z największych firm technologicznych próbuje wypromować własny stos technologiczny oparty o licencje zapewniające każdemu dostęp do źródeł. Otwartość nie wynika z dobroduszności i chęci dzielenia się ze społecznością, a wspólnym mianownikiem wszystkich narzędzi jest kompletne API dla użytkowników języka Python. Jest to język w którym najszybciej można znaleźć literaturę wprowadzającą w zagadnienie.\cite{siteDLByLanguage}
 
 Na uwagę zasługuje fakt pojawienie się kilku bibliotek napisanych wyłącznie dla JavaScript'u. Ich zastosowanie jest nastawione na użytkowników gotowych modeli i ogranicza się głównie do importu zminiaturyzowanych wag na telefon by szybko odpowiadać na sygnały użytkownika takie jak zdjęcie z aparatu, bądź komendę głosową. 
 
 \subsection{Tensorflow}
 \begin{figure}[h]
 	\centering
-			\includegraphics[resolution=100, scale=0.5]{Tensorflow.png}
+			\includegraphics[resolution=100, scale=0.6]{Tensorflow.png}
 		\caption{Logo biblioteki Tensorflow}
 \end{figure}
 
-Tensorflow jest pierwszą otwartoźródłową biblioteką dla obliczeń numerycznych uzywając grafów przepływu danych. Umożliwia praktykom uczenia maszynowego wykonywać intensywne obliczenia na danych przez wydajną implementację powszechnie używanych algorymtów głębokiego uczenia. Węzły w grafie przepływu są reprezentowane jako operacje matematyczne, zaś wierzchołki przedstawiają wielowymiarowe macierze (tensory) zapewniające komunikacje między wierchołkami i węzłami. Architektura tworzonych sieci w Tensorflow jest łatwa w modyfikacji, dlatego jeden model można wykorzystać do pracy z procesorami CPU, GPU, urządzeniami mobilnymi i chmurą mieszaną. \cite{DeepLearningTensorflow}
+Tensorflow jest pierwszą otwartoźródłową biblioteką dla obliczeń numerycznych używająca grafów przepływu danych. Umożliwia praktykom uczenia maszynowego wykonywać intensywne obliczenia na danych przez wydajną implementację powszechnie używanych algorytmów głębokiego uczenia. Węzły w grafie przepływu są reprezentowane jako operacje matematyczne, zaś wierzchołki przedstawiają wielowymiarowe macierze (tensory) zapewniające komunikacje między wierzchołkami i węzłami. Architektura tworzonych sieci w Tensorflow jest łatwa w modyfikacji, dlatego jeden model można wykorzystać do pracy z procesorami CPU, GPU, urządzeniami mobilnymi i chmurą mieszaną.\cite{DeepLearningTensorflow}
 
-Pierwotnie Tensorflow umożliwiał pracę tylko z językiem Python. Od wersji 1.0 dodano eksperymentalne API do Javy i Golag. Ta wersja zadebiutowała z innowacyjnym narzędziem Tensorflow Debugger. Jest on narzędziem tekstowym do debugowania działających aplikacji.
+Pierwotnie Tensorflow umożliwiał pracę tylko z językiem Python. Od wersji 1.0 dodano eksperymentalne API do Javy i Golang. Ta wersja zadebiutowała z innowacyjnym narzędziem Tensorflow Debugger. Jest on narzędziem tekstowym do debugowania działających aplikacji.
 
 Należy zaznaczyć że biblioteka jest wieloplatformowa i działa na wszystkich popularnych systemach operacyjnych:
 \begin{itemize}
@@ -511,7 +552,7 @@ Należy zaznaczyć że biblioteka jest wieloplatformowa i działa na wszystkich 
 \item Raspberry PI
 \end{itemize}
 
-Zestaw narzędzie zawiera Tensorflow Board graficzne oprogramowanie do analizy utworzonych modeli. Łatwość użycia i przyjęcie modelu Open Source sprawia że jest to najczęściej używana biblioteka podczas prac naukowych, o czym świadczy ilość cytowań[1]. Wiele firm wspiera projekt używając kodu i dodając do niego własne rozszerzenia, warto wymienić choćby kilku większych kontrybutorów:
+Zestaw narzędzie zawiera \textit{Tensorflow Board} graficzne oprogramowanie do analizy utworzonych modeli. Łatwość użycia i przyjęcie modelu Open Source sprawia że jest to najczęściej używana biblioteka podczas prac naukowych, o czym świadczy ilość cytowań\cite{siteTensorflowCitations}. Wiele firm wspiera projekt używając kodu i dodając do niego własne rozszerzenia, warto wymienić choćby kilku większych kontrybutorów:
 \begin{itemize}
 \item Google,
 \item ARM,
@@ -523,11 +564,11 @@ Zestaw narzędzie zawiera Tensorflow Board graficzne oprogramowanie do analizy u
 
 Główne zalety:
 \begin{itemize}
-\item Największe zasoby dokumentacji i tutoriali,
-\item Oglądanie w czasie rzeczywistym procesu uczenia przez Tensorboard,
-\item Największa społeczność skupiona wokół projektu spośród wszystkich bibliotek,
+\item Największe zasoby dokumentacji i kursów w sieci,
+\item Oglądanie w czasie rzeczywistym procesu uczenia przez \textit{Tensorboard},
+\item Największa społeczność programistów skupiona wokół projektu spośród wszystkich bibliotek,
 \item Wspiera uczenie rozproszone na wielu maszynach,
-\item Odmiany Tensorflow Lite i Tensorflow JS umożliwiają zastosowanie tych samych modeli na urządzeniach mobilnych i przeglądarkach
+\item Biblioteki pokrewne, korzystające ze wspólnego silnika \textit{Tensorflow Lite} i \textit{Tensorflow.JS} umożliwiają zastosowanie tych samych modeli na urządzeniach mobilnych i przeglądarkach.
 \end{itemize}
 
 Tensorflow ma dwie wady, działające na niekorzyść osób zaczynających pracę z sieciami neuronowymi:
@@ -569,31 +610,31 @@ classes = model.predict(x_test, batch_size=128)
 
 \begin{figure}[h]
 	\centering
-			\includegraphics[resolution=100, scale=0.25]{Keras.png}
+			\includegraphics[resolution=100, scale=0.3]{Keras.png}
 		\caption{Logo biblioteki Keras}
 \end{figure}
 
-Keras jest frameworkiem udostępniającym wysokopoziomowe API dla głębokich sieci neuronowych. Jego źródła zostały otwarte w 2015 roku. Społeczność skupiona wokół projektu wyróżnia się bardzo pozytywnym podejściem dla osób z poza środowiska naukowego i jest otwarta na propozycje rozwoju biblioteki. Nazwa Keras pochodzi od greckiego słowa κέρας oznaczającego róg, geneza nazwy wywodzi się z Odyseji. 
+Keras jest frameworkiem udostępniającym wysokopoziomowe API dla głębokich sieci neuronowych. Jego źródła zostały otwarte w 2015 roku. Społeczność skupiona wokół projektu wyróżnia się bardzo pozytywnym podejściem dla osób z poza środowiska naukowego i jest otwarta na propozycje rozwoju biblioteki. Nazwa Keras pochodzi od greckiego słowa \kappa\epsilon\rho\alpha\zeta oznaczającego róg, geneza nazwy wywodzi się z greckiego eposu Homera pod tytułem Odyseja.
 
-Założeniem François Chollet'a, czyli autora jest zwiększenie szybkości przeprowadzania ekperymentów, dlatego Keras ma wysokopoziomowe API udostępniające uruchomienie algorytmów głębokiego uczenia w kilku liniach kodu. Zalety wymieniane przez autora:
+Założeniem François Chollet'a, czyli autora jest zwiększenie szybkości przeprowadzania eksperymentów, dlatego Keras ma wysokopoziomowe API udostępniające uruchomienie algorytmów głębokiego uczenia w kilku liniach kodu. Zalety wymieniane przez autora:
 \begin{itemize}
-\item Wspieranie łatwego i szybkiego prototypowania (przez modualrność, przyjazny interfejs, możliwośći rozszerzenia),
+\item Wspieranie łatwego i szybkiego prototypowania (przez modularność, przyjazny interfejs, możliwości rozszerzenia),
 \item Wspiera konwolucyjne sieci neuronowe, rekurencyjne sieci neuronowe i umożliwia mieszanie obu,
 \item Działa na CPU i GPU.
 \end{itemize}
 
-Działanie opiera się na wykorzystaniu rdzenia Tensorflow, CNTK lub Theano jako bibliotek wykonujących obliczenia. Potwierdza to idee stworzenia narzędzia dla szybkieko prototypowania modeli.
+Działanie opiera się na wykorzystaniu rdzenia Tensorflow, CNTK lub Theano jako bibliotek wykonujących obliczenia. Potwierdza to idee stworzenia narzędzia dla szybkiego prototypowania modeli.\cite{bookDeepLearningKeras}
 
 Do zalet można zaliczyć:
 \begin{itemize}
 \item Najszybsze prototypowanie ze wszystkich rozwiązań na rynku,
-\item Uproszczony interfejs zachęca do eksperymentów osoby nie związane z Data Science,
+\item Uproszczony interfejs zachęca do eksperymentów osoby nie związane z analizą danych,
 \item Wbudowane wsparcie do pracy na GPU,
 \item Wspiera strumieniowanie danych przez Spark,
 \item Działa nie tylko na kartach NVIDIA, ale też Google TPU, AMD
 \end{itemize}
 
-Przy dłuższej pracy i bardziej skomplikowanych modelach wysokopoziomowość ogranicza elastyczność w działaniu. Nie ma tak wielu możliwości kontroli sieci jak pozostałe biblioteki, dlatego głównie poleca się ją dla nowicjuszy i eksperymentów przy standardowych typach sieci (konwolucyjnych, rekurencyjnych).
+Przy dłuższej pracy i bardziej skomplikowanych modelach, wysokopoziomowość interfejsu programistycznego biblioteki ogranicza elastyczność w działaniu. Brak wielu możliwości kontroli sieci, powoduje że poleca się ją głównie dla nowicjuszy oraz eksperymentów przy standardowych typach sieci (konwolucyjnych, rekurencyjnych).
 
 \noindent
 \newline 
@@ -604,7 +645,13 @@ Kod źródłowy: https://github.com/keras-team/keras
 Licencja: MIT
 
 \subsection{PyTorch}
-Oprogramowanie wywodzące się ze starej biblioteki Torch. Otwartoźródłowa paczka uczenia maszynowego dla języka Python. Główna biblioteka używana w Facebook'u do przetwarzania języka naturalnego. 
+\begin{figure}[h]
+	\centering
+			\includegraphics[resolution=100, scale=0.5]{PyTorch.png}
+		\caption{Logo biblioteki PyTorch}
+\end{figure}
+
+Oprogramowanie wywodzące się ze starej biblioteki \textit{Torch}. Otwartoźródłowy zestaw bibliotek uczenia maszynowego dla języka Python. Stał się zestawem różnych narzędzi od kiedy do głównego repozytorium zaczęto dodawać inne mniejsze biblioteki oraz narzędzia takie jak serwowanie modeli wzdłuż wszystkich platform. Główna biblioteka używana w Facebook'u do przetwarzania języka naturalnego. 
 
 PyTorch dostarcza dwie wysokopoziomowe funkcjonalności:
 \begin{itemize}
@@ -617,26 +664,20 @@ Główne zalety:
 \item Proces modelowania jest prosty i przejrzysty dzięki architekturze opartej na programowaniu imperatywnym,
 \item Dynamiczne generowanie grafu sieci,
 \item Deklaratywna równoległość danych, czyli dzielenie sygnałów wejściowych na wiele mniejszych,
-\item Najbardziej ''Pythoniczna'' składnia,
-\item Zawiera sporą ilość pretrenowanych modeli i architektur, pozwalając na kombinację ich w nowe struktury,
-\item Graf obliczeniowy jest generowany w trakcie działania programu, co pozwala na używanie dowolnego debuggera i nawet drukowanie obecnego stanu obliczeń na ekran, jest to spory potencjał na narzędzia interaktywne
-\item Służy także jako alternatywa dla numpy z możliwością obliczeń na GPU,
-\item Specjalnie napisane zarządzanie pamięcią GPU, pozwalające na niesamowicie wydajne zarządzanie pamięcią w porównaniu do konkurencji
+\item Najbardziej ''pythoniczna'' składnia,
+\item Zawiera sporą ilość gotowych do użycia modeli i architektur, pozwalając na kombinację ich w nowe struktury,
+\item Graf obliczeniowy jest generowany w trakcie działania programu, co pozwala na używanie dowolnego debuggera i nawet drukowanie obecnego stanu obliczeń na ekran, jest to spory potencjał na narzędzia interaktywne,
+\item Służy także jako alternatywa dla NumPy z możliwością obliczeń na GPU,
+\item Specjalnie napisane zarządzanie pamięcią GPU, pozwalające na niesamowicie wydajne zarządzanie pamięcią w porównaniu do konkurencji.
 \end{itemize}
 
-PyTorch jest jednym z najmłodszych narzędzi, dlatego ma kilka poważnych wad:
+PyTorch jest jednym z najmłodszych narzędzi, dlatego ma kilka nierozwiązanych jeszcze problemów:
 \begin{itemize}
 \item Nie jest zalecany do zastosowań produkcyjnych. Obecna wersja jest numerowana 0.4, wersja 1.0 była zapowiedziana na lato 2018. Na wrzesień 2018 brak informacji kiedy nastąpi premiera,
 \item Brak gotowych narzędzi do monitoringu i wizualizacji procesu uczenia i podglądu grafu sieci
-\end{itemize}
+\end{itemize}\cite{book:2226069}
 
-Język Pyro do programowania probalistycznego stworzony przez firmę Uber opiera się na PyTorch.
-
-\begin{figure}[h]
-	\centering
-			\includegraphics[resolution=100, scale=0.3]{PyTorch.png}
-		\caption{Logo biblioteki PyTorch}
-\end{figure}
+Język \textit{Pyro} do programowania probalistycznego stworzony przez firmę Uber opiera się na PyTorch.
 
 \noindent
 \newline
@@ -650,13 +691,13 @@ Licencja: Brak określonej. Prawa autorów zastrzeżone, oprogramowanie \"as is\
 \subsection{Tensorflow.js [Deeplearn.js]}
 \begin{figure}[h]
 	\centering
-			\includegraphics[resolution=100, scale=0.5]{TensorflowJS.png}
+			\includegraphics[resolution=100, scale=0.6]{TensorflowJS.png}
 		\caption{Logo biblioteki Tensorflow.js}
 \end{figure}
 
-W 2017 roku został opublikowany projekt o nazwie Deeplearn.js z celem wprowadzenia uczenia maszynowego i głębokiego uczenia do przeglądarek internetowych bez konieczności korzystania z zewnętrznego API. 
+W 2017 roku został opublikowany projekt o nazwie Deeplearn.js z celem wprowadzenia uczenia maszynowego i głębokiego uczenia do przeglądarek internetowych bez konieczności korzystania z zewnętrznego API.
 
-JavaScript kojarzony jest przez starych programistów jako powolny interpretowany język ograniczony do pracy w obrębie jednego procesu procesora CPU. Aby uniknąć restrykcji wydajnościowych zaimplementowano wykonanie operacji na WebGL, przeglądarkowemu interfejsowi do OpenGL.
+JavaScript kojarzony jest jeszcze często przez programistów nie aktualizujących wiedzy z programowania front-end'u jako powolny interpretowany język ograniczony do pracy w obrębie jednego procesu procesora CPU.\cite{siteSlowJavaScript} Aby uniknąć restrykcji wydajnościowych zaimplementowano wykonanie operacji na WebGL, interfejsowi OpenGL działającym na przeglądarkach internetowych.
 
 W maju 2018 zespół odpowiedzialny za rozwój DeepLearn.js został połączony z zespołem programistów pracujących przy Tensorflow, a biblioteka zmieniła nazwę na Tensorflow.js. Dostarcza calej mocy Tensorflow do przeglądarki czy dowolnego interpretera kodu Javascript jak Node.js.
 
@@ -668,14 +709,14 @@ Biblioteka na podstawowym poziomie dostarcza dwa elementy:
 \item LayerAPI -- komponent zbudowany na CoreAPI, udostępnia abstrakcje wyższego poziomu
 \end{itemize}
 
-Podstawową jednostką danych jest tensor, czyli zbiór wartości liczbowych ułożonych w tablicę jedno lub więcej wymiarową. Tensor definiuje się konstrukturem tf.tensor, gdzie należy określić tablice oraz kształt tensora. Istnieje wiele metod pozwalających na stworzenie tensorów róznych kształtów takich jak tf.zeros do wypełnienia podanego kształtu zerami, oraz takie jak tensor1d, tensor2d, tensor3d i tensor4d dla ułatwienia czytelności przy tworzeniu najczęściej używanych rozmiarów.
+Podstawową jednostką danych jest tensor, czyli zbiór wartości liczbowych ułożonych w tablicę jedno lub więcej wymiarową. Tensor definiuje się konstruktorem \textit{tf.tensor}, gdzie należy określić tablice oraz kształt tensora. Istnieje wiele metod pozwalających na stworzenie tensorów różnych kształtów takich jak \textit{tf.zeros} do wypełnienia podanego kształtu zerami, oraz takie jak \textit{tensor1d, tensor2d, tensor3d, tensor4d} dla ułatwienia czytelności przy tworzeniu najczęściej używanych rozmiarów.
 Tensory są niezmienne co oznacza że raz stworzony tensor nie może zmieniać wartości. 
 
-Zmienne (ang. Variables) są inicjalizowane wartościami tensorów i można modyfikować ich wartości, używa się ich do trzymania i aktualizacji wartości w trakcie trenowania modelu.
+Zmienne (ang. variables) są inicjalizowane wartościami tensorów co daje możliwość modyfikowania ich wartości, używa się ich do trzymania i aktualizacji wartości w trakcie trenowania modelu.
 
-Operacje (ang. Operations [Ops]) to metody pozwalające na modyfikacje danych. Tensorflow.js udostępnia całą gamę operacji do pracy z machine learningiem. Działają one na tensorach przez zwracanie wyniku operacji jako nowy tensor.
+Operacje (ang. operations [Ops]) to metody pozwalające na modyfikacje danych. \textit{Tensorflow.js} udostępnia całą gamę operacji do pracy z machine learningiem. Działają one na tensorach przez zwracanie wyniku operacji jako nowy tensor.
 
-Powyższe struktury danych należą do CoreAPI, druga warstwa operacji LayerAPI operuje na wyższym poziomie abstrakcji i zapewnia zupełnie inne bloki do budowy sieci neuronowych. Najważniejsze atuty tej warsty to wysokie podobieństwo do kodu tworzonego w Keras, możliwość naśladowania stylu programowania znanego z języka Python. Poniżej prezentowany jest kod porównawczy między Pythonową wersją tego samego kodu i Javascriptową reprezentacją z użyciem Tensorflow.js. Kod wykonujący intensywne operacje napisany jest asynchronicznie. Największą zaletą może się jednak okazać brak konieczności używania NumPy, którego w JavaScript brakuje. Wszystkie operacje matematyczne wymagane do uczenia maszynowego z NumPy zostały zaimplementowane w bibliotece.
+Powyższe struktury danych należą do CoreAPI, druga warstwa operacji LayerAPI operuje na wyższym poziomie abstrakcji i zapewnia zupełnie inne bloki do budowy sieci neuronowych. Najważniejsze atuty tej warstwy to wysokie podobieństwo do kodu tworzonego w Keras, możliwość naśladowania stylu programowania znanego z języka Python. Poniżej prezentowany jest kod porównawczy między pythonową wersją tego samego kodu i javascriptową reprezentacją z użyciem \textit{Tensorflow.js}. Kod wykonujący intensywne operacje napisany jest asynchronicznie. Największą zaletą może się jednak okazać brak konieczności używania NumPy, którego w JavaScript brakuje. Wszystkie operacje matematyczne wymagane do uczenia maszynowego z NumPy zostały zaimplementowane w bibliotece.\cite{siteTensorflowJSConcepts}
 
 \noindent
 \begin{minipage}{\linewidth}
@@ -717,14 +758,16 @@ Licencja: Licencja: Apache 2.0
 \subsection{PaddlePaddle}
 \begin{figure}[h]
 	\centering
-			\includegraphics[resolution=100]{PaddlePaddle.png}
+			\includegraphics[resolution=100, scale=1.2]{PaddlePaddle.png}
 		\caption{Logo biblioteki Paddle}
 \end{figure}
-Pełna nazwa biblioteki PArallel Distributed Deep LEarning. Oprogramowanie skierowane głównie na jeden rynek, mało znane w Europie / USA, jest to zaś najpopularniejszy framework w Chinach. Tworzony i utrzymywany przez firmę Baidu, znany jako Chiński klon Google. Założony w 2000 roku przeniósł pomysł na wyszukiwarkę internetową na chiński rynek i od tej pory z powodzeniem kopiuje wszystkie technologie i pomysły Google, w tym autonomiczne samochody. Jedynym problemem jaki może napotkać osoba nie znająca języka chińskiego jest częste zgłaszanie uwag i komentarzy do kodu bez opisu w języku angielskim. Tutoriale udostępniane w internecie pochodzą głównie od Baidu, stąd bardzo mała popularność poza rodzimym rynkiem. Ze strony domowej można wyczytać często powtarzające się słowa o \"prostocie użycia\", \"prostocie działania\". 
+Pełna nazwa biblioteki ''\textbf{PA}rallel \textbf{D}istributed \textbf{D}eep \textbf{LE}arning''. Oprogramowanie skierowane głównie na jeden rynek, mało znane w Europie / USA. Jest to zaś najpopularniejszy framework w Chinach. Tworzony i utrzymywany przez firmę Baidu, znaną jako chiński klon Google. Założona w 2000 roku przeniosła pomysł na wyszukiwarkę internetową na chiński rynek i od tej pory z powodzeniem kopiuje wszystkie technologie i pomysły Google, w tym autonomiczne samochody. 
 
-Przechodząc do treści technicznych PaddlePaddle opisywany jest jako zestaw narzędzi i bibliotek do uczenia głębokiego bazujący na \"języku programowania do uczenia głębokich sieci neuronowych\". Biblioteka jest bardzo elastyczna i pozwala na tworzenie dowolnego kształtu modeli. Jak w Tensorflow tak i tutaj istnieje graficzne narzędzie wizualizacji nauczania \"Visual DL\", narzędzie pozwala wyświetlić wydajność trenowania i statystyki danych takie jak dokładność, wartości funkcji kosztu, rozkład parametrów, próbki obrazu i dźwięku, wykres ONNX modelu.
+Problemem jaki może napotkać osoba nie znająca języka chińskiego jest częste zgłaszanie uwag i komentarzy do kodu bez opisu w języku angielskim. Kursy praktycznego wykorzystania narzędzia udostępniane w internecie pochodzą głównie od pracowników firmy Baidu, a kierowane są najczęściej dla studentów chińskich uniwersytetów, stąd bardzo mała popularność poza rodzimym rynkiem. Ze strony domowej można wyczytać często powtarzające się słowa o ''prostocie użycia'', ''prostocie działania''. 
 
-Na podstawie biblioteki istnieje cała społeczność i inicjatywa EasyDL, mająca ułatwić firmom bez specjalistów od algorytmów uczenia maszynowego na wykonanie szybkich i sprawnych modeli bez konieczności posiadania terabajtów danych. Społeczność skupia się głównie w ośrodkach akademickich i startupach w Chinach, gdzie PaddlePaddle jest standardem.
+Przechodząc do treści technicznych, PaddlePaddle opisywany jest jako zestaw narzędzi i bibliotek do uczenia głębokiego bazujący na ''języku programowania do uczenia głębokich sieci neuronowych''. Biblioteka jest bardzo elastyczna i pozwala na tworzenie dowolnego kształtu modeli. Jak w Tensorflow tak i tutaj istnieje graficzne narzędzie wizualizacji nauczania \textit{Visual Deep Learning}, narzędzie pozwala wyświetlić wydajność trenowania i statystyki danych takie jak dokładność, wartości funkcji kosztu, rozkład parametrów, próbki obrazu i dźwięku, wykres ONNX modelu.
+
+Na podstawie biblioteki istnieje cała społeczność i inicjatywa \textit{EasyDeepLearning}, mająca ułatwić firmom nie zatrudniającym specjalistów od algorytmów uczenia maszynowego na wykonanie szybkich i sprawnych modeli bez konieczności posiadania terabajtów danych. Społeczność skupia się głównie w ośrodkach akademickich i start-upach w Chinach, gdzie PaddlePaddle jest standardem.
 
 Same możliwości biblioteki są potężne, pozwala na budowę:
 \begin{itemize}
@@ -736,11 +779,11 @@ Same możliwości biblioteki są potężne, pozwala na budowę:
 \item Analizatora nastrojów
 \end{itemize}
 
-Przy bliższym spotkaniu, widać że jest to klon Tensorflow, który ze względu na brak konkurencji w Chinach jest dużo szybciej rozwijany i jego możliwości w zakresie uczenia na farmach serwerów przewyższają pierwowzór. Z produktów opartych na Baidu korzysta prawie miliard osób, stąd bardzo duży nacisk na optymalizację i własne rozwiązania technologiczne przekładają się na wysoką wydajność.
+Przy bliższym spotkaniu, widać że jest to klon Tensorflow, który ze względu na brak konkurencji w Chinach jest dużo szybciej rozwijany, a jego możliwości w zakresie uczenia na farmach serwerów przewyższają pierwowzór. Z produktów opartych na Baidu korzysta prawie miliard osób, stąd bardzo duży nacisk na optymalizację i własne rozwiązania technologiczne przekładają się na wysoką wydajność.
 
 \noindent
 \newline
-Dokumentacja: http://paddlepaddle.org/documentation/docs/en/0.15.0/getstarted/index_en.html
+Dokumentacja: http://www.paddlepaddle.org/documentation/en
 \newline
 Kod źródłowy: https://github.com/PaddlePaddle/Paddle
 \newline
@@ -749,9 +792,10 @@ Licencja: Apache 2.0
 \subsection{MXNet}
 \begin{figure}[h]
 	\centering
-			\includegraphics[resolution=100]{MXNet.png}
+			\includegraphics[resolution=100,scale=2]{MXNet.png}
 		\caption{Logo biblioteki MXNet}
 \end{figure}
+
 Biblioteka do głębokiego uczenia stworzona przez fundację Apache. Wspiera największą ilość języków ze wszystkich dostępnych bibliotek:
 \begin{itemize}
 \item Python,
@@ -762,16 +806,17 @@ Biblioteka do głębokiego uczenia stworzona przez fundację Apache. Wspiera naj
 \item R,
 \item Scala
 \end{itemize}
+
 O popularności i powszechne przyjęciu świadczy implementacja na chmurach Microsoft Azure, Intel i Amazon Web Services. Główne zastosowania do których MXNet jest używany to rozpoznawanie mowy i pisma ręcznego, przetwarzanie języka naturalnego i przewidywanie zdarzeń. Użycie skupia się w kręgach przedsiębiorstw, trudno zatem znaleźć badania akademickie przeprowadzane z wykorzystaniem tej biblioteki.
 
-Kolejnym atutem MXNet jest przenośność modeli. Są one zoptymalizowane by nie zajmować dużo pamięci, pozwala to na przeniesienie modelu wytrenowanego w chmurze do urządzenia mobilnego jak smartfon. Łatwe serwowanie modeli, skalowanie na żądanie z mieszaniem GPU i CPU jest zdecydowanie największymi atutami dlaczego Amazon wybrał tą bibliotekę jako pierwszą na swoje centra obliczeniowe. 
+Kolejnym atutem MXNet jest przenośność modeli. Są one zoptymalizowane by nie zajmować dużo pamięci, pozwala to na przeniesienie modelu wytrenowanego w chmurze do urządzenia mobilnego jak smartfon. Łatwe serwowanie modeli, skalowanie na żądanie z mieszaniem GPU i CPU jest zdecydowanie największymi atutami dlaczego Amazon wybrał tą bibliotekę jako pierwszą na swoje centra obliczeniowe.\cite{book:2256184}
 
 Gluon jest API wysokiego poziomu dostarczanym wraz z MXNet. Jego zadaniem jest dostarczyć czystej, spójnej i prostej składni bez obniżania wydajności działania aplikacji. Istnieje również druga warstwa API wysokopoziomowego (można wybierać, z której chce się korzystać) o nazwie Module. Ta warstwa skupia się na pracy z Symbol, paczką do przetwarzania wyrażeń symbolicznych.\cite{DBLP:journals/corr/ChenLLLWWXXZZ15} Jego najlepszymi atutami są:
 \begin{itemize}
 \item uproszczenie składni budowanych sieci neuronowych, przypominają one pseudokod,
 \item elastyczna struktura zapewniająca kod imperatywny,
 \item dynamiczny graf sieci, umożliwia zmiany struktury sieci w trakcie działania programu,
-\item cache'owanie sieci neuronowej poprawia wydajność, w tym celu używa się modelu sieci HybridSequential
+\item ładowanie sieci neuronowej do pamięci podręcznej poprawia wydajność, w tym celu używa się modelu sieci \textit{HybridSequential}
 \end{itemize}
 
 \noindent 
@@ -788,6 +833,7 @@ Licencja: Apache 2.0
 			\includegraphics[resolution=100, scale=0.35]{Caffe2.png}
 		\caption{Logo biblioteki Caffe2}
 \end{figure}
+
 Biblioteka wywodzi się z architektury Caffe, narzędzia dla praktyków głębokich sieci neuronowych udostępniającego przejrzystą składnię API w czasach przed pojawieniem się bibliotek wspieranych przez wielkie korporacje. Pierwsza wersja napisana przez Yangqing Jia w trakcie doktoratu na uniwersytecie Berkeley, obecnie jest dyrektorem działu AI w Facebook'u, gdzie rozwijany jest Caffe2. \cite{jia2014caffe} O wieku świadczy dobór języków dostępnych do wykorzystania w bibliotece:
 \begin{itemize}
 \item C++
@@ -795,12 +841,12 @@ Biblioteka wywodzi się z architektury Caffe, narzędzia dla praktyków głębok
 \item MATLAB
 \end{itemize}
 
-Caffe2 jest rozwinięciem tego modelu, również pracuje na GPU, CPU, jest skalowalny, posiada spore wsparcie społeczności. Różnica jest w modyfikacji architektury obliczeniowej. Główną przewagą jest prosta skalowalność na wiele maszyn i urządzenia mobilne. Ta modularność i elastyczność nazywana jest odframeworkowaniem (ang. un-framework) poprzedniej wersji.
+Caffe2 jest rozwinięciem tego modelu, również pracuje na GPU, CPU, jest skalowalny, posiada spore wsparcie społeczności. Różnica jest w modyfikacji architektury obliczeniowej. Główną przewagą jest prosta skalowalność na wiele maszyn i urządzenia mobilne. Taki podział na komponenty i elastyczność w wykorzystaniu podzespołów nazywana jest odframeworkowaniem (ang. un-framework) poprzedniej wersji.
 \cite{DBLP:journals/corr/JiaSDKLGGD14}
 
-Cała baza została napisana w języku C++ i była testowana latami przez Facebook'a do rozpoznawania obiektów na obrazie, analizy wiadomości do rekomendowania reklam, systemów rekomendujących na podstawie profilu użytkownika. Wydajność jest to jedną z największych zalet, po opracowaniu odpowiedniej architektury, cały kod wdrożeniowy na produkcję może być napisany w C++. Na jednym procesorze NVIDIA DGX-1 prędkość przetwarznia wynosi 231 obrazów na sekundę.\cite{NvidiaCaffe2(https://developer.nvidia.com/caffe2)}
+Cała baza została napisana w języku C++ i była testowana latami przez Facebook'a do rozpoznawania obiektów na obrazie, analizy wiadomości do rekomendowania reklam, systemów rekomendujących na podstawie profilu użytkownika. Wydajność jest to jedną z największych zalet, po opracowaniu odpowiedniej architektury, cały kod wdrożeniowy na produkcję może być napisany w C++. Na jednym procesorze NVIDIA DGX-1 prędkość przetwarzania wynosi 231 obrazów na sekundę.\cite{siteNvidiaCaffe2}
 
-Caffe2 posiada zoo modeli, gotowe do użycia pretrenowane modele dla najczęściej spotykanych zastosowań bez potrzeby wydawania zasobów na tworzenie modelu od zera. Pełna lista modeli, z którymi można eksperymentować jest pokaźna (na dzień obecny największa ze wszystkich dostępnych zwierząt w ZOO):
+Caffe2 posiada zoo modeli, gotowe do użycia wcześniej wyuczone modele dla najczęściej spotykanych zastosowań bez potrzeby wydawania zasobów na tworzenie modelu od zera. Pełna lista modeli, z którymi można eksperymentować jest pokaźna (na dzień obecny największa ze wszystkich dostępnych zwierząt w ZOO):
 \begin{itemize}
 \item AlexNet,
 \item GoogleNet,
@@ -814,9 +860,9 @@ Caffe2 posiada zoo modeli, gotowe do użycia pretrenowane modele dla najczęści
 \item ZFNET 512
 \end{itemize}
 
-Dojrzałość produktu sprawiła że istnieje wiele narzędzi programistycznych ułatwiających pracę z biblioteką. Programiści aplikacji mobilnych mają do dyspozycji wtyczki integracyjne do Visual Studio, Android Studio, Xamarin. Dla pozostałych Caffe2 jest dostępne na każdą popularną platformę desktopową oraz w usługach chmurowych. Kod napisany na jedną platforme jest przenoszalny na pozostałe bez konieczności modyfikacji.
+Dojrzałość produktu sprawiła że istnieje wiele narzędzi programistycznych ułatwiających pracę z biblioteką. Programiści aplikacji mobilnych mają do dyspozycji wtyczki integracyjne do Visual Studio, Android Studio, Xamarin. Dla pozostałych Caffe2 jest dostępne na każdy popularny system operacyjny oraz u dostawców usług chmurowych. Kod napisany na jedną platformę jest przenaszalny na pozostałe bez konieczności modyfikacji.
 
-Od kwietnia 2018 roku, repozytorium Caffe2 jest przenoszone do katalogu PyTorch. Facebook zdecydował sie na zwiększenie kompatybilności przez stopniowe połączenie bazy kodu. Docelowo Caffe2 ma być modułem dla rozwiązań mobilnych, a PyTorch dla całej reszty.
+Od kwietnia 2018 roku, repozytorium Caffe2 jest przenoszone do katalogu PyTorch. Facebook zdecydował się na zwiększenie kompatybilności przez stopniowe połączenie bazy kodu. Docelowo Caffe2 ma być głównym modułem dla rozwiązań mobilnych, a PyTorch dla całej reszty.
 
 \noindent
 \newline
@@ -830,12 +876,12 @@ Licencja: Apache 2.0 (Caffe 1 -- BSD)
 \subsection{ML.NET}
 \begin{figure}[h]
 	\centering
-			\includegraphics[resolution=100, scale=0.8]{ML_NET.png}
+			\includegraphics[resolution=100, scale=1]{ML_NET.png}
 		\caption{Logo biblioteki ML.NET}
 \end{figure}
-Nowe oprogramowanie od Microsoftu, data wydania pierwszej wersji poglądowej 7 maj 2018. Microsoft tworząc to oprogramowanie wybrał jako grupę docelową programistów skupionych w ekosystemie .NET. API biblioteki udostępnione jest w językach C++ oraz C#, przy czym kompletna dokumentacja jest tylko dla języka C#. Docelowo ma stać się częścią .NET Core. Oprogramowanie od początku istnienia powstaje jako otwartoźródłowe, a Microsoft przy każdym wydaniu zachęca do zgłaszania uwag oraz propozycji dalszego rozwoju lub nowych funkcjonalnośći. Jest to odejście od tradycyjnego modelu utrzymywania oprogramowania w tajemnicy do czasu premiery. Nastawienie na łatwość integracji z oprogramowaniem biznesowym, chmurą Azure oraz łatwość obsługi przez programistów pracujących w technologiach Microsoftu ma zachęcić do wykorzystania oprogramowania na szerszą skalę kiedy wyjdzie ono z fazy rozwojowej i zastąpi CNTK.
+Nowe oprogramowanie od Microsoftu, data wydania pierwszej wersji poglądowej 7 maj 2018. Microsoft tworząc to oprogramowanie wybrał jako grupę docelową programistów skupionych w ekosystemie .NET. API biblioteki udostępnione jest w językach C++ oraz C#, przy czym kompletna dokumentacja jest tylko dla języka C#. Docelowo ma stać się częścią .NET Core. Oprogramowanie od początku istnienia powstaje jako otwartoźródłowe, a Microsoft przy każdym wydaniu zachęca do zgłaszania uwag oraz propozycji dalszego rozwoju lub nowych funkcjonalności. Jest to odejście od tradycyjnego modelu utrzymywania oprogramowania w tajemnicy do czasu premiery. Nastawienie na łatwość integracji z oprogramowaniem biznesowym, chmurą Azure oraz łatwość obsługi przez programistów pracujących w technologiach Microsoftu ma zachęcić do wykorzystania oprogramowania na szerszą skalę kiedy wyjdzie ono z fazy rozwojowej i zastąpi CNTK.
 
-W odróżnieniu od pozostałych na chwilę obecną ML.NET jest biblioteką głównie przeznaczną do uczenia maszynowego, wyewulowaną z wewnętrznych rozwiązań Microsoftu od lat używanych w zespołach Windows, Bing, Azure. Microsoft przyznaje że jest to przepisywanie większego systemu do świata otwartego oprogramowania. \cite{https://blogs.msdn.microsoft.com/dotnet/2018/05/07/introducing-ml-net-cross-platform-proven-and-open-source-machine-learning-framework/} Możliwości biblioteki można rozszerzać przez podłączenie modeli z innych bibliotek, wspierane od początku są Tensorflow, Caffe2, CNTK oraz Accord.NET. Sporym atutem jest natywne wsparcie w Azure każdej nowej wersji natychmiast po premierze. Wersja 0.3 przyniosła wsparcie dla formatu modeli ONNX. Narzędzia do głębokiego uczenia pojawiły się w wersji 0.5, zaprezentowanej 12 września 2018. Integracja modeli z Tensorflow umożliwia przeniesienie środowiska z testowego do modelu E2E (ang. Enterprise-2-Enterprise) \"Przedsiębiorstwo-do-przedsiębiorstwa\". Jest to jeszcze zbyt niedojrzała biblioteka by opisywać jej architekturę, nie jest nawet zalecana do rozwiązań produkcyjnych, programiści .NET prawdopodobnie będą z niej chętniej korzystali po pojawieniu się pierwszej kompletnej wersji, co ma nastąpić do wydarzenia BUILD 2019. Obecnie traktowana jest jako sposób na przyciągnięcie do ekosystemu .NET Core osób tworzących rozwiązania dla przedsiębiorstw. ML.NET ma jeszcze wiele braków i wad (konieczność programowania skalowania, brak wsparcia platform mobilnych i wyłączność na chmurę Azure), które uniemożliwiają traktowanie go jako poważnego narzędzia komercyjnego w przeciwieństwie do kolejnego narzędzia Microsoftu CNTK.
+W odróżnieniu od pozostałych na chwilę obecną ML.NET jest biblioteką głównie przeznaczoną do uczenia maszynowego, wyewoluowaną z wewnętrznych rozwiązań Microsoftu od lat używanych w zespołach Windows, Bing, Azure. Microsoft przyznaje że jest to przepisywanie większego systemu do świata otwartego oprogramowania.\cite{siteMLNet} Możliwości biblioteki można rozszerzać przez podłączenie modeli z innych bibliotek, wspierane od początku są Tensorflow, Caffe2, CNTK oraz Accord.NET. Sporym atutem jest natywne wsparcie w Azure każdej nowej wersji natychmiast po premierze. Wersja 0.3 przyniosła wsparcie dla formatu modeli ONNX. Narzędzia do głębokiego uczenia pojawiły się w wersji 0.5, zaprezentowanej 12 września 2018. Integracja modeli z Tensorflow umożliwia przeniesienie środowiska z testowego do modelu E2E (ang. Enterprise-2-Enterprise) ''Przedsiębiorstwo-do-przedsiębiorstwa''. Jest to jeszcze zbyt niedojrzała biblioteka by opisywać jej architekturę, nie jest nawet zalecana do rozwiązań produkcyjnych, programiści .NET prawdopodobnie będą z niej chętniej korzystali po pojawieniu się pierwszej kompletnej wersji, co ma nastąpić do wydarzenia \textit{BUILD 2019}. Obecnie traktowana jest jako sposób na przyciągnięcie do ekosystemu .NET Core osób tworzących rozwiązania dla przedsiębiorstw. ML.NET ma jeszcze wiele braków i wad (konieczność programowania skalowania, brak wsparcia platform mobilnych i wyłączność na chmurę Azure), które uniemożliwiają traktowanie go jako poważnego narzędzia komercyjnego w przeciwieństwie do kolejnego narzędzia Microsoftu CNTK.
 
 \noindent
 \newline
@@ -851,11 +897,11 @@ Licencja: MIT
 			\includegraphics[resolution=120]{CNTK.png}
 		\caption{Logo biblioteki CNTK}
 \end{figure}
-Nazwa kompletna \"Microsoft Cognitive Toolkit\". Jest to zestaw narzędzi stworzonych w dziale badań i rozwoju Microsoftu, zajmującego się Deep Learningiem. W 2015 zgodnie z nowym modelem biznesowym, nastawionym na częściowe otwieranie kodu źródłowego narzędzi urzywanych wewnątrz Microsoftu, CNTK został opublikowany na GitHub'ie w kwietniu tego roku. Microsoft wcześniej korzystał z powodzeniem z biblioteki do trenowania modeli usług krytycznych biznesowo. Architektura jest skupiona wokół głębokiego uczenia sieci neuronowych, a dopiero później dodano pozostałe popularne algorytmy uczenia maszynowego.
+Nazwa kompletna ''Microsoft Cognitive Toolkit''. Jest to zestaw narzędzi stworzonych w dziale badań i rozwoju Microsoftu, zajmującego się Deep Learningiem. W 2015 zgodnie z nowym modelem biznesowym, nastawionym na częściowe otwieranie kodu źródłowego narzędzi używanych wewnątrz Microsoftu, CNTK został opublikowany na platformie GitHub w kwietniu tego roku. Microsoft wcześniej korzystał z powodzeniem z biblioteki do trenowania modeli usług krytycznych biznesowo. Architektura jest skupiona wokół głębokiego uczenia sieci neuronowych, a dopiero później dodano pozostałe popularne algorytmy uczenia maszynowego.
 
-CNTK posiada zaimplementowane najczęściej używane narzędzia do głębokich sieci neuronowych, takie jak struktury sieci konwolucyjnych czy rekurencyjne sieci neuronowe. Także algorytmy spadku gradientowego i wsteczna propagacja błędów zostały zaimplementowane z automatycznym zrównoleglaniem obliczeń z pojedynczego CPU na wiele procesorów GPU na wielu komputerach w sieci. Biblioteka ta jest jednym z backendów do biblioteki Keras, jednak w przeciwieństwie do Keras'a działa tylko na systemach Windows i wybranych dystrybucjach Linux'a.
+CNTK posiada zaimplementowane najczęściej używane narzędzia do głębokich sieci neuronowych, takie jak struktury sieci konwolucyjnych czy rekurencyjne sieci neuronowe. Także algorytmy spadku gradientowego i wsteczna propagacja błędów zostały zaimplementowane z automatycznym wykonywaniem równoległych obliczeń z pojedynczego CPU na wiele procesorów GPU na wielu komputerach w sieci. Biblioteka ta jest jednym z backendów do biblioteki Keras, jednak w przeciwieństwie do Keras'a działa tylko na systemach Windows i wybranych dystrybucjach GNU\\Linux.
 
-Niesamowicie wartościowym atutem jest z pewnością dokumentacja dostarczana przez Microsoft. Nie tylko jest ona przejrzysta i spójna z resztą dokumentacji ekosystemu .NET, ale również dostarcza dziesiątek tutoriali krok po kroku jak budować zaawansowane modele, czyścić dane i wyciągać z nich wnioski. Przestawia nawet w jaki sposób przygotowane już rozwiązania przenieść na chmurę Azure i umożliwić korzystanie z nich klientom. Dla osób nie mających podłoża w Data Science, są gotowe przepisy, czyli przygotowane wcześniej szablony do działania na Azure z interfejsem graficznym instruującym jak przygotować dane aby otrzymać gotową usługę.
+Niesamowicie wartościowym atutem jest z pewnością dokumentacja dostarczana przez Microsoft. Nie tylko jest ona przejrzysta i spójna z resztą dokumentacji ekosystemu .NET, ale również dostarcza dziesiątek tutoriali krok po kroku jak budować zaawansowane modele, czyścić dane i wyciągać z nich wnioski. Przestawia nawet w jaki sposób przygotowane już rozwiązania przenieść na chmurę Azure i umożliwić korzystanie z nich klientom. Dla osób nie mających podłoża w Data Science, są gotowe przepisy, czyli przygotowane wcześniej szablony do działania na Azure z interfejsem graficznym instruującym jak przygotować dane aby otrzymać gotową usługę.\cite{book:2187021}
 
 \noindent
 \newline
@@ -872,18 +918,18 @@ Licencja: MIT
 
 \chapter{Architektura}
 \section{Znaczenie architektury dla wydajności sieci}
-Elementy sieci neuronowych można ułożyć na nieskończenie wiele sposobów, wystarczy dodać kolejną warstę neuronów lub zmodyfikować wielkość warstwy i wyniki będą zgoła inne. Celem szukania odpowiedniej dla danego zadania architektury jest otrzymanie najlepszej wydajności klasyfikacji przy skończonym i możliwie jak najkrótszym czasie uczenia. Chcąc uzyskać dobre rezultaty bez eksperymentów od zera, należy wybrać architekturę, która została wykorzystana do rozwiązania podobnego zadania bądź przetestować kilka gotowych architektur z wyuczonymi modelami, a następnie sprawdzić jak się zachowują dla posiadanych zbiorów danych na różnych hiperparametrach.
+Elementy sieci neuronowych można ułożyć na nieskończenie wiele sposobów, wystarczy dodać kolejną warstwę neuronów lub zmodyfikować wielkość warstwy i wyniki będą zgoła inne. Celem szukania odpowiedniej dla danego zadania architektury jest otrzymanie najlepszej wydajności klasyfikacji przy skończonym i możliwie jak najkrótszym czasie uczenia. Chcąc uzyskać dobre rezultaty bez eksperymentów od zera, należy wybrać architekturę, która została wykorzystana do rozwiązania podobnego zadania bądź przetestować kilka gotowych architektur z wyuczonymi modelami, a następnie sprawdzić jak się zachowują dla posiadanych zbiorów danych na różnych hiperparametrach.
 
 Stworzenie efektywnej architektury przesądziło o wynikach zawodów ''ImageNet Competition 2012''. Pierwsze miejsce w klasyfikacji obrazów wyłącznie z użyciem głębokiej sieci neuronowej zapoczątkowało prawdziwą rewolucję nie tylko wśród społeczności uczenia maszynowego, ale całego przemysłu technologicznego. Pierwszy zespół, któremu udało się zejść z błędem rozpoznania do mniej niż 25\% Geuffrey Hinton, zwany ojcem chrzestnym głębokich sieci neuronowych (ang. Godfather of Deep Learning) udowodnił że jego przekonania, którymi się kierował w trakcie kilkudziesięcioletniej kariery naukowej są słuszne. Poprzeczką, której profesor Hinton nie mógł wcześniej przeskoczyć były ograniczenia obliczeniowe procesorów, kiedy technologia GPU wraz z możliwością programowania równoległego w CUDA umożliwiły przetestowanie idei, podejście do rozpoznawania obrazów zmieniło świat przemysłu, a wkrótce zmieni życie każdego człowieka.
 
-Rok 2017 został uznany za czas kiedy ImageNet Competition został na stałe rozwiązany. Błędne rozpoznanie algorytmów wśród najlepszych drużyn wyniosło zaledwie 2\%. Przez pięć lat od czasu debiutu AlexNet powstało wiele architektur sieci neuronowych, bibliotek wyspecjalizowanych w szybkim tworzeniu nowych prototypów, a te dające obiecujące wyniki zostały podzielone względem zastosowania. Obecnie wyróżniane typy sieci neuronowych są sklasyfikowane wzgledem typu danych wejściowych. Dla sygnału wejściowego w postaci pikseli najlepiej sprawdza się konwolucyjna sieć neuronowa. Warstwy konwolucyjne potrafią bardzo dokładnie wyodrębnić cechy obrazu na różnych poziomach złożoności co jest wyjaśnione w dalszej części pracy.
+Rok 2017 został uznany za czas kiedy ImageNet Competition został na stałe rozwiązany. Błędne rozpoznanie algorytmów wśród najlepszych drużyn wyniosło zaledwie 2\%. Przez pięć lat od czasu debiutu AlexNet powstało wiele architektur sieci neuronowych, bibliotek wyspecjalizowanych w szybkim tworzeniu nowych prototypów, a te dające obiecujące wyniki zostały podzielone względem zastosowania. Obecnie wyróżniane typy sieci neuronowych są sklasyfikowane względem typu danych wejściowych. Dla sygnału wejściowego w postaci pikseli najlepiej sprawdza się konwolucyjna sieć neuronowa. Warstwy konwolucyjne potrafią bardzo dokładnie wyodrębnić cechy obrazu na różnych poziomach złożoności co jest wyjaśnione w dalszej części pracy.
 
-Polskim ekspertem i popularyzatorem sieci neuronowych od wielu lat jest profesor doktor habilitowany inżynier Ryszard Tadeusiewicz. Osoba bardzo zasłużona w naukach technicznych. Jego książki stały się częścią bibliografi niniejszej pracy. Profesor w swoich publikacjach istotnie zwraca uwagę na architekturę jako element konieczny w budowaniu 
+Polskim ekspertem i popularyzatorem sieci neuronowych od wielu lat jest profesor doktor habilitowany inżynier Ryszard Tadeusiewicz. Osoba bardzo zasłużona w naukach technicznych. Jego książki stały się częścią bibliografii niniejszej pracy. Profesor w swoich publikacjach istotnie zwraca uwagę na architekturę jako element konieczny w budowaniu 
 
 Architektury różnią się ilością warstw ukrytych, typem neuronów i funkcji aktywacji w każdej warstwie. 
 “Właśnie taka [warstwowa] struktura sieci wyjątkowo łatwo i wygodnie da się wytwarzać zarówno w formie modelu elektronicznego, jak i da się symulować w formie programu komputerowego. Dlatego badacze przyjęli właśnie strukturę warstwową i od tej pory stosują ją we wszystkich sztucznych sieciach neuronowych. [...] W związku z tym wszyscy tak postępują, nie martwiąc się ani przesłankami biologicznymi, ani dowodami wskazującymi, że architektura sieci bardziej wymyślnie dostosowanej do charakteru zadania może znacznie lepiej realizować stawiane zadania.”
 
-Tak napisał w 2007 roku, kiedy nie istniały jeszcze złożone głębokie sieci neuronowe, największe w tej porzy miały 5 warstw ukrytych, a zbiory danych na których pracowano były stosunkowo niewielkie w porównaniu z dzisiejszymi zasobami skatalogowanych obrazów. Prof. Tadeusiewicz uważa że jest to najlepsze ułożenie neuronów ze względu na prostotę oraz dowód że badacze znaleźli podobne struktury w niektórych częściach ludzkiego mózgu (w tym w oku, które jest ewolucyjnie złożone z tej sameh tkanki co mózgowa).
+Tak napisał w 2007 roku, kiedy nie istniały jeszcze złożone głębokie sieci neuronowe, największe w tej pory miały 5 warstw ukrytych, a zbiory danych na których pracowano były stosunkowo niewielkie w porównaniu z dzisiejszymi zasobami skatalogowanych obrazów. Prof. Tadeusiewicz uważa że jest to najlepsze ułożenie neuronów ze względu na prostotę oraz dowód że badacze znaleźli podobne struktury w niektórych częściach ludzkiego mózgu (w tym w oku, które jest ewolucyjnie złożone z tej samej tkanki co mózgowa).
 
 Dowodem na znaczenie ułożenia neuronów w poprawnej strukturze jest ich rosnąca skuteczność od kiedy badacze bardzo dużo eksperymentują z różnymi kombinacjami. Coroczne zawody ImageNet, w których udowadnia się że struktura sieci ma znaczenie są świetnym przykładem że jest to proces iteracyjny i jak podkreślano wcześniej, metoda empiryczna jest obecnie jedynym sposobem na znalezienie idealnego modelu.
 
@@ -920,7 +966,7 @@ W trakcie trenowania sieci wyjście jest ustawione na ustalony rozmiar (224 x 22
 [Christian Szegedy, Wei Liu, Yangqing Jia, Pierre Sermanet, Scott Reed, Dragomir Anguelov, Dumitru Erhan, Vincent Vanhoucke, Andrew Rabinovich, 2014] - produkt jak nazwa wskazuje wyszedł z firmy Google. Charakteryzuje się przełomową poprawą użycia zasobów wewnętrznych. ImageNet jest zaprojektowana na jak największą szerokość i głębokość jednocześnie utrzymując stałe zużycie mocy obliczeniowej. Optymalizacja jakości opiera się na zasadzie Hebbian’a (jest to teoria neuronauki, która mówi o adaptacji neuronów w trakcie nauki). Błędy klasyfikacji wynoszą top-1: 17,2\% i top-5: 3,58\% (dla v3). Sieć składa się łącznie z 22 warstw. Sieć jest modułowa, gdzie każdy moduł pełni rolę wielopoziomowego ekstraktora cech przeliczającego konwolucje na macierzach rozmiarów 1x1, 3x3, 5x5. Zaletą tej architektury są bardzo małe rozmiary wag (mniej niż 100MB dla v3). Kolejną ważną zaletą jest ilość parametrów, tylko 4 miliony co jest wynikiem 12 razy lepszym od AlexNet. Jest to jedna z najbardziej złożonych sieci względem architektury modułowej. W wersji naiwnej każda warstwa posiada 4 ekstraktory cech (3 konwolucyjne i jedną 3x3 max pooling), następnie wartości te są składane i wysyłane do warstwy wyżej. Do poprawienia wydajności obliczeniowej pozbyto się warstwy “w pełni połączonej”. \cite{DBLP:journals/corr/SzegedyLJSRAEVR14}
 
 \subsection{ResNet}
-[Kaiming He et al, 2015]  - architektura oparta na mikro modułach. Charakteryzuje się możliwością odrzucania połączeń i posiada ogromny moduł na normalizację zbioru iteracji (batch normalization). Normalizacja jest pomysłem zaczerpniętym z rekurencyjnych sieci neuronowych. Ta technika pozwala stworzyć sieć ze 152 warstwami ukrytymi przy zachowaniu złożoności mniejszej niż VGG. \cite{DBLP:journals/corr/XieGDTH16}
+[Kaiming He et al, 2015]  - architektura oparta na mikro modułach. Charakteryzuje się możliwością odrzucania połączeń i posiada ogromny moduł na normalizację zbioru iteracji (ang. batch normalization). Normalizacja jest pomysłem zaczerpniętym z rekurencyjnych sieci neuronowych. Ta technika pozwala stworzyć sieć ze 152 warstwami ukrytymi przy zachowaniu złożoności mniejszej niż VGG. \cite{DBLP:journals/corr/XieGDTH16}
 \begin{figure}[h]
 	\centering
 			\includegraphics[resolution=100]{ResNet.png}
@@ -1001,7 +1047,10 @@ Cały przepływ danych do wykrycia obiektów jest jedną siecią, dlatego może 
 % ################################
 %        BIBLIOGRAFIA
 % ################################
-\bibliographystyle{plain}
-\bibliography{bibliography/alexnetNips,bibliography/deeplearningbook,bibliography/dropout,bibliography/fastAI,bibliography/ganArxiv,bibliography/googleNet,bibliography/lecun,bibliography/medicalImage,bibliography/microsoftResNet,bibliography/rCNN,bibliography/relu,bibliography/resnextArxiv,bibliography/VGGNet,bibliography/ZFNet,bibliography/YOLO,bibliography/SqueezeNet,bibliography/SegNet,bibliography/deeplearningAI,bibliography/deeplearningTensorflow,bibliography/odkrywanieSieci,bibliography/benchmarks,bibliography/MXNet,bibliography/CaffePerformance,bibliography/caffe} 
+
+\selectlanguage{polish}
+\printbibliography
+%\bibliographystyle{plain}
+%\bibliography{bibliography/alexnetNips,bibliography/deeplearningbook,bibliography/dropout,bibliography/fastAI,bibliography/ganArxiv,bibliography/googleNet,bibliography/lecun,bibliography/medicalImage,bibliography/microsoftResNet,bibliography/rCNN,bibliography/relu,bibliography/resnextArxiv,bibliography/VGGNet,bibliography/ZFNet,bibliography/YOLO,bibliography/SqueezeNet,bibliography/SegNet,bibliography/deeplearningAI,bibliography/deeplearningTensorflow,bibliography/odkrywanieSieci,bibliography/benchmarks,bibliography/MXNet,bibliography/CaffePerformance,bibliography/caffe} 
 
 \end{document}
