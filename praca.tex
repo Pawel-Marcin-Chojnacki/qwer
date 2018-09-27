@@ -20,6 +20,7 @@
 \graphicspath{{figures/}} %Setting the graphicspath
 % PAGE LAYOUT
 
+% Bibliograhy
 \usepackage[backend=bibtex8,sorting=none,isbn=false]{biblatex}
 \nocite{*}
 \addbibresource{bibliography/alexnetNips}
@@ -60,6 +61,12 @@
 \addbibresource{bibliography/siteTensorflowJSConcepts}
 \addbibresource{bibliography/bookDeepLearningMXNet}
 \addbibresource{bibliography/bookCNTK}
+\addbibresource{bibliography/bookMachineLearning}
+\addbibresource{bibliography/siteNvidiaAcceleration}
+\addbibresource{bibliography/siteBriefHistory}
+
+%Image source
+\newcommand{\source}[1]{\caption*{Źródło: {#1}} }
 
 %\usepackage{showframe} % debug
 \marginparwidth 0pt
@@ -355,7 +362,7 @@ W jaki sposób sztuczny neuron jest w stanie rozpoznać sygnał wejściowy? Do w
 
 
 \section{Co to jest sieć neuronowa?}
-Koncepcja sztucznej sieci neuronowej to połączenie wielu neuronów w jeden obiekt. Pozwala to na rozpoznawanie bardziej skomplikowanych wzorców i większej różnorodności typów obiektów niż klasyfikacja binarna. Zwykła sieć neuronowa składa się z trzech warstw węzłów. Warstwa pierwsza stanowi warstwę wejściową sieci i składa się z sygnału wejściowego.
+Koncepcja sztucznej sieci neuronowej to połączenie wielu neuronów w jeden obiekt. Pozwala to na rozpoznawanie bardziej skomplikowanych wzorców i większej różnorodności typów obiektów niż klasyfikacja binarna. Zwykła (płytka) sieć neuronowa składa się z trzech warstw węzłów. Warstwa pierwsza stanowi warstwę wejściową sieci i składa się z sygnału wejściowego.
 
 Kolejna warstwa jest nazywana warstwą ukrytą, użytkownik nie ma dostępu do niej, przypomina czarną skrzynkę. Nie można zaobserwować co się wewnątrz niej dzieje, użytkownik widzi jakie są dane wejściowe, wartości które powinny zostać zwrócone (w ostatniej warstwie), ale nie ma informacji co jest i powinno się znajdować w tej warstwie podczas trenowania sieci.
 Ostatnia warstwa, pojedynczy węzeł nazywany jest warstwą wyjściową. Pobiera wektor wartości wyjściowych z poprzedniej warstwy (ukrytej) i na nim zostaje obliczona wartość wyjściowa (odpowiedź).
@@ -379,7 +386,7 @@ Zadania uczenie nadzorowanego dzielą się na dwie kategorie, regresję i klasyf
 
 W problemie regresji próbuje się przewidzieć wyniki, które są wartościami ciągłymi, czyli mając jakieś dane próbuje się je mapować na funkcję ciągłą. 
 
-W problemie klasyfikacji algorytm ma za zadanie przewidzieć wyniki będące wartościami dyskretnymi, uściślając jest to znajdowanie klas obiektów, na podstawie danych wejściowych.
+W problemie klasyfikacji algorytm ma za zadanie przewidzieć wyniki będące wartościami dyskretnymi, uściślając jest to znajdowanie klas obiektów, na podstawie danych wejściowych.\cite{Gron:2017:HML:3153997}
 
 Uczenie nadzorowane ma wiele zastosowań, do głównych należą (wraz z używanym typem sieci):
 \begin{itemize}
@@ -401,7 +408,7 @@ Uczenie maszynowe bez nadzoru nauczyciela jest drugim typem uczenia maszynowego 
 Sieci neuronowe do poprawnego działania potrzebują więcej niż tylko połączenia ze sobą neuronów. Należy dobrać odpowiednie algorytmy korygujące błędy. Aby algorytm zatrzymał się w odpowiednim momencie z osobna trzeba zdefiniować warunki stopu dla epoki, ilość epok, rozmiar danych. Każda warstwa musi posiadać określoną funkcję aktywacji. Ostatnim opisanym elementem sieci są hiperparametry, czyli właściwości sterujące algorytmem by wiedział w jaki sposób wyznaczać pozostałe parametry.
 
 \subsection{Metoda gradientu prostego}
-Algorytm stosowany do szukania minimum lokalnego płaszczyzny wyznaczonej funkcją. Jest to bardzo prosta metoda optymalizacji stosowana do wyznaczania wag i progów. Płaszczyzna złożona z osi poziomych \(w\) i \(b\) oraz oś pionowa będąca wartością funkcji kosztu \(J(w,b)\). Algorytm mając początkowo losowe wagi i progi, rozpoczyna w tym losowym miejscu sprawdza wartość funkcji kosztu, następnie wykonuje małe przesunięcie w najbardziej stromym kierunku w dół płaszczyzny. Operacja zejścia powtarzana jest do zejścia do minimum lokalnego.
+Algorytm stosowany do szukania minimum lokalnego płaszczyzny wyznaczonej funkcją. Jest to bardzo prosta metoda optymalizacji stosowana do wyznaczania wag i progów. Płaszczyzna złożona z osi poziomych \(w\) i \(b\) oraz oś pionowa będąca wartością funkcji kosztu \(J(w,b)\). Algorytm mając początkowo losowe wagi i progi, rozpoczyna w tym losowym miejscu sprawdza wartość funkcji kosztu, następnie wykonuje małe przesunięcie w najbardziej stromym kierunku w dół płaszczyzny. Operacja zejścia powtarzana jest do znalezienia do minimum lokalnego.
 
 \begin{algorithm}
 i = 0\;
@@ -414,7 +421,7 @@ i = 0\;
 \end{algorithm}
 
 \subsection{Funkcje aktywacji}
-Budując sieć neuronową należy funkcje aktywacji dla warstw ukrytych oraz warstwy wyjściowej. Funkcje aktywacji są znane również jako charakterystyka neuronu. Charakterystyka neuronu jest elementem, który pośredniczy między zsumowanym pobudzeniem neuronu, a jego danymi wejściowymi. 
+Budując sieć neuronową należy zdefiniować funkcje aktywacji dla warstw ukrytych oraz warstwy wyjściowej. Funkcje aktywacji znane są również jako charakterystyka neuronu. Charakterystyka neuronu jest elementem, który pośredniczy między zsumowanym pobudzeniem neuronu, a jego danymi wejściowymi. 
 
 Najczęściej używaną charakterystyką była do niedawna funkcja sigmoidalna ponieważ ma wiele zalet:
 \begin{itemize}
@@ -425,9 +432,9 @@ Najczęściej używaną charakterystyką była do niedawna funkcja sigmoidalna p
 Definicja funkcji sigmoidalnej \(f(x) = \frac{1}{1+e^{-z}}\).
 Obecnie nie jest zalecane używanie funkcji sigmoidalnej poza przypadkami na warstwie wyjściowej w przypadku klasyfikacji binarnej, kiedy należy stwierdzić prawdopodobieństwo klasy obiektu. Dużo wydajniejszym odpowiednikiem jest następna funkcja.
 
-Sprawną funkcją aktywacji jest tangens hiperboliczny. Jego wartości zawierają się między -1 i 1. Definicja funkcji tangensu hiperbolicznego \(tanh(x) = \frac{e^{x} - e^{-x}}{e^{x} + e^{-x}}\). Jak widać na załączonych rycinach ta funkcja jest przesunięciem sigmoidy względem osi y, tak że przechodzi przez punkt \((0,0)\). Dla warstw ukrytych charakterystyka neuronu będąca tangensem hiperbolicznym ma lepszą skuteczność. Mediana wartości wychodzących z warstw  ukrytych wynosi 0. Nie trzeba wtedy stosować skalowania względem sigmoidy, co znacząco ułatwia uczenie.
+Sprawną funkcją aktywacji jest tangens hiperboliczny. Jego wartości zawierają się między -1 i 1. Definicja funkcji tangensu hiperbolicznego \(tanh(x) = \frac{e^{x} - e^{-x}}{e^{x} + e^{-x}}\). Jak widać na załączonych rysunkach ta funkcja jest przesunięciem sigmoidy względem osi y, tak że przechodzi przez punkt \((0,0)\). Dla warstw ukrytych charakterystyka neuronu będąca tangensem hiperbolicznym ma lepszą skuteczność. Mediana wartości wychodzących z warstw ukrytych wynosi 0. Nie trzeba wtedy stosować skalowania względem sigmoidy, co znacząco ułatwia uczenie.
 
-Zalecaną charakterystyką neuronu w dużych architekturach jest rektyfikowana jednostka liniowa. Definicja funkcji jest w porównaniu do pozostałych jest banalna \(relu(z) = max(0,z)\). Jedynym problemem przy używaniu ReLU jest wyliczenie pochodnej kiedy argument z jest mniejszy od 0. W praktyce nie sprawia to większych problemów bo wartość zostanie ustawiona na 0, ale opracowano funkcję która jest pozbawiona tej niedogodności.
+Zalecaną charakterystyką neuronu w dużych architekturach jest rektyfikowana jednostka liniowa. Stała się ona domyślną funkcją stosowaną w bibliotekach implementujących sieci neuronowe. Funkcja zwraca przekształecenie nieliniowe. Na rysunku widać że funkcja bardzo przypomina liniową, składa się z dwóch liniowych fragmentów. To jest jedna z największa zalet, ponieważ funkcja ta jest banalna w implementacji i wyliczeniu wartości. Definicja funkcji jest w porównaniu do pozostałych jest banalna \(relu(z) = max(0,z)\). Jedynym problemem przy używaniu ReLU jest wyliczenie pochodnej kiedy argument z jest mniejszy od 0. W praktyce nie sprawia to większych problemów bo wartość zostanie ustawiona na 0, ale opracowano funkcję która jest pozbawiona tej niedogodności.
 
 Nieszczelna liniowa jednostka rektyfikowana (ang. leaky Rectified Linear Unit) definiowana \(f(x) = max(x, 0.01x)\). Pozwala to zmniejszyć efekt kiedy pochyła funkcji schodzi do 0, spowalniając uczenie. Niestety ta funkcja nie jest powszechnie używana w praktyce.
 
@@ -461,7 +468,7 @@ Należy podkreślić że w nowoczesnych sieciach neuronowych każda warstwa moż
 Najważniejszy element sieci neuronowej. Składa się na niego zbiór wag i progów (bias). Wagi wyznaczają sposób działania sieci, która ma nauczyć się dobrać odpowiednie parametry przy pomocy algorytmu uczącego, odpowiednio dobranych hiperparametrów oraz zbioru danych uczących. Wagi muszą być dobrane w sposób umożliwiający neuronom wykonanie czynności, których się od nich wymaga. Ze względu na ilość wag w głębokich sieciach, gdzie dla każdego z tysięcy neuronów może istnieć kilkaset wejść, proces musi być automatyczny. Sieć musi wiedzieć kiedy każdy z neuronów zwiększa swoją dokładność czy nie. Wagi i progi powinny być elastyczne i zmieniać się bardo szybko na początku procesu uczenia i tylko w niewielkim stopniu zmieniać wartości kiedy algorytm kończy proces uczenia.
 
 \subsection{Hiperparametry}
-Tworzenie dobrej sieci neuronowej wymaga nie tylko parametrów ale również dobrego doboru hiperparametrów. Elementy "ręcznie" dobierane dla algorytmu uczenia. Najczęściej ustawiane parametry dla sieci neuronowej to:
+Tworzenie dobrej sieci neuronowej wymaga nie tylko parametrów ale również rozważnego doboru hiperparametrów. Elementy ''ręcznie'' dobierane dla algorytmu uczenia. Najczęściej ustawiane parametry dla sieci neuronowej to:
 \begin{itemize}
 \item stała uczenia,
 \item ilość iteracji uczenia w jednej epoce,
@@ -471,9 +478,9 @@ Tworzenie dobrej sieci neuronowej wymaga nie tylko parametrów ale również dob
 \item parametry regularyzacji,
 \item rozmiary próbek uczących,
 \end{itemize}
-i wiele innych mniej ważnych hiperparametrów
+i wiele innych mniej ważnych hiperparametrów.
 
-Są to parametry kontrolujące sposób wykonania algorytmu uczącego i w ostateczności to one mają największy wpływ na zwykłe parametry wagi i progi (bias). Nie został ustalony jednolity sposób doboru hiperparametrów. Zwyczajowo stosuje się metodę prób i błędów na podstawie tego jak algorytm się zachowuje.\cite{sitefastAI} Za każdą zmianą wartości należy uruchomić algorytm i sprawdzić jak zachowuje się funkcja kosztu, jeśli maleje lepiej niż przy poprzednich wartościach można stroić dalej w tym kierunku. Dopieranie odpowiednich wartości niestety jest procesem empirycznym i należy wyrobić odpowiednią intuicję aby jak najtrafniej dobierać parametry od początku. Wartości te też nie są stałe, zmieniają się w zależności od dziedziny badanego zagadnienia. Być może najbliższe lata przyniosą dobry i spójny przewodnik dobierania najlepszych wartości, pozwoli to znacznie zautomatyzować proces.
+Są to parametry kontrolujące sposób wykonania algorytmu uczącego i w ostateczności to one mają największy wpływ na skuteczność uczenia parametrów wag oraz progów (ang. bias). Nie ma na chwilę obecną dobrego przewodnika w jaki sposób dobierać hiperparametry. Zwyczajowo stosuje się metodę prób i błędów na podstawie tego jak algorytm się zachowuje.\cite{sitefastAI} Za każdą zmianą wartości należy uruchomić algorytm i sprawdzić jak zachowuje się funkcja kosztu, jeśli maleje lepiej niż przy poprzednich wartościach można stroić dalej w tym kierunku. Dopieranie odpowiednich wartości niestety jest procesem empirycznym i należy wyrobić odpowiednią intuicję aby jak najtrafniej dobierać parametry od początku. Wartości te też nie są stałe, zmieniają się w zależności od dziedziny badanego zagadnienia. Być może najbliższe lata przyniosą dobry i spójny przewodnik dobierania najlepszych wartości, pozwoli to znacznie zautomatyzować proces.
 
 \subsection{Wykres obliczeniowy}
 Aby opisać organizację obliczeń podsekcję o wstecznej propagacji błędu, należy sformalizować operacje obliczeń. Robi się to za pomocą wykresu obliczeniowego. Węzły w grafie reprezentują skalary, wektory, macierze i tensory. Drugim elementem w grafie są operacje czyli proste funkcje z jedną lub większą ilością zmiennych. Graf obliczeniowy przydaje się kiedy istnieje zdefiniowana funkcja bądź zmienna, którą należy zoptymalizować, w przypadku sieci neuronowych oczywistą jest funkcja kosztu.
@@ -509,14 +516,50 @@ Istnieją również analogiczne metod korekcji wag, jak szybka propagacja (ang. 
 % ################################
 
 \chapter{Deep Learning}
-\section{Techniki tworzenia głębokich sieci}
-W tym rozdział zostają przybliżone trzy interesujące techniki głębokiego uczenia. Zostały wybrane ze względu na ich obszerną ilość zastosowań oraz potencjał, który można wykorzystać przy rozpoznawaniu wzorców na obrazach. Następnie opiszę kilka bibliotek implementujących wsparcie dla większości architektur sieci przedstawionych w pracy. Biblioteki są wybrane na podstawie przekroju platform i języków mi znanych. 
+\section{Tworzenie głębokich sieci}
+W tym rozdziale zostały przybliżone trzy interesujące techniki głębokiego uczenia. Zostały wybrane ze względu na ich obszerną ilość zastosowań oraz potencjał, który można wykorzystać przy rozpoznawaniu wzorców na obrazach. Jedna z nich zostanie używana wielokrotnie w dalszej części pracy, jest w szczególności istotna ze względu na wykorzystanie w rozpoznawaniu obrazów. Wszystkie opisywane architektury korzystają z konwolucyjnych sieci neuronowych.
 
-\subsection{Sieci neuronowe}
-Sztuczne sieci neuronowe zostały opisane w poprzednim rozdziale, tutaj uwaga skupia się na podziale na różne architektury, głębokości oraz rodzaj dodatkowych warstw, takich jak filtr cech.
+Podstawowe techniki znane z głębokiego uczenia znane są już od dziesięcioleci, należy teraz odpowiedzieć na pytanie dlaczego dopiero teraz zostają wykorzystane na masową skalę przez wszystkie firmy technologiczne, a powoli także przemysłowe. Sieci neuronowe z powodzeniem były wykorzystywane do prostych zadań jak rozpoznawanie cyfr, kodów kreskowych, kodów pocztowych, pisma odręcznego od wczesnych lat 90tych ubiegłego wieku. Ze względu na ograniczenia wydajnościowe komputerów osobistych i brak odpowiedniej architektury przetwarzania obliczeń równoległych modele wyprodukowane przez sieć musiały być bardzo małe, tak małe żeby mieściły się na dysku twardym o pojemności mniejszej niż płyta DVD. Wytrenowanie modelu, który jest przechowywany na dysku, zamiast pamięci podręcznej, bądź jak obecnie w jeszcze szybszej pamięci karty graficznej, jest zadaniem tak czasochłonnym, że nie opłacało się tworzyć głębokich sieci neuronowych z tysiącami parametrów na komputerach klasy PC. Wynalezienie osobnego procesora do zadań graficznych i jego późniejsze możliwości programowania na specjalistycznym SDK umożliwiły eksperymenty z głębokim uczeniem w czasie iteracji liczonym w tygodniach, nie miesiącach. Wydajność obliczeniowa procesorów GPU znalazła się na odpowiednim poziomie dopiero po roku 2010. Jak opisano w pracy, jeszcze w 2012 roku wytrenowanie sieci AlexNet zajęło dwa tygodnie na dwóch kartach NVIDIA GeForce 580 GTX, najmocniejszych na tą chwilę na rynku dla graczy. NVIDIA na swoim blogu chwali się informacjami jakoby przyspieszenie kart graficznych między latami 2012 a 2015 wzroslo pięćdziesięciokrotnie.\cite{siteNvidiaAcceleration} Drugim równie ważnym aspektem nagłego rozkwitu w rozwoju głębokich sieci jest ilość dostępnych danych. Smartfony umożliwyły generowanie danych tekstowych, dźwiękowych i miliardów gigabajtów zdjęć i filmów. Taka ilość danych idealnie współgra z rosnącą wydajnością sieci neuronowych. Innowacje w zakresie algorytmów odbyły w zakresie optymalizacji szybkości obliczeń. Jednym z głównych przykładów zwiększenia wydajności jest przejście z funkcji sigmoidy jako funkcji aktywacji do funkcji ReLU. Ta funkcja liczy się dużo szybciej, ponieważ dla wszystkich dodatnich wartości, nachylenie gradientu wynosi 1, w sigmoidzie zaś gdy wartość często wynosi 0, parametry zmieniają się dużo wolniej.
 
-\subsection{Convolutional Neural Networks}
-Sieci konwolucyjne stosowane głównie do sygnałów wejściowych będących obrazem (zbiorem pikseli). 
+Innowacje dzieją się dużo szybciej kiedy cykl iteracyjny od pomysłu, przez kod do eksperymentu dzieje się prawie w czasie rzeczywistym, w przeciwieństwie do wcześniejszych możliwości gdy trening trwał często ponad miesiąc. Głębokie uczenie jeszcze większych sieci przyspieszy z ciągłym strumieniem nowych, opisanych danych, oraz coraz to szybszym sprzętem.
+
+\subsection{Głębokie sieci neuronowe}
+Elementy sztucznych sieci neuronowych zostały opisane w poprzednim rozdziale, w tej sekcji uwaga skupiona jest na podziale architektur, głębokości warstw ukrytych oraz rodzajach dodatkowych warstw, takich jak filtr cech, warstwy łączące, konwolucje.
+
+Głębokie sieci neuronowe znane są również jako sieci neuronowe typu \textit{feedforward} (w literaturze autor nie znalazł polskiego odpowiednika na to słowo, również prof. Tadeusiewicz posługuje się angielską nazwą), kolejna nazwa to wielowarstwowy perceptron. Nazwa \textbf{feedforward} ma naznaczyć że wszystkie informacje przepływają przez funkcję wyliczaną z \(x\), przez pośrednie operacje wyliczające \(f\) by ostatecznie trafić do wyjścia \(y\). Przez brak informacji zwrotnej, która mogłaby natychmiast przekazać neuronowi wyliczone wartości. W przypadku jeśli sieć neuronowa ma otrzymywać natychmiastową informację zwrotną tworzona jest rekurencyjna sieć neuronowa przedstawiana w jednej z sekcji tego rozdziału. Wszystkie wymienione określenia opisują sieć której zadaniem jest przybliżyć funkcję \(f*\). Klasyfikator \(y = f*(x) \) mapuje wejście \(x\) do kategorii \(y\). Wielowarstwowy perceptron definiuje mapowanie \(y = f(x;\theta)\) ucząc się parametrów \theta tak by wydobyć jak najlepsze przybliżenie funkcji. Przykłady uczące serwowane sieci dają przybliżony obraz jak ma wyglądać funkcja. W typowej sieci, funkcji jest wiele i są one wywoływane jednak przez drugą, taki łańcuch funkcji pozwala określać głębokość wybranej sieci (stąd ich nazwa ''głębokie sieci neuronowe''). Dokładanie kolejnych warstw można urozmaicić przez wybieranie innego typu jednostek dla każdej z warstw, co może ulepszyć jakość architektury. O skuteczności takich rozwiązań traktuje rozdzial poświęcony porównaniu efektywnych architektur.
+ Ten rodzaj sieci jest najbardziej użyteczny do zastosowań przetwarzania obrazów i jego modyfikacje będą opisane w dalszej części pracy.
+
+\begin{figure}[h]
+	\centering
+			\includegraphics[resolution=100, scale=0.6]{feedforwardNetwork.png}
+		\caption{Przykładowa struktura sieci typu feedforward.}
+\end{figure}
+
+Każda sieć która ma więcej niż jedna warstwę ukrytą ma prawo być nazwana głęboką, jednak im sieć jest głębsza tym lepsze potrafi osiągnąć wyniki. Warstwy ukryte działają bez możliwości wglądu w nie w trakcie uczenia, programista, nie ma również kontroli nad informacjami przekazywanymi między warstwami ukrytymi.
+
+Możliwości uczenia wielowarstwowych sieci neuronowych, sprawiają że są one idealnymi kandydatkami na zadania wymagające rozpoznawania obrazów. Używając zwykłej sieci typu feedforward, cechy obrazu zostają wyodrębnione przez ekstraktor w trakcie działania algorytmu (strojenie parametrów) a pozostałe informacje są odrzucane. Klasyfikator następnie dzieli na kategorie wektory z wyodrębnionymi cechami obrazu. Ta metoda jest skuteczna dla sieci w pełni połączonych ze sobą, jednak niesie ze sobą poważny problem uniemożliwiający stosowanie jej obecnie na większą skalę. Dowon
+
+Zdjęcia są duże i ich rozmiar wraz z nowymi smartfonami rośnie dużo szybciej niż przepustowość kart graficznych. Taka sieć wymagałaby już tysięcy ukrytych jednostek w pierwszej warstwie ukrytej, co daje setki tysięcy lub miliony parametrów tylko na pierwszej warstwie. Mając obraz o niewielkiej rozdzielczości 250x250x3, pełne połączenie warstwy wejściowej z pierwszą ukrytą warstwą wielkości 100 000 neuronów, wygeneruje 18 750 000 000 parametrów tylko w pierwszej warstwie. Obecne sieci z ponad czterdziestoma warstwami byłyby niemożliwe. Większe możliwości sieci kosztem zapotrzebowania na moc obliczeniową są poza zasięgiem większości osób i podmiotów. W pełni połączona sieć wymaga większej ilości reprezentacji każdej klasy, ponieważ nie ma ona informacji o przesunięciach, różnych kątach, pochyleniu. Takie dane należałoby wygenerować automatycznie lub znaleźć wielokrotnie większy zbiór etykietowanych obrazów.
+
+Drugą poważną wadą tej architektury jest ignorowanie ułożenia lokalnego sygnału wejściowego. Zdjęcie można w dowolny sposób poszatkować, pomieszać a wyjście pozostanie takie samo. Niestety w przypadku rozpoznania obiektu na zdjęciach jest to nie do przyjęcia. Rozwiązaniem tych problemów jest kolejny typ sieci wywodzący się z wielowarstwowego perceptronu, konwolucyjna sieć neuronowa.
+
+\subsection{Konwolucyjne sieci neuronowe (ang. Convolutional Neural Networks)}
+Wyspecjalizowany typ sieci neuronowych do przetwarzania danych ułożonych w siatkę. Sieci te są niezwykle skuteczne w przetwarzaniu ''siatek'' pikseli. Nie odbiegają znacząco od klasycznych feedforward'owych sieci. Ich dodatkową cechą jest jak wynika z nazwy, liniowa operacja konwolucji (splotu) matematycznej. Wraz z konwolucją dochodzi wymagana operacja łączenia (ang. pooling).  W sieciach konwolucyjnych łączy się trzy narzędzia, lokalne pola percepcji, współdzielenie wag, przestrzenne lub czasowe próbkowanie. Te narzędzia rozwiązują również trzy problemy, przesunięcie, skalowanie i zniekształcenie obrazu.
+Prosta i zwykła sieć konwolucyjna otrzymuje na wejściu obrazy o znormalizowanej wielkości i w miarę możliwości wycentrowane. Każdy neuron w wybranej warstwie otrzymuje wejście ze zbioru neuronów z poprzedniej warstwy, które znajdują się w jego sąsiedztwie. Połączenia lokalne były wielokrotnie używane w modelach uczenia maszynowego. Używając lokalnych pól recepcyjnych, jednostki są w stanie wyodrębnić pojedyncze cechy obrazu takie jak krzywizny, krańce płaszczyzn. Cechy te są przekazywane w grupach do kolejnych warstw, gdzie tworzy się z nich coraz wyższe poziomy abstrakcji obiektu, by w ostatniej warstwie nadać im już konkretny kształt obiektu. Zastosowanie warstw rozpoznających najbardziej podstawowe cechy, pozwala używać jednego neuronu do rozpoznania wielu części obrazu jeśli obiektów występuje więcej. Neurony wybranej warstwy zorganizowane są na płaszczyźnie, w której wszystkie jednostki dzielą zestaw wag. Zbiór wartości wyjściowych neuronów zadanej płaszczyzny jest nazywany mapą cech. Jednostki w mapie cech wykonują tę samą operację na różnych fragmentach zdjęcia. Warstwa konwolucyjna zatem jest złożona z wielu map cech, aby zebrać wiele cech w różnych miejscach obrazu. Jednostka w mapie cech ma połączone wejścia z polem recepcyjnym o mniejszym rozmiarze.
+
+Operacja konwolucji jest działaniem wykonanym na dwóch funkcjach, w ujęciu uczenia maszynowego piersza funkcja jest wejściem, druga nazywana jądrem (ang. kernel). Wyjście konwolucji stanowi mapa cech.
+
+
+Dla zwizualizowania kompresji jaką narzuca konwolucja warto zaznajomić się ze wzorami na wielkość warstw łączącej i filtra, zwanego też polem recepcyjnym.
+Wielkość pola recepcyjnego: 
+$$ Wys = (\frac{Wysokosc - Wysokosc\_filtra + 2 * Margines\_wewnetrzny}{Wysokosc\_kroku}) + 1 $$ 
+$$ Szer = (\frac{Szerokosc - Szerokosc\_filtra + 2 * Margines\_wewnetrzny}{Szerokosc\_kroku}) + 1 $$
+Wielkość warstwy łączącej wyznacza się wzorem:
+$$ Macierz = (\frac{Macierz\_wejsciowa + 2 * Margines\_wewnetrzny - Filtr}{Krok}) + 1 $$
+
+Sieci konwolucyjne stosowane głównie do sygnałów wejściowych będących obrazem (zbiorem pikseli).
+
+
 \subsection{Recurrent Neural Networks}
 
 \subsection{Fully Convolutional Networks}
@@ -613,7 +656,7 @@ classes = model.predict(x_test, batch_size=128)
 		\caption{Logo biblioteki Keras}
 \end{figure}
 
-Keras jest frameworkiem udostępniającym wysokopoziomowe API dla głębokich sieci neuronowych. Jego źródła zostały otwarte w 2015 roku. Społeczność skupiona wokół projektu wyróżnia się bardzo pozytywnym podejściem dla osób z poza środowiska naukowego i jest otwarta na propozycje rozwoju biblioteki. Nazwa Keras pochodzi od greckiego słowa \kappa\epsilon\rho\alpha\zeta oznaczającego róg, geneza nazwy wywodzi się z greckiego eposu Homera pod tytułem Odyseja.
+Keras jest frameworkiem udostępniającym wysokopoziomowe API dla głębokich sieci neuronowych. Jego źródła zostały otwarte w 2015 roku. Społeczność skupiona wokół projektu wyróżnia się bardzo pozytywnym podejściem dla osób z poza środowiska naukowego i jest otwarta na propozycje rozwoju biblioteki. Nazwa Keras pochodzi od greckiego słowa \(\kappa\epsilon\rho\alpha\zeta\) oznaczającego róg, geneza nazwy wywodzi się z greckiego eposu Homera pod tytułem Odyseja.
 
 Założeniem François Chollet'a, czyli autora jest zwiększenie szybkości przeprowadzania eksperymentów, dlatego Keras ma wysokopoziomowe API udostępniające uruchomienie algorytmów głębokiego uczenia w kilku liniach kodu. Zalety wymieniane przez autora:
 \begin{itemize}
@@ -919,23 +962,36 @@ Licencja: MIT
 \section{Znaczenie architektury dla wydajności sieci}
 Elementy sieci neuronowych można ułożyć na nieskończenie wiele sposobów, wystarczy dodać kolejną warstwę neuronów lub zmodyfikować wielkość warstwy i wyniki będą zgoła inne. Celem szukania odpowiedniej dla danego zadania architektury jest otrzymanie najlepszej wydajności klasyfikacji przy skończonym i możliwie jak najkrótszym czasie uczenia. Chcąc uzyskać dobre rezultaty bez eksperymentów od zera, należy wybrać architekturę, która została wykorzystana do rozwiązania podobnego zadania bądź przetestować kilka gotowych architektur z wyuczonymi modelami, a następnie sprawdzić jak się zachowują dla posiadanych zbiorów danych na różnych hiperparametrach.
 
-Stworzenie efektywnej architektury przesądziło o wynikach zawodów ''ImageNet Competition 2012''. Pierwsze miejsce w klasyfikacji obrazów wyłącznie z użyciem głębokiej sieci neuronowej zapoczątkowało prawdziwą rewolucję nie tylko wśród społeczności uczenia maszynowego, ale całego przemysłu technologicznego. Pierwszy zespół, któremu udało się zejść z błędem rozpoznania do mniej niż 25\% Geuffrey Hinton, zwany ojcem chrzestnym głębokich sieci neuronowych (ang. Godfather of Deep Learning) udowodnił że jego przekonania, którymi się kierował w trakcie kilkudziesięcioletniej kariery naukowej są słuszne. Poprzeczką, której profesor Hinton nie mógł wcześniej przeskoczyć były ograniczenia obliczeniowe procesorów, kiedy technologia GPU wraz z możliwością programowania równoległego w CUDA umożliwiły przetestowanie idei, podejście do rozpoznawania obrazów zmieniło świat przemysłu, a wkrótce zmieni życie każdego człowieka.
+Stworzenie efektywnej architektury przesądziło o wynikach zawodów ''ImageNet Competition 2012''. Pierwsze miejsce w klasyfikacji obrazów wyłącznie z użyciem głębokiej sieci neuronowej zapoczątkowało prawdziwą rewolucję nie tylko wśród społeczności uczenia maszynowego, ale całego przemysłu technologicznego. Pierwszy zespół, któremu udało się zejść z błędem rozpoznania do mniej niż 25\% Geoffrey Hinton, zwany ojcem chrzestnym głębokich sieci neuronowych (ang. Godfather of Deep Learning) udowodnił że jego przekonania, którymi się kierował w trakcie kilkudziesięcioletniej kariery naukowej są słuszne. Poprzeczką, której profesor Hinton nie mógł wcześniej przeskoczyć były ograniczenia obliczeniowe procesorów, kiedy technologia GPU wraz z możliwością programowania równoległego w CUDA umożliwiły przetestowanie idei, podejście do rozpoznawania obrazów zmieniło świat przemysłu, a wkrótce zmieni życie każdego człowieka. Dlatego Gartner, uważa że już w 2019 roku głębokie uczenie maszynowe 
 
-Rok 2017 został uznany za czas kiedy ImageNet Competition został na stałe rozwiązany. Błędne rozpoznanie algorytmów wśród najlepszych drużyn wyniosło zaledwie 2\%. Przez pięć lat od czasu debiutu AlexNet powstało wiele architektur sieci neuronowych, bibliotek wyspecjalizowanych w szybkim tworzeniu nowych prototypów, a te dające obiecujące wyniki zostały podzielone względem zastosowania. Obecnie wyróżniane typy sieci neuronowych są sklasyfikowane względem typu danych wejściowych. Dla sygnału wejściowego w postaci pikseli najlepiej sprawdza się konwolucyjna sieć neuronowa. Warstwy konwolucyjne potrafią bardzo dokładnie wyodrębnić cechy obrazu na różnych poziomach złożoności co jest wyjaśnione w dalszej części pracy.
+Rok 2017 został uznany za czas kiedy wysokie wyniki na zawodach ''ImageNet Competition'' oznaczały rozwiązanie problemu klasyfikacji obrazu. Błędne rozpoznanie algorytmów wśród najlepszych drużyn wyniosło zaledwie 2\%. Przez pięć lat od czasu debiutu \textit{AlexNet} powstało wiele architektur sieci neuronowych, bibliotek wyspecjalizowanych w szybkim tworzeniu nowych prototypów, a te dające obiecujące wyniki zostały podzielone względem zastosowania. Obecnie wyróżniane typy sieci neuronowych są sklasyfikowane względem typu danych wejściowych. Dla sygnału wejściowego w postaci pikseli najlepiej sprawdza się konwolucyjna sieć neuronowa. Warstwy konwolucyjne potrafią bardzo dokładnie wyodrębnić cechy obrazu na różnych poziomach złożoności, od pojedynczych kresek do kształtów całych obiektów, jak kontur ręki czy marka samochodu. W dalszej części pracy wyjaśniane jest działanie tych sieci.
 
-Polskim ekspertem i popularyzatorem sieci neuronowych od wielu lat jest profesor doktor habilitowany inżynier Ryszard Tadeusiewicz. Osoba bardzo zasłużona w naukach technicznych. Jego książki stały się częścią bibliografii niniejszej pracy. Profesor w swoich publikacjach istotnie zwraca uwagę na architekturę jako element konieczny w budowaniu 
+Polskim ekspertem i popularyzatorem sieci neuronowych, od wielu lat jest profesor doktor habilitowany inżynier Ryszard Tadeusiewicz. Osoba bardzo zasłużona w naukach technicznych, trzykrotny rektor Akademii Górniczo-Hutniczej, dwukrotnie odznaczony orderami Odrodzenia Polski, a także zdobywca tytułu Mistrza Mowy Polskiej. Jego książki stały się częścią bibliografii niniejszej pracy. Profesor w swoich publikacjach istotnie zwraca uwagę na architekturę jako element konieczny w budowaniu wydajnych systemów uczących.
 
-Architektury różnią się ilością warstw ukrytych, typem neuronów i funkcji aktywacji w każdej warstwie. 
+Architektury różnią się ilością warstw ukrytych, typem neuronów i funkcji aktywacji w każdej warstwie.
 “Właśnie taka [warstwowa] struktura sieci wyjątkowo łatwo i wygodnie da się wytwarzać zarówno w formie modelu elektronicznego, jak i da się symulować w formie programu komputerowego. Dlatego badacze przyjęli właśnie strukturę warstwową i od tej pory stosują ją we wszystkich sztucznych sieciach neuronowych. [...] W związku z tym wszyscy tak postępują, nie martwiąc się ani przesłankami biologicznymi, ani dowodami wskazującymi, że architektura sieci bardziej wymyślnie dostosowanej do charakteru zadania może znacznie lepiej realizować stawiane zadania.”
 
-Tak napisał w 2007 roku, kiedy nie istniały jeszcze złożone głębokie sieci neuronowe, największe w tej pory miały 5 warstw ukrytych, a zbiory danych na których pracowano były stosunkowo niewielkie w porównaniu z dzisiejszymi zasobami skatalogowanych obrazów. Prof. Tadeusiewicz uważa że jest to najlepsze ułożenie neuronów ze względu na prostotę oraz dowód że badacze znaleźli podobne struktury w niektórych częściach ludzkiego mózgu (w tym w oku, które jest ewolucyjnie złożone z tej samej tkanki co mózgowa).
+Tak profesor Tadeusiewicz pisał w 2007 roku, kiedy jeszcze złożone głębokie sieci neuronowe nie były wykorzystywane ze względu na koszt uczenia. Największe architektury do tej pory składały się z 5 warstw ukrytych, a zbiory danych na których pracowano były stosunkowo niewielkie w porównaniu z dzisiejszymi zasobami skatalogowanych obrazów. Prof. Tadeusiewicz uważa że, struktura warstwowa, gdzie każdy neuron jest połączony z każdym z warstwy kolejnej to najlepsze ułożenie neuronów ze względu na prostotę. Biolodzy zajmujący się strukturą mózgu znaleźli podobne struktury (neurony ułożone warstwami) w niektórych częściach ludzkiego mózgu (w tym w oku, które jest ewolucyjnie złożone z tej samej tkanki co mózgowa).
 
-Dowodem na znaczenie ułożenia neuronów w poprawnej strukturze jest ich rosnąca skuteczność od kiedy badacze bardzo dużo eksperymentują z różnymi kombinacjami. Coroczne zawody ImageNet, w których udowadnia się że struktura sieci ma znaczenie są świetnym przykładem że jest to proces iteracyjny i jak podkreślano wcześniej, metoda empiryczna jest obecnie jedynym sposobem na znalezienie idealnego modelu.
+Najbardziej wydajna obliczeniowo jest sieć z połączeniami gdzie neurony są połączone tylko z wybranymi neuronami kolejnej warstwy. Takie rozwiązanie jest fizycznie niemożliwe do ułożenia przy sieciach złożonych z milionów parametrów. To samo zachowanie jest symulowane przez zerowanie części połączeń kiedy sieć się uczy. Efekt jest ten sam, to rozwiązanie wymaga trochę więcej mocy obliczeniowej, by sieć mogła rozpoznać idealny rozkład połączeń.
 
-\section{Przegląd najbardziej efektywnych architektur}
+Różne modyfikacje architektur warstwowych pojawiają się pod wymogi zadań coraz bardziej dokładnego procesu uczenia. Przewiduje się że architektura będzie coraz bardziej złożona wraz ze wzrostem sprzętu. Opracowanie procesu nauczania przez przenoszenie wzorców rozpoznawania z jednej domeny do innej, daje drogę do stworzenia niesamowicie złożonych sieci. Ponieważ raz stworzony model, niezależnie od kosztu uczenia, będzie mógł być wykorzystywany do szybkiego rozpoznawania nowych zadań przed nim stawianych.
+
+Dowodem na znaczenie ułożenia neuronów w strukturze warstwowej o różnych typach warstw jest ich rosnąca skuteczność. Od kiedy badacze eksperymentują z różnymi kombinacjami, co roku pojawiają się coraz wydajniejsze struktury. Coroczne zawody \textit{ImageNet}, w których udowadnia się że struktura sieci ma znaczenie są świetnym przykładem że jest to proces iteracyjny i jak podkreślano wcześniej, metoda empiryczna jest obecnie jedynym sposobem na znalezienie idealnego modelu.
+
+\begin{figure}[h]
+	\centering
+			\includegraphics[resolution=100, scale=0.6]{architecturePerformance.png}
+		\caption{Wydajność architektury względem ilości operacji potrzebnych do przejścia sygnału przez nią.}
+\end{figure}
+
+
+\section{Przegląd efektywnych architektur}
 
 \subsection{LeNet}
-[Yann LeCun, Leon Bottou, Yoshua Bengio, Patrick Haffner, 1998] - . Pierwsze praktyczne zastosowanie sieci konwolucyjnych jeszcze w latach 90’tych. Używana była do prostych zadań: czytanie kodów pocztowych, liczb.\cite{Lecun98gradient-basedlearning}
+[Yann LeCun, Leon Bottou, Yoshua Bengio, Patrick Haffner, 1998] - Pierwsze praktyczne zastosowanie sieci konwolucyjnej do rozpoznawania cyfr. Używana była do prostego zadania czytania kodów pocztowych, oraz krótkich ciągów liczb. Architektura została zaprezentowana w publikacji ''Gradient-Based Learning Applied to Document Recognition''. Składa się ona z 7 warstw, razem z wejściową i wyjściową, pełna nazwa LeNet-5 co symbolizuje ilość warstw ukrytych. Sieć w porównaniu z opisywanymi w następnych sekcjach jest najmniejsza (pamięciowo) i najprostsza w implementacji. Czas wytrenowania takiej sieci na nowoczesnym GPU zawiera się w jednej minucie. Najlepszym zbiorem uczącym dla LeNet jest MINST, zbiór cyfr pisanych odręcznie, około 70 000 obrazów. Zbiór został przestudiowany przez dziesiątki lat przez wielu ekspertów od wizji komputerowej. Połączenie LeNet wraz z MINST uchodzi za odpowiednik programu ''hello, world'' ze świata programowania. 
+
+Sieć na wejście przyjmuje sygnał złożony z obrazów 32x32 piksele w różnych odcieniach szarości (bez kolorów). Używa filtra konwolucyjnego o rozmiarach 5x5 pikseli z przesunięciem o 1. Wyjście pierwszej warstwy konwolucyjnej daje rozmiar 28x28 pikseli złożony z 6 map cech. Następnie przychodzi warstwa druga ''łącząca'' o rozmiarach 14x14 pikseli złożona z 6 map cech, każda jednostka mapy cech jest podłączona z sąsiedztwem o rozmiarach 2x2 odpowiadającym cechom z pierwszej warstwy. . \cite{Lecun98gradient-basedlearning}
 
 \begin{figure}[h]
 	\centering
@@ -962,10 +1018,10 @@ Dowodem na znaczenie ułożenia neuronów w poprawnej strukturze jest ich rosną
 W trakcie trenowania sieci wyjście jest ustawione na ustalony rozmiar (224 x 224 x 3). Przetwarzanie wstępne obejmuje odjęcie mediany wartości RGB dla każdego piksela. Zdjęcie jest przetwarzanie przez stos warstw konwolucyjnych, gdzie używane są filtry o bardzo małym polu widzenia (3x3) [najmniejszy możliwy rozmiar by móc rozpoznać kierunek]. Operacja Max-pooling jest wykonana na polu 4 pikseli, co pokazuje że jest to pobieranie jak najmniejszych cech z obrazu. Ukryte warstwy są wyposażone w nieliniową funkcję aktywacji ReLU. Po stosie warstw konwolucyjnych, następuje nałożenie 3 warstw w pełni połączonych (to takie duże warstwy zawierające wszystkie cechy?). Pierwsze dwie mają 4096 kanałów, trzecia już tylko 1000 (po jednym kanale na klasę obiektu). Obecnie architektura ta jest dość popularnym wyborem dla wyodrębniania cech ze zdjęć. Konfiguracje wag dla zbioru obrazów z ImageNet są dostępne online. W tej sieci problemem jest 140 milionów parametrów, którymi czasem trzeba zarządzać. \cite{DBLP:journals/corr/SimonyanZ14a}
 
 \subsection{GoogleNet / Inception}
-[Christian Szegedy, Wei Liu, Yangqing Jia, Pierre Sermanet, Scott Reed, Dragomir Anguelov, Dumitru Erhan, Vincent Vanhoucke, Andrew Rabinovich, 2014] - produkt jak nazwa wskazuje wyszedł z firmy Google. Charakteryzuje się przełomową poprawą użycia zasobów wewnętrznych. ImageNet jest zaprojektowana na jak największą szerokość i głębokość jednocześnie utrzymując stałe zużycie mocy obliczeniowej. Optymalizacja jakości opiera się na zasadzie Hebbian’a (jest to teoria neuronauki, która mówi o adaptacji neuronów w trakcie nauki). Błędy klasyfikacji wynoszą top-1: 17,2\% i top-5: 3,58\% (dla v3). Sieć składa się łącznie z 22 warstw. Sieć jest modułowa, gdzie każdy moduł pełni rolę wielopoziomowego ekstraktora cech przeliczającego konwolucje na macierzach rozmiarów 1x1, 3x3, 5x5. Zaletą tej architektury są bardzo małe rozmiary wag (mniej niż 100MB dla v3). Kolejną ważną zaletą jest ilość parametrów, tylko 4 miliony co jest wynikiem 12 razy lepszym od AlexNet. Jest to jedna z najbardziej złożonych sieci względem architektury modułowej. W wersji naiwnej każda warstwa posiada 4 ekstraktory cech (3 konwolucyjne i jedną 3x3 max pooling), następnie wartości te są składane i wysyłane do warstwy wyżej. Do poprawienia wydajności obliczeniowej pozbyto się warstwy “w pełni połączonej”. \cite{DBLP:journals/corr/SzegedyLJSRAEVR14}
+[Christian Szegedy, Wei Liu, Yangqing Jia, Pierre Sermanet, Scott Reed, Dragomir Anguelov, Dumitru Erhan, Vincent Vanhoucke, Andrew Rabinovich, 2014] -- produkt jak nazwa wskazuje wyszedł z firmy Google. Charakteryzuje się przełomową poprawą użycia zasobów wewnętrznych. ImageNet jest zaprojektowana na jak największą szerokość i głębokość jednocześnie utrzymując stałe zużycie mocy obliczeniowej. Optymalizacja jakości opiera się na zasadzie Hebbian’a (jest to teoria neuronauki, która mówi o adaptacji neuronów w trakcie nauki). Błędy klasyfikacji wynoszą top-1: 17,2\% i top-5: 3,58\% (dla v3). Sieć składa się łącznie z 22 warstw. Sieć jest modułowa, gdzie każdy moduł pełni rolę wielopoziomowego ekstraktora cech przeliczającego konwolucje na macierzach rozmiarów 1x1, 3x3, 5x5. Zaletą tej architektury są bardzo małe rozmiary wag (mniej niż 100MB dla v3). Kolejną ważną zaletą jest ilość parametrów, tylko 4 miliony co jest wynikiem 12 razy lepszym od AlexNet. Jest to jedna z najbardziej złożonych sieci względem architektury modułowej. W wersji naiwnej każda warstwa posiada 4 ekstraktory cech (3 konwolucyjne i jedną 3x3 max pooling), następnie wartości te są składane i wysyłane do warstwy wyżej. Do poprawienia wydajności obliczeniowej pozbyto się warstwy “w pełni połączonej”. \cite{DBLP:journals/corr/SzegedyLJSRAEVR14}
 
 \subsection{ResNet}
-[Kaiming He et al, 2015]  - architektura oparta na mikro modułach. Charakteryzuje się możliwością odrzucania połączeń i posiada ogromny moduł na normalizację zbioru iteracji (ang. batch normalization). Normalizacja jest pomysłem zaczerpniętym z rekurencyjnych sieci neuronowych. Ta technika pozwala stworzyć sieć ze 152 warstwami ukrytymi przy zachowaniu złożoności mniejszej niż VGG. \cite{DBLP:journals/corr/XieGDTH16}
+[Kaiming He et al, 2015] -- architektura oparta na mikro modułach. Charakteryzuje się możliwością odrzucania połączeń i posiada ogromny moduł na normalizację zbioru iteracji (ang. batch normalization). Normalizacja jest pomysłem zaczerpniętym z rekurencyjnych sieci neuronowych. Ta technika pozwala stworzyć sieć ze 152 warstwami ukrytymi przy zachowaniu złożoności mniejszej niż VGG. \cite{DBLP:journals/corr/XieGDTH16}
 \begin{figure}[h]
 	\centering
 			\includegraphics[resolution=100]{ResNet.png}
