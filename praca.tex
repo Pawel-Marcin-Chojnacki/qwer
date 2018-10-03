@@ -4,6 +4,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{enumitem} % słownik pojęć
 \usepackage{amsmath}
+\let\lll\undefined
 \usepackage{amssymb}
 \usepackage{tabularx} % tabele
 \usepackage[usenames,dvipsnames,svgnames,table]{xcolor} % kolory jak~się chce gdzieś użyć
@@ -23,47 +24,7 @@
 % Bibliograhy
 \usepackage[backend=bibtex8,sorting=none,isbn=false]{biblatex}
 \nocite{*}
-\addbibresource{bibliography/alexnetNips}
-\addbibresource{bibliography/deeplearningbook}
-\addbibresource{bibliography/dropout}
-\addbibresource{bibliography/sitefastAI}
-\addbibresource{bibliography/ganArxiv}
-\addbibresource{bibliography/googleNet}
-\addbibresource{bibliography/lecun}
-\addbibresource{bibliography/medicalImage}
-\addbibresource{bibliography/microsoftResNet}
-\addbibresource{bibliography/rCNN}
-\addbibresource{bibliography/relu}
-\addbibresource{bibliography/resnextArxiv}
-\addbibresource{bibliography/VGGNet}
-\addbibresource{bibliography/ZFNet}
-\addbibresource{bibliography/YOLO}
-\addbibresource{bibliography/SqueezeNet}
-\addbibresource{bibliography/SegNet}
-\addbibresource{bibliography/deeplearningTensorflow}
-\addbibresource{bibliography/odkrywanieSieci}
-\addbibresource{bibliography/benchmarks}
-\addbibresource{bibliography/MXNet}
-\addbibresource{bibliography/CaffePerformance}
-\addbibresource{bibliography/caffe}
-\addbibresource{bibliography/sieciNeuronowe}
-\addbibresource{bibliography/siteAIhistory}
-\addbibresource{bibliography/siteJia}
-\addbibresource{bibliography/siteMendeley}
-\addbibresource{bibliography/siteNvidiaCaffe2}
-\addbibresource{bibliography/sitePythonvR}
-\addbibresource{bibliography/siteSlowJavaScript}
-\addbibresource{bibliography/siteTensorflowCitations}
-\addbibresource{bibliography/siteMLNet}
-\addbibresource{bibliography/siteDLByLanguage}
-\addbibresource{bibliography/bookDeepLearningKeras}
-\addbibresource{bibliography/deepLearningWithPyTorch}
-\addbibresource{bibliography/siteTensorflowJSConcepts}
-\addbibresource{bibliography/bookDeepLearningMXNet}
-\addbibresource{bibliography/bookCNTK}
-\addbibresource{bibliography/bookMachineLearning}
-\addbibresource{bibliography/siteNvidiaAcceleration}
-\addbibresource{bibliography/siteBriefHistory}
+\input{bibitems}
 
 %Image source
 \newcommand{\source}[1]{\caption*{Źródło: {#1}} }
@@ -292,7 +253,7 @@ Dziedzina jest tak dynamiczna, że zdarza się iż literatura w czasie publikacj
 
 Ilość mocy obliczeniowej potrzebnej do stworzenia dobrego modelu powoduje konieczność przedstawienia największych problemów osób praktykujących uczenie głębokich sieci neuronowych w taki sposób by uniknąć kosztownego dochodzenia do zadowalających wyników metodą prób i błędów. W rozdziale poświęconym wydajności architektur przedstawiono sposoby na uniknięcie najczęściej popełnianych błędów oraz zbiór powszechnie przyjętych praktyk dla osiągnięcia optymalnej wydajności przy zaledwie kilku próbach. Wydajność jest tu rozumiana zarówno jako czas obliczeń potrzebny do wyuczenia modelu rozpoznawania danego zagadnienia, oraz dokładność z jaką już nauczony model potrafi rozpoznać niespotkane wcześniej dane. Oba te parametry są od siebie zależne, ponieważ koszt poprawy jakości predykcji algorytmu o ostatnie 1-2\% może wynosić setki tysięcy złotych, zakłada się oczekiwaną poprawność lub korzysta z gotowych modeli dodając tylko własne klasy obiektów. Na koszt składa się energia elektryczna, serwery wyposażone w karty graficzne oraz czas oczekiwania na zakończenie obliczeń. Zmiany zachodzące w rozwoju sprzętu, techniki przenoszenia cech między modelami, tzw. transfer uczenia, pozwolą na tworzenie aplikacji w czasie rzeczywistym już za kilka do kilkunastu lat.
 
-Architektury posiadają wiele hiperparametrów, które wpływają na precyzję modelu. Po modyfikacji wartości dowolnego należy rozpocząć pracę algorytmu od początku, dlatego dobór odpowiednich wartości na początku jest niezwykle cenny. Na rok 2017, żadna otwartoźródłowa biblioteka nie posiada wbudowanych automatów do poszukiwania optymalnych hiperparametrów. Dobieranie ich dzieje się na intuicję wyrobioną dziesiątkami prób. Istnieje kilka nowatorskich technik dobierania hiperparametrów, które ze względu na to że zostały odkryte przez mało znanych badaczy, nie są jeszcze powszechnie stosowane w dużych ośrodkach badawczych. Te techniki również są na tyle nowe, że nie ma wydawnictwa branżowego opisującego ich użycie dla praktyków. Jedyny sposób na chwile obecną to śledzenie publikacji naukowych wydawanych w serwisie arXiv. Kilka technik strojenia stałej uczenia w tym cykliczna zmiana stałej uczenia pozwala efektywnie zmniejszyć błąd klasyfikatora o 10-20\%, co wiąże się z dużo wyższą wydajnością, przy znikomym nakładzie pracy. 
+Architektury posiadają wiele hiperparametrów, które wpływają na precyzję modelu. Po modyfikacji wartości dowolnego należy rozpocząć pracę algorytmu od początku, dlatego dobór odpowiednich wartości na początku jest niezwykle cenny. Na rok 2017, żadna otwartoźródłowa biblioteka nie posiada wbudowanych automatów do poszukiwania optymalnych hiperparametrów. Dobieranie ich dzieje się na intuicję wyrobioną dziesiątkami prób. Istnieje kilka nowatorskich technik dobierania hiperparametrów, które ze względu na to że zostały odkryte przez mało znanych badaczy, nie są jeszcze powszechnie stosowane w dużych ośrodkach badawczych. Te techniki również są na tyle nowe, że nie ma wydawnictwa branżowego opisującego ich użycie dla praktyków. Jedyny sposób na chwile obecną to śledzenie publikacji naukowych wydawanych w serwisie arXiv. Kilka technik strojenia stałej uczenia w tym cykliczna zmiana stałej uczenia pozwala efektywnie zmniejszyć błąd klasyfikatora o 10-20\%, co wiąże się z dużo wyższą wydajnością, przy znikomym nakładzie pracy. 
 
 Do prezentacji działania bibliotek, architektur i algorytmów użyty został gotowy zbiór danych. Zestaw danych treningowych pochodzi z serwisu Mendeley. Są to zdjęcia z prześwietleń rentgenowskich podzielone na dwie kategorie:
 \begin{itemize}
@@ -320,13 +281,13 @@ Pierwszy model sztucznego neuronu był wyobrażeniem uproszczonej biologicznej r
 
 Uproszczeniem które pozwala na sprawną implementację, jest wyodrębnienie zasady przetwarzania informacji bioelektrycznej do kilku prostszych operacji. Takie uproszczenie składa się z wielu sygnałów wejściowych, wagi przypisanej każdemu z tych sygnałów, oraz pojedynczej wartości wyjściowej. Jak wielkie jest to uproszczenie widać przy porównaniu rysunku prawdziwego neuronu (również w uproszczeniu) oraz sztucznego neuronu. Taka budowa choć bardzo banalna, daje wiele możliwości. Podstawową zaletą jest prostota odwzorowania w urządzeniach elektronicznych. Przed nadejściem ery komputerów osobistych, stosowano maszyny nazywane perceptronami. Nazwa perceptron jest obecnie używana zamiennie z neuronem.\cite{odkrywanieSieci}
 
-\begin{figure}[h]
+\begin{figure}[ht]
 	\centering
 			\includegraphics[resolution=100, scale=0.7]{neuronMozgowy.png}
 		\caption{Wizualizacja uproszczonego modelu neuronu mózgowego.}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[ht]
 	\centering
 			\includegraphics[resolution=100, scale=0.8]{sztucznyNeuron.png}
 		\caption{Wizualizacja prostego sztucznego neuronu.}
@@ -354,12 +315,11 @@ W jaki sposób sztuczny neuron jest w stanie rozpoznać sygnał wejściowy? Do w
 \(X = \begin{bmatrix} x_{1} \\ x_{2} \\ \dots \\ x_{n} \end{bmatrix} \) - wektor wyznaczający przestrzeń wejść, oraz \newline
 \(W = \begin{bmatrix} w_{1} \\ w_{2} \\ \dots \\ w_{n} \end{bmatrix} \) - wektor wyznaczający przestrzeń wag. \newline W ten notacji można wyrazić wyjście neuronu jako \(y= W^T * X\). Wartość wyjściowa neuronu y, będzie wyższa im bliższe będzie położenie wektorów.\cite{sieciNeuronowe}
 
-\begin{figure}[h]
+\begin{figure}[ht]
 	\centering
 			\includegraphics[resolution=100, scale=0.7]{Neuron.png}
 		\caption{Prosta reprezentacja neuronu.}
 \end{figure}
-
 
 \section{Co to jest sieć neuronowa?}
 Koncepcja sztucznej sieci neuronowej to połączenie wielu neuronów w jeden obiekt. Pozwala to na rozpoznawanie bardziej skomplikowanych wzorców i większej różnorodności typów obiektów niż klasyfikacja binarna. Zwykła (płytka) sieć neuronowa składa się z trzech warstw węzłów. Warstwa pierwsza stanowi warstwę wejściową sieci i składa się z sygnału wejściowego.
@@ -370,7 +330,7 @@ Ostatnia warstwa, pojedynczy węzeł nazywany jest warstwą wyjściową. Pobiera
 Taka architektura nazywa się siecią dwuwarstwową. Dane wejściowe, mimo że tworzą pierwszą warstwę nie są liczone w nazewnictwie.
 Z warstwami ukrytą i wyjściową powiązane są parametry \(w\) (ang. weight) oraz \(b\) (ang. bias), oznaczające kolejno: macierz wag oraz wektor progów.
 
-\begin{figure}[h]
+\begin{figure}[ht]
 	\centering
 			\includegraphics[resolution=100, scale=0.2]{SiecNeuronowa.png}
 		\caption{Prosta sieć neuronowa złożona z dwóch warstw.}
@@ -440,25 +400,25 @@ Nieszczelna liniowa jednostka rektyfikowana (ang. leaky Rectified Linear Unit) d
 
 Należy podkreślić że w nowoczesnych sieciach neuronowych każda warstwa może posiadać indywidualnie ustanowioną funkcję aktywacji w zależności od architektury. Domyślnym wyborem funkcji aktywacji jest ReLU. 
 
-\begin{figure}[h]
+\begin{figure}[ht]
 	\centering
 			\includegraphics[resolution=100, scale=0.7]{Sigmoid.png}
 		\caption{Wykres funkcji sigmoidalnej}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[ht]
 	\centering
 			\includegraphics[resolution=100, scale=0.7]{Tangens.png}
 		\caption{Wykres funkcji tangensu hiperbolicznego}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[ht]
 	\centering
 			\includegraphics[resolution=100, scale=0.8]{ReLU.png}
 		\caption{Wykres rektyfikowanej jednostki liniowej}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[ht]
 	\centering
 			\includegraphics[resolution=100, scale=0.8]{leakyReLU.png}
 		\caption{Wykres nieszczelnej rektyfikowanej jednostki liniowej}
@@ -494,7 +454,7 @@ Graf obliczeniowy powyższej funkcji znajduje się na rysunku poniżej.
 
 Do minimalizowania funkcji kosztu algorytm oblicza pochodne w odwrotnej kolejności do przedstawionej na poprzednim przykładzie grafu.
 
-\begin{figure}[h]
+\begin{figure}[ht]
 	\centering
 			\includegraphics[resolution=100, scale=0.5]{ComputationGraph.png}
 		\caption{Wykres obliczeniowy dla funkcji \(J(a,b,c) = 3(a+bc)\)}
@@ -526,10 +486,9 @@ Innowacje dzieją się dużo szybciej kiedy cykl iteracyjny od pomysłu, przez k
 \subsection{Głębokie sieci neuronowe}
 Elementy sztucznych sieci neuronowych zostały opisane w poprzednim rozdziale, w tej sekcji uwaga skupiona jest na podziale architektur, głębokości warstw ukrytych oraz rodzajach dodatkowych warstw, takich jak filtr cech, warstwy łączące, konwolucje.
 
-Głębokie sieci neuronowe znane są również jako sieci neuronowe typu \textit{feedforward} (w literaturze autor nie znalazł polskiego odpowiednika na to słowo, również prof. Tadeusiewicz posługuje się angielską nazwą), kolejna nazwa to wielowarstwowy perceptron. Nazwa \textbf{feedforward} ma naznaczyć że wszystkie informacje przepływają przez funkcję wyliczaną z \(x\), przez pośrednie operacje wyliczające \(f\) by ostatecznie trafić do wyjścia \(y\). Przez brak informacji zwrotnej, która mogłaby natychmiast przekazać neuronowi wyliczone wartości. W przypadku jeśli sieć neuronowa ma otrzymywać natychmiastową informację zwrotną tworzona jest rekurencyjna sieć neuronowa przedstawiana w jednej z sekcji tego rozdziału. Wszystkie wymienione określenia opisują sieć której zadaniem jest przybliżyć funkcję \(f*\). Klasyfikator \(y = f*(x) \) mapuje wejście \(x\) do kategorii \(y\). Wielowarstwowy perceptron definiuje mapowanie \(y = f(x;\theta)\) ucząc się parametrów \theta tak by wydobyć jak najlepsze przybliżenie funkcji. Przykłady uczące serwowane sieci dają przybliżony obraz jak ma wyglądać funkcja. W typowej sieci, funkcji jest wiele i są one wywoływane jednak przez drugą, taki łańcuch funkcji pozwala określać głębokość wybranej sieci (stąd ich nazwa ''głębokie sieci neuronowe''). Dokładanie kolejnych warstw można urozmaicić przez wybieranie innego typu jednostek dla każdej z warstw, co może ulepszyć jakość architektury. O skuteczności takich rozwiązań traktuje rozdzial poświęcony porównaniu efektywnych architektur.
- Ten rodzaj sieci jest najbardziej użyteczny do zastosowań przetwarzania obrazów i jego modyfikacje będą opisane w dalszej części pracy.
+Głębokie sieci neuronowe znane są również jako sieci neuronowe typu \textit{feedforward} (w literaturze autor nie znalazł polskiego odpowiednika na to słowo, również prof. Tadeusiewicz posługuje się angielską nazwą), kolejna nazwa to wielowarstwowy perceptron. Nazwa \textbf{feedforward} ma naznaczyć że wszystkie informacje przepływają przez funkcję wyliczaną z \(x\), przez pośrednie operacje wyliczające \(f\) by ostatecznie trafić do wyjścia \(y\). Przez brak informacji zwrotnej, która mogłaby natychmiast przekazać neuronowi wyliczone wartości. W przypadku jeśli sieć neuronowa ma otrzymywać natychmiastową informację zwrotną tworzona jest rekurencyjna sieć neuronowa przedstawiana w jednej z sekcji tego rozdziału. Wszystkie wymienione określenia opisują sieć której zadaniem jest przybliżyć funkcję \(f*\). Klasyfikator \(y = f*(x) \) mapuje wejście \(x\) do kategorii \(y\). Wielowarstwowy perceptron definiuje mapowanie \(y = f(x,\theta)\) ucząc się parametrów \theta tak by wydobyć jak najlepsze przybliżenie funkcji. Przykłady uczące serwowane sieci dają przybliżony obraz jak ma wyglądać funkcja. W typowej sieci, funkcji jest wiele i są one wywoływane jednak przez drugą, taki łańcuch funkcji pozwala określać głębokość wybranej sieci (stąd ich nazwa "głębokie sieci neuronowe"). Dokładanie kolejnych warstw można urozmaicić przez wybieranie innego typu jednostek dla każdej z warstw, co może ulepszyć jakość architektury. O skuteczności takich rozwiązań traktuje rozdzial poświęcony porównaniu efektywnych architektur. Ten rodzaj sieci jest najbardziej użyteczny do zastosowań przetwarzania obrazów i jego modyfikacje będą opisane w dalszej części pracy.
 
-\begin{figure}[h]
+\begin{figure}[ht]
 	\centering
 			\includegraphics[resolution=100, scale=0.6]{feedforwardNetwork.png}
 		\caption{Przykładowa struktura sieci typu feedforward.}
@@ -574,7 +533,7 @@ Nagły wzrost zainteresowania sieciami neuronowymi, spowodował pojawienie się 
 Na uwagę zasługuje fakt pojawienie się kilku bibliotek napisanych wyłącznie dla JavaScript'u. Ich zastosowanie jest nastawione na użytkowników gotowych modeli i ogranicza się głównie do importu zminiaturyzowanych wag na telefon by szybko odpowiadać na sygnały użytkownika takie jak zdjęcie z aparatu, bądź komendę głosową. 
 
 \subsection{Tensorflow}
-\begin{figure}[h]
+\begin{figure}[ht]
 	\centering
 			\includegraphics[resolution=100, scale=0.6]{Tensorflow.png}
 		\caption{Logo biblioteki Tensorflow}
@@ -630,6 +589,7 @@ Licencja: Apache 2.0
 
 \subsection{Keras}
 
+\lstinputlisting[language=Python]{Keras.py}
 \noindent
 \begin{minipage}{\linewidth}
 \begin{lstlisting}[caption=Skrypt najprostszego modelu sekwencyjnego (Keras w 30 sekund), label=lst:test]
@@ -650,7 +610,7 @@ classes = model.predict(x_test, batch_size=128)
 \end{lstlisting}
 \end{minipage}
 
-\begin{figure}[h]
+\begin{figure}[ht]
 	\centering
 			\includegraphics[resolution=100, scale=0.3]{Keras.png}
 		\caption{Logo biblioteki Keras}
@@ -687,7 +647,7 @@ Kod źródłowy: https://github.com/keras-team/keras
 Licencja: MIT
 
 \subsection{PyTorch}
-\begin{figure}[h]
+\begin{figure}[ht]
 	\centering
 			\includegraphics[resolution=100, scale=0.5]{PyTorch.png}
 		\caption{Logo biblioteki PyTorch}
@@ -731,7 +691,7 @@ Licencja: Brak określonej. Prawa autorów zastrzeżone, oprogramowanie \"as is\
 
 
 \subsection{Tensorflow.js [Deeplearn.js]}
-\begin{figure}[h]
+\begin{figure}[ht]
 	\centering
 			\includegraphics[resolution=100, scale=0.6]{TensorflowJS.png}
 		\caption{Logo biblioteki Tensorflow.js}
@@ -798,7 +758,7 @@ Kod źródłowy: https://js.tensorflow.org/
 Licencja: Licencja: Apache 2.0
 
 \subsection{PaddlePaddle}
-\begin{figure}[h]
+\begin{figure}[ht]
 	\centering
 			\includegraphics[resolution=100, scale=1.2]{PaddlePaddle.png}
 		\caption{Logo biblioteki Paddle}
@@ -1083,6 +1043,151 @@ Cały przepływ danych do wykrycia obiektów jest jedną siecią, dlatego może 
 %        PORÓWNANIE WYDAJNOŚCI ARCHITEKTUR
 % ################################
 \chapter{Testy wydajności}
+Rozdział przedstawia praktyczne wykorzystanie omówionych wcześniej mechanizmów. Autor wybrał kilka z omawianych w poprzednim rozdziale architektur i wykonał testy wydajności na jednym zbiorze danych. Porównanie ma przedstawiać czas uczenia na modelach z wcześniej ustawionymi parametrami.
+
+\section{Dane}
+Zdjęcia przedstawiają prześwietlenia płuc przygotowane i przeanalizowane przez zespół złożony z: Daniel S. Kermany. Michael Goldbaum, Wenjia Cai, Carolina C.S. Valentim, Huiying Liang, Sally L. Baxter,, Alex McKeown, Ge Yang, Xiaokang Wu, Fangbing Yan, Justin Dong, Made K. Prasadha, Jacqueline Pei, Magdalene Y.L. Ting, Jie Zhu, Christina Li, Sierra Hewett, Jason Dong, Ian Ziyar, Alexander Shi, Runze Zhang, Lianghong Zheng, Rui Hou, William Shi, Xin Fu, Yaou Duan, Viet A.N. Huu, Cindy Wen, Edward D. Zhang, Charlotte L. Zhang, Oulan Li, Xiaobo Wang, Michael A. Singer, Xiaodong Sun Jie Xu, Ali Tafreshi, M. Anthony Lewis, Huimin Xia, Kang Zhang. Obrazy zostały udostępnione z licencją Creative Commons 4.0.\cite{siteCell}
+
+Dane złożone są z:
+\being{itemize}
+\item 5862 obrazów,
+\item podzielone na 2 kategorie,
+\item rozłożone w 3 katalogach,
+\item test — 234 zdrowe płuca, 390 z zapaleniem płuc,
+\item train — 1341 zdrowe płuca, 3875 z zapaleniem płuc,
+\item val — 8 zdrowe płuca, 8 z zapaleniem płuc.
+\end{itemize}
+
+Ilość danych na możliwości głębokiego uczenia sieci neuronowych jest niewielka. Gdyby zwiększyć ilość sygnałów wejściowych kilkunastokrotnie, każda nowoczesna architektura bez problemu uzyskałaby wynik zbliżony do nieomylnego, powyżej 99,5\%. Zapalenie wywołane wirusem i bakteriami jest w jednym katalogu, dlatego algorytm powinien nie odróżniać między sobą dwóch stanów chorobowych. Zapalenie płuc może być wywołane również Mycoplasmę i grzyby, jednak te dwie kategorie nie zostały umieszczone w zbiorze danych. Obrazy rentgenowskie klatki piersiowej (przód-tył) zostały wybrane z kohort pacjentów pediatrycznych w wieku od jednego do pięciu lat z Centrum Medycznego Kobiet i Dzieci w Guangzhou. Wszystkie zdjęcia zostały wykonane w ramach rutynowej opieki klinicznej pacjentów.
+
+Zdjęcia rentgenowskie zostały przygotowane pod kątem analizy. Wszystkie radiogramy klatki piersiowej zostały przeszukane pod kątem kontroli jakości, usuwając wszystkie skany nieczytelne oraz będące niskiej jakości. Diagnozy dotyczące zawartości obrazów zostały ocenione przez zespół dwóch lekarzy specjalistów, a następnie przefiltrowane przez kolejnego lekarza celem usunięcia ewentualnych błędów.
+
+## Testowane architektury
+Wybrane architektury na których zestaw został przetestowany:
+*
+- VGG,
+- Densenet,
+- Inception,
+- Resnet,
+- Squeezenet,
+- AlexNet
+
+Architektury te zostały wybrane na szereg zastosowań komercyjnych w rozwiązywaniu zawodów na serwisie Kaggle, gdzie uczestnicy wybierają algorytmy z całego repertuaru uczenia maszynowego by zdobyć wysokie nagrody finansowe. Przez ostatnie dwa lata serwis został zdominowany przez algorytmy używające głębokiego uczenia sieci, głównie ze względu na łatwość implementacji i uniwersalność zastosowań. Osoby, które potrafią świetnie i szybko stroić sieć pod nowe wyzwania, zdobywają wysokie nagrody w zawodach i hackatonach oraz zyskują propozycje zawodowe z wysokim uposażeniem. Kolejną zaletą architektur jest mnogość narzędzi i instrukcji wspierających przenoszenie uczenia na nowe domeny. Popularna sieć neuronowa zawiera często zestaw wskazówek, które warstwy należy dostroić, które wytrenować od nowa, co daje bardzo szybkie przeniesienie z idei do przystępnie działających modeli.
+## Środowisko obliczeniowe
+Sprzęt na którym zostały wykonane prace:
+*
+- Intel® Xeon® Processor E5-2630 v4 (10 rdzeni, 20 wątków)
+- GeForce GTX 1070 Ti (8Gb)
+Narzędzia programistyczne używane do wykonywania obliczeń:
+*
+- Linux Mint 18.3 Sylvia (GNU/Linux 4.13.0-41-generic x86\_64)
+- conda 4.5.11
+- Python 3.6.5
+- Tensorflow 1.9.0
+- Keras 2.2.2
+- PyTorch 0.3.1.post2
+- fastai
+
+Sposób przygotowania środowiska pracy z danymi w systemie typu UNIX jest identyczny jak dla programistów tego systemu. Należy zainstalować wybraną wersję środowiska Python, dokładna wersja zależy od wybranych bibliotek, jednak obecnie wszystkie rozwijane utrzymują wsparcie w pierwszej kolejności dla wersji Python 3.5 i wyższe. Dla ułatwienia zarządzania paczkami, sugeruje się instalację oprogramowania Anaconda na maszynie roboczej. Jest to zestaw narzędzi i bibliotek używanych do pracy z danymi. Anaconda potrafi tworzyć środowiska wirtualne, zarządzać wersjami bibliotek unikając tzw. piekła zależności i w dodatku nie trzeba mieć uprawnień roota w systemie, co jest częstym problemem podczas korzystania z maszyn współdzielonych, bez uprawnień administratora nie można zainstalować bibliotek korzystających z urządzeń GPU.
+
+Trudnością  w wykonywaniu eksperymentów na sieciach neuronowych jest możliwość replikacji wyników przez innych. Nawet znając założenia eksperymentu i mając ten sam zestaw danych wejściowych dość często można spotkać się z sytuacją kiedy wyniki obliczeń i dokładność będą się trochę różniły między sobą. Taki stan rzeczy wynika ze specyfiki zagadnienia i wpływ mają tutaj wartości losowe wag, wybrane progi, oraz hiperparametry dobierane przy uruchamianiu algorytmu. Wszystkie te elementy mogą doprowadzić do znalezienia zupełnie innego minimum lokalnego na płaszczyźnie badanej przez algorytm. Aby zapobiec rozbieżności wyników między kolejnymi treningami sieci, przedstawia się tutaj szczegółowy opis procesu.
+
+##Proces eksperymentu
+Należy zacząć od przygotowania danych, struktury katalogów. Obrazy podzielone są na trzy katalogi, kolejno 
+- test
+- train
+- val
+Jest to de facto standard struktury ułożenia danych. W każdym z wyżej wymienionych katalogów, zdjęcia muszą zostały ułożone w odpowiadającej klasie katalogu
+- normal
+- pneumonia
+Podział danych na zestawy treningowe, uczące i walidacyjny zwyczajowo jest w w proporcjach 70%/25%/5%. Tutaj jest podobnie.
+Skrypt, który przygotowuje algorytm jest podobny dla wszystkich architektur, jest to naturalne ponieważ określa się w nim hiperparametry dla algorytmu. Po wielokrotnych eksperymentach na różnych parametrach, okazuje się że użyta karta graficzna dość szybko wyczerpuje ograniczenia pamięciowe, a załadowanie całego zbioru danych jest niemożliwe. Zmusza to użytkownika do skalowania zdjęć do dużo niższej rozdzielczości. Najmniejszym wspólnym mianownikiem dla wszystkich zastosowanych architektur jest przeskalowanie zdjęć do rozmiaru 400 x 400 pikseli pozostawiając 3 warstwy na kolor. Pozostawiona jest również liczba epok dla każdej z architektury, dla wyrównania szans uczenia. Współczynnik uczenia został na sztywno ustawiony na wartość 0,01. W późniejszych badaniach zastosowany został algorytm wygaszania stałej uczenia, czyli zmianę wraz ze znajdowaniem kolejnych minimów lokalnych płaszczyzny funkcji szukanej przez sieć.
+
+Dla uniknięcia tworzenia nowych modeli, co na dostępnym sprzęcie wymagałoby tygodni obliczeń dla każdej z architektur, użyto w eksperymencie modeli uczonych na zawody ImageNet. Każdy model jest uczony na 1,2 miliona zdjęć przydzielonych do 1000 klas. 
+
+Eksperymenty zostały wykonane w kolejności od najstarszej architektury spełniającej wymóg klasyfikacji obrazów, który został ustalony na powyżej 80%. Następnie każda z architektur przechodzi strojenie indywidualne, tak by uzyskać najwyższy możliwy jej wynik. Zwycięzca otrzymuje możliwość honorowego porównania pomiaru uczenia zarówno na CPU oraz GPU.
+
+##Przegląd danych uczących
+Na początek warto zaznajomić się z wyglądem sygnałów wejściowych, ich strukturą i parametrami. Czyszczenie danych to zazwyczaj większość procesu pracy z danymi. Tutaj jednak zostały one skatalogowane i przystosowane do eksperymentów. Jednak zawsze należy korzystać z dobrych praktyk i sprawdzić przynajmniej kilka losowych obiektów pod kątem poprawności.
+
+PATH = "~/data/chest_xray/"
+os.listdir(PATH)
+files = os.listdir(f'{PATH}val/normal')[:5]
+files
+
+~'PNEUMONIA', 'NORMAL'
+~\['NORMAL2-IM-1440-0001.jpeg',
+ ~'NORMAL2-IM-1437-0001.jpeg',
+ ~'NORMAL2-IM-1431-0001.jpeg',
+ ~'NORMAL2-IM-1436-0001.jpeg',
+ ~'NORMAL2-IM-1430-0001.jpeg']
+Struktura nie budzi podejrzeń. Mając dostęp do maszyny wyposażonej w Jupyter Notebook, można w prosty sposób podejrzeć wybrany obraz. Praktyka ta jest szczególnie zalecana pracując na maszynie lokalnej, jeszcze przez uruchomieniem na środowisku obliczeniowym.
+`plt.imshow (img = plt.imread(f'{PATH}val/normal/{files[4]}’))`
+// Zdjęcie
+Jak wyglądają dane zdjęcia dla komputera:
+`img.shape`
+(1040, 1272)
+`img[:4,:4]`
+array([[169, 171, 156, 167],
+       [174, 159, 156, 157],
+       [168, 158, 167, 255],
+       [169, 169, 255,   0]], dtype=uint8)
+Warto wybrać kilka losowych zdjęć dla potwierdzenia ogólnej poprawności danych. Nie sprawdzi się w ten sposób wszystkich danych, ale pozwoli to na wstępny ogląd z czym się pracuje.
+
+
+
+
+
+## Wyniki nauczania
+Kolejnym wspólnym elementem dla każdego z programów głębokiego uczenia maszynowego jest przeglądanie danych wynikowych i analiza przypadków w których sieć gorzej sobie radzi albo radzi sobie nadzwyczaj dobrze. Powszechną praktyką jest samodzielne przejrzenie kilku przykładów następujących kategorii:
+- Kilka losowo wybranych poprawnie sklasyfikowanych odpowiedzi,
+- kilka losowo wybranych niepoprawnie sklasyfikowanych odpowiedzi,
+- odpowiedzi dla każdej z klas z najwyższą pewnością (prawdopodobieństwem) poprawnie sklasyfikowane,
+- odpowiedzi dla każdej z klas z najwyższą pewnością (prawdopodobieństwem) niepoprawnie sklasyfikowanie,
+- odpowiedzi najbardziej niepewne, najbliższe przejścia do innej klasy.
+Wyświetlenie po kilka obrazów z każdej z powyższych kategorii pozwoli zrozumieć dlaczego algorytm zachowuje się w danych sposób i znacząco ułatwia jego modyfikacje. Jak wspomniano we wcześniejszych rozdziałach, uczenie głębokie jest jeszcze praktyką skazaną na metodykę prób i błędów, dlatego wizualizacja jest najprostszym sposobem na uwidocznienie błędów.
+
+## Optymalizacja wyników
+###Wybór stałej uczenia
+Współczynnik uczenia to jeden z najbardziej znaczących hiperparametrów jakie można kontrolować. Definiuje ona tempo aktualizacji parametrów sieci. Jest to jedna z najtrudniejszych wartości do określenia. Do optymalizacji wyników pomocna jest technika opisana przez Leslie N. Smith’a, nazywana cyklicznymi współczynnikami stałej uczenia do trenowania sieci neuronowych (ang. Cyclical Learning Rates for Training Neural Networks). W założeniu technika ta ma całkowicie wyeliminować potrzebę ciągłych eksperymentów w celu znalezienia najlepszych wartości i ustawienia harmonogramu nastawiania globalnych wartości stałej uczenia. Zamiast stale (monotonicznie) obniżać szybkość uczenia się, metoda ta pozwala cyklicznie modyfikować wartość uczenia pomiędzy ustalonymi wartościami krańcowymi minimum i maksimum. Doświadczenie pokazuje (i testy wykonane w publikacji), że trening wykonany osiąga lepszą dokładność klasyfikacji bez potrzeby ręcznego strojenia i to juz w zaledwie kilku iteracjach algorytmu. Technika zmiennych parametrów uczenia potrafi z założenia samodzielnie określić odpowiednie ramy parametrów liniowo zwiększając stopę uczenia przez kilka epok.\cite{DBLP:journals/corr/Smith15a}
+
+##Sztuczne zwiększenie ilości danych
+Zwiększając ilość epok można dostrzec, że sieć po przekroczeniu pewnej granicy zależnej od ilości posiadanych danych spotyka się z problemem przeuczenia. Oznacza to, że model przestaje uczyć się rozpoznawać konkretne cechy obrazu, a zaczyna wkuwać na pamięć konkretne obrazy ze zbioru treningowego, zatracając umiejętność uogólniania konkretnych klas danych. Doprowadza to do sytuacji kiedy zestaw treningowy jest zapamiętany i rozpoznawany prawidłowo dla każdego obiektu, ale nowe dane, nie spotkane wcześniej przez sieć, są rozpoznawane gorzej niż w przypadku kiedy sieć umiałaby generalizować na podstawie cech obrazu.
+Dobrym sposobem na uniknięcie problemu przeuczenia jest dostarczenie większej ilości różnorodnych danych. Technika tworzenia nowych danych z istniejących nazywa się powiększaniem danych (ang. data augumentation). Jest to zaawansowany proces, często pomijany w książkach ze względu na trudności w implementacji i zwyczajowy brak gotowych rozwiązań w najpopularniejszych bibliotekach. 
+Proces zwiększania ilości danych w uczeniu maszynowym polega losowej zmianie obrazów w procesie powielania obrazów treningowych. Zmiana jest drobną modyfikacją, nie mającą wpływu na główne cechy w tym ostateczne rozpoznanie obrazu. Najlepszymi operacjami powielającymi dane są: 
+- poziome i pionowe odbicie (jeśli odwrócony obraz ma sens np. zdjęcia satelitarne),
+- zbliżanie,
+- obracanie obrazu o kilka stopni (kąt obracania powinien być niewielki). 
+Konwolucyjna sieć neuronowa jest w stanie nauczyć się lepiej rozpoznawać cechy zdjęcia jeśli otrzyma kilka modyfikowanych kopii tego samego obrazu. Należy jednak pamiętać że nie jest to metoda pozwalająca uzyskać setki obiektów uczących z każdego przykładu, tutaj znów ryzykuje się przeuczeniem. Zwyczajowo pięć sztuk z każdego obiektu pozwala zwiększyć znacząco zestaw uczący bez ryzyka przeuczenia. 
+Jak widać poniżej na przykładzie architektury ResNet34, dodatnie sztucznie wygenerowanych danych znacząco zwiększyło jakość klasyfikacji, aż o 12,5%. Niestety metoda nie jest jeszcze powszechnie stosowana, wynika to po części braku styczności z niewielką ilością danych badaczy dużych ośrodków takich jak DeepMind czy Microsoft AI Research. W największych laboratoriach programiści mają do dyspozycji ogromne ilości danych i na żądanie otrzymują zasoby na pozyskanie dodatkowych danych z centrów danych. Z tego powodu technika powielania nie ma odzwierciedlenia w bibliotekach rozwijanych przez duże ośrodki badawcze. 
+
+##Cykliczny współczynnik uczenia
+Kolejną techniką poprawienia jakości uczenia jest zastosowanie algorytmu gradientu spadkowego z ponownym uruchamianiem. Metoda ta polega na wygaszaniu współczynnika uczenia, zmniejszając jego wartość w trakcie pracy algorytmu. Następnie wykonywana jest operacja próby wyjścia z minimum lokalnego celem znalezienia prawidłowej przestrzeni wag, takiej która będzie cechowała się stabilnością dla większej gamy przykładów, prócz samej dokładności. Znów celem jest generalizowanie rozpoznawanej klasy, a nie uczenie się wszystkich przykładów. \cite{DBLP:journals/corr/HuangLPLHW17}
+
+
+## Analiza wyników
+### AlexNet
+Nie ma co się spodziewać wielkich wyników po debiutancie z 2012 roku. Szczególnie dlatego będzie to świetny odnośnik do pozostałych architektur, by porównać jak wiele się zmieniło przez zaledwie kilka lat.
+### VGG,
+###Densenet,
+###Inception,
+###Resnet34,
+Najpopularniejsza architektura dla uczenia zdjęć. Jest bardzo szybka do przetrenowania nowych modeli i posiada implementację w każdej bibliotece głębokiego uczenia. 
+// Zdjęcie
+### WideResidualNetwork
+
+## Porównanie czasu uczenia (CPU i GPU)
+Sekcja poświęcona na uświadomienie jak wielka przepaść wydajnościowa istnieje między uczeniem modelu na procesorze jednostki centralnej komputera, a procesorze jednostki graficznej. Trenowanie obrazów odbywa się tylko na ostatnich warstwach architektury ResNet, ponieważ uczenie całości zajęłoby wiele tygodni na zwykłym komputerze klasy PC.
+Oba pomiary dotyczą już przygotowanej sieci z dostrojeniem, a hiperparametry pozostają takie same, jak w najlepszym wyniku uczenia sieci w poprzednich sekcjach. 
+CPU:
+GPU:
+ 
+## Podsumowanie
+Pierwszym wnioskiem jaki nasuwa się po przeprowadzeniu testów wydajności jest: nie zaczynać przygody z głębokimi sieciami neuronowymi bez dostępu do procesora graficznego ze średniej półki cenowej. Oczekiwanie na wyniki używając jedynie CPU, zniechęci każdego do eksperymentów, a na tym obecnie polega dobieranie świetnych modeli. Wybierając kartę graficzną również należy się kierować odpowiednio dużą pamięcią. Spora część zbioru danych uczących jest ładowana do pamięci GPU, stąd zaleca się minimum 6Gb.
+
+Wpływ wybranej architektury na wynik ma znaczenie, malejące z każdą nową siecią. Zbliżając się do blisko stuprocentowej skuteczności rozpoznawania obrazów, trudno jest stwierdzić że istnieją wyzwania w tej dziedzinie. Należałoby się raczej skupić na bezpieczeństwie sieci i zabezpieczeniami przed próbami oszukania. Ataki stają się popularne, kiedy agenci automatyczni zostają wdrożeni na szeroką skalę.
+
+Dużo ważniejsze od ułożenia kolejnych warstw neuronów okazują się techniki pozwalające optymalizować znajdywanie optymalnego minimum funkcji określającej model. Nowe techniki pojawiające się z każdym miesiącem pozwalają na skuteczne wykorzystanie algorytmu przez osoby nie znające matematyki stojącej za algorytmami głębokiego uczenia.
 
 % ################################
 %        PODSUMOWANIE
