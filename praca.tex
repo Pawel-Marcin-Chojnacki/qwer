@@ -1064,7 +1064,7 @@ Zdjęcia rentgenowskie zostały przygotowane pod kątem analizy. Wszystkie radio
 
 \section{Testowane architektury}
 Wybrane architektury na których zestaw został przetestowany:
-\being{itemize} 
+\begin{itemize} 
 \item VGG,
 \item Densenet,
 \item Inception,
@@ -1077,52 +1077,69 @@ Architektury te zostały wybrane na szereg zastosowań komercyjnych w rozwiązyw
 
 \subsection{Środowisko obliczeniowe}
 Sprzęt na którym zostały wykonane prace:
-*
-- Intel® Xeon® Processor E5-2630 v4 (10 rdzeni, 20 wątków)
-- GeForce GTX 1070 Ti (8Gb)
+\begin{itemize}
+\item Intel® Xeon® Processor E5-2630 v4 (10 rdzeni, 20 wątków),
+\item GeForce GTX 1070 Ti (8Gb).
+\end{itemize}
+
 Narzędzia programistyczne używane do wykonywania obliczeń:
-*
-- Linux Mint 18.3 Sylvia (GNU/Linux 4.13.0-41-generic x86\_64)
-- conda 4.5.11
-- Python 3.6.5
-- Tensorflow 1.9.0
-- Keras 2.2.2
-- PyTorch 0.3.1.post2
-- fastai
+\begin{itemize}
+\item Linux Mint 18.3 Sylvia (GNU/Linux 4.13.0-41-generic x86\_64),
+\item conda 4.5.11,
+\item Python 3.6.5,
+\item Tensorflow 1.9.0,
+\item Keras 2.2.2,
+\item PyTorch 0.3.1.post2,
+\item fastai.
+\end{itemize}
 
 Sposób przygotowania środowiska pracy z danymi w systemie typu UNIX jest identyczny jak dla programistów tego systemu. Należy zainstalować wybraną wersję środowiska Python, dokładna wersja zależy od wybranych bibliotek, jednak obecnie wszystkie rozwijane utrzymują wsparcie w pierwszej kolejności dla wersji Python 3.5 i wyższe. Dla ułatwienia zarządzania paczkami, sugeruje się instalację oprogramowania Anaconda na maszynie roboczej. Jest to zestaw narzędzi i bibliotek używanych do pracy z danymi. Anaconda potrafi tworzyć środowiska wirtualne, zarządzać wersjami bibliotek unikając tzw. piekła zależności i w dodatku nie trzeba mieć uprawnień roota w systemie, co jest częstym problemem podczas korzystania z maszyn współdzielonych, bez uprawnień administratora nie można zainstalować bibliotek korzystających z urządzeń GPU.
 
 Trudnością  w wykonywaniu eksperymentów na sieciach neuronowych jest możliwość replikacji wyników przez innych. Nawet znając założenia eksperymentu i mając ten sam zestaw danych wejściowych dość często można spotkać się z sytuacją kiedy wyniki obliczeń i dokładność będą się trochę różniły między sobą. Taki stan rzeczy wynika ze specyfiki zagadnienia i wpływ mają tutaj wartości losowe wag, wybrane progi, oraz hiperparametry dobierane przy uruchamianiu algorytmu. Wszystkie te elementy mogą doprowadzić do znalezienia zupełnie innego minimum lokalnego na płaszczyźnie badanej przez algorytm. Aby zapobiec rozbieżności wyników między kolejnymi treningami sieci, przedstawia się tutaj szczegółowy opis procesu.
 
-##Proces eksperymentu
-Należy zacząć od przygotowania danych, struktury katalogów. Obrazy podzielone są na trzy katalogi, kolejno 
-- test
-- train
-- val
-Jest to de facto standard struktury ułożenia danych. W każdym z wyżej wymienionych katalogów, zdjęcia muszą zostały ułożone w odpowiadającej klasie katalogu
-- normal
-- pneumonia
-Podział danych na zestawy treningowe, uczące i walidacyjny zwyczajowo jest w w proporcjach 70%/25%/5%. Tutaj jest podobnie.
+\section{Proces eksperymentu}
+Należy zacząć od przygotowania danych, struktury katalogów. Obrazy podzielone są na trzy katalogi, kolejno:
+\begin{itemize}
+\item test,
+\item train,
+\item val.
+\end{itemize}
+
+Jest to de facto standard struktury ułożenia danych. W każdym z wyżej wymienionych katalogów, zdjęcia muszą zostały ułożone w odpowiadającej klasie katalogu:
+\begin{itemize}
+\item normal,
+\item pneumonia.
+\end{itemize}
+
+Podział danych na zestawy treningowe, uczące i walidacyjny zwyczajowo jest w w proporcjach 70\%/25\%/5\%. Tutaj podział jest w proporcjach 89\%/11,8\%/0,2\%.
 Skrypt, który przygotowuje algorytm jest podobny dla wszystkich architektur, jest to naturalne ponieważ określa się w nim hiperparametry dla algorytmu. Po wielokrotnych eksperymentach na różnych parametrach, okazuje się że użyta karta graficzna dość szybko wyczerpuje ograniczenia pamięciowe, a załadowanie całego zbioru danych jest niemożliwe. Zmusza to użytkownika do skalowania zdjęć do dużo niższej rozdzielczości. Najmniejszym wspólnym mianownikiem dla wszystkich zastosowanych architektur jest przeskalowanie zdjęć do rozmiaru 400 x 400 pikseli pozostawiając 3 warstwy na kolor. Pozostawiona jest również liczba epok dla każdej z architektury, dla wyrównania szans uczenia. Współczynnik uczenia został na sztywno ustawiony na wartość 0,01. W późniejszych badaniach zastosowany został algorytm wygaszania stałej uczenia, czyli zmianę wraz ze znajdowaniem kolejnych minimów lokalnych płaszczyzny funkcji szukanej przez sieć.
 
-Dla uniknięcia tworzenia nowych modeli, co na dostępnym sprzęcie wymagałoby tygodni obliczeń dla każdej z architektur, użyto w eksperymencie modeli uczonych na zawody ImageNet. Każdy model jest uczony na 1,2 miliona zdjęć przydzielonych do 1000 klas. 
+Dla uniknięcia tworzenia nowych modeli, co na dostępnym sprzęcie wymagałoby tygodni obliczeń dla każdej z architektur, użyto w eksperymencie modeli uczonych na zawody ImageNet. Każdy model jest uczony na zbiorze 1,2 miliona zdjęć przydzielonych do 1000 klas. 
 
-Eksperymenty zostały wykonane w kolejności od najstarszej architektury spełniającej wymóg klasyfikacji obrazów, który został ustalony na powyżej 80%. Następnie każda z architektur przechodzi strojenie indywidualne, tak by uzyskać najwyższy możliwy jej wynik. Zwycięzca otrzymuje możliwość honorowego porównania pomiaru uczenia zarówno na CPU oraz GPU.
+Eksperymenty zostały wykonane w kolejności od najstarszej architektury spełniającej wymóg klasyfikacji obrazów, który został ustalony na powyżej 80\%. Następnie każda z architektur przechodzi strojenie indywidualne, tak by uzyskać najwyższy możliwy jej wynik. Zwycięzca otrzymuje możliwość honorowego porównania pomiaru uczenia zarówno na CPU oraz GPU.
 
-##Przegląd danych uczących
+\subsection{Przegląd danych uczących}
 Na początek warto zaznajomić się z wyglądem sygnałów wejściowych, ich strukturą i parametrami. Czyszczenie danych to zazwyczaj większość procesu pracy z danymi. Tutaj jednak zostały one skatalogowane i przystosowane do eksperymentów. Jednak zawsze należy korzystać z dobrych praktyk i sprawdzić przynajmniej kilka losowych obiektów pod kątem poprawności.
+
+
+\noindent
+\begin{minipage}{\linewidth}
+\begin{lstlisting}[caption=Podgląd danych, label=lst:test]
+~'PNEUMONIA', 'NORMAL'
+~\['NORMAL2-IM-1440-0001.jpeg',
+~'NORMAL2-IM-1437-0001.jpeg',
+~'NORMAL2-IM-1431-0001.jpeg',
+~'NORMAL2-IM-1436-0001.jpeg',
+~'NORMAL2-IM-1430-0001.jpeg']
+\end{lstlisting}
+\end{minipage}
 
 PATH = "~/data/chest_xray/"
 os.listdir(PATH)
 files = os.listdir(f'{PATH}val/normal')[:5]
 files
 
-~'PNEUMONIA', 'NORMAL'
-~\['NORMAL2-IM-1440-0001.jpeg',
- ~'NORMAL2-IM-1437-0001.jpeg',
- ~'NORMAL2-IM-1431-0001.jpeg',
- ~'NORMAL2-IM-1436-0001.jpeg',
- ~'NORMAL2-IM-1430-0001.jpeg']
+
 Struktura nie budzi podejrzeń. Mając dostęp do maszyny wyposażonej w Jupyter Notebook, można w prosty sposób podejrzeć wybrany obraz. Praktyka ta jest szczególnie zalecana pracując na maszynie lokalnej, jeszcze przez uruchomieniem na środowisku obliczeniowym.
 `plt.imshow (img = plt.imread(f'{PATH}val/normal/{files[4]}’))`
 // Zdjęcie
@@ -1140,7 +1157,7 @@ Warto wybrać kilka losowych zdjęć dla potwierdzenia ogólnej poprawności dan
 
 
 
-## Wyniki nauczania
+\subsection{Wyniki nauczania}
 Kolejnym wspólnym elementem dla każdego z programów głębokiego uczenia maszynowego jest przeglądanie danych wynikowych i analiza przypadków w których sieć gorzej sobie radzi albo radzi sobie nadzwyczaj dobrze. Powszechną praktyką jest samodzielne przejrzenie kilku przykładów następujących kategorii:
 - Kilka losowo wybranych poprawnie sklasyfikowanych odpowiedzi,
 - kilka losowo wybranych niepoprawnie sklasyfikowanych odpowiedzi,
@@ -1149,11 +1166,11 @@ Kolejnym wspólnym elementem dla każdego z programów głębokiego uczenia masz
 - odpowiedzi najbardziej niepewne, najbliższe przejścia do innej klasy.
 Wyświetlenie po kilka obrazów z każdej z powyższych kategorii pozwoli zrozumieć dlaczego algorytm zachowuje się w danych sposób i znacząco ułatwia jego modyfikacje. Jak wspomniano we wcześniejszych rozdziałach, uczenie głębokie jest jeszcze praktyką skazaną na metodykę prób i błędów, dlatego wizualizacja jest najprostszym sposobem na uwidocznienie błędów.
 
-## Optymalizacja wyników
-###Wybór stałej uczenia
+\section{Optymalizacja wyników}
+\subsection{Wybór stałej uczenia}
 Współczynnik uczenia to jeden z najbardziej znaczących hiperparametrów jakie można kontrolować. Definiuje ona tempo aktualizacji parametrów sieci. Jest to jedna z najtrudniejszych wartości do określenia. Do optymalizacji wyników pomocna jest technika opisana przez Leslie N. Smith’a, nazywana cyklicznymi współczynnikami stałej uczenia do trenowania sieci neuronowych (ang. Cyclical Learning Rates for Training Neural Networks). W założeniu technika ta ma całkowicie wyeliminować potrzebę ciągłych eksperymentów w celu znalezienia najlepszych wartości i ustawienia harmonogramu nastawiania globalnych wartości stałej uczenia. Zamiast stale (monotonicznie) obniżać szybkość uczenia się, metoda ta pozwala cyklicznie modyfikować wartość uczenia pomiędzy ustalonymi wartościami krańcowymi minimum i maksimum. Doświadczenie pokazuje (i testy wykonane w publikacji), że trening wykonany osiąga lepszą dokładność klasyfikacji bez potrzeby ręcznego strojenia i to juz w zaledwie kilku iteracjach algorytmu. Technika zmiennych parametrów uczenia potrafi z założenia samodzielnie określić odpowiednie ramy parametrów liniowo zwiększając stopę uczenia przez kilka epok.\cite{DBLP:journals/corr/Smith15a}
 
-##Sztuczne zwiększenie ilości danych
+\subsection{Sztuczne zwiększenie ilości danych}
 Zwiększając ilość epok można dostrzec, że sieć po przekroczeniu pewnej granicy zależnej od ilości posiadanych danych spotyka się z problemem przeuczenia. Oznacza to, że model przestaje uczyć się rozpoznawać konkretne cechy obrazu, a zaczyna wkuwać na pamięć konkretne obrazy ze zbioru treningowego, zatracając umiejętność uogólniania konkretnych klas danych. Doprowadza to do sytuacji kiedy zestaw treningowy jest zapamiętany i rozpoznawany prawidłowo dla każdego obiektu, ale nowe dane, nie spotkane wcześniej przez sieć, są rozpoznawane gorzej niż w przypadku kiedy sieć umiałaby generalizować na podstawie cech obrazu.
 Dobrym sposobem na uniknięcie problemu przeuczenia jest dostarczenie większej ilości różnorodnych danych. Technika tworzenia nowych danych z istniejących nazywa się powiększaniem danych (ang. data augumentation). Jest to zaawansowany proces, często pomijany w książkach ze względu na trudności w implementacji i zwyczajowy brak gotowych rozwiązań w najpopularniejszych bibliotekach. 
 Proces zwiększania ilości danych w uczeniu maszynowym polega losowej zmianie obrazów w procesie powielania obrazów treningowych. Zmiana jest drobną modyfikacją, nie mającą wpływu na główne cechy w tym ostateczne rozpoznanie obrazu. Najlepszymi operacjami powielającymi dane są: 
@@ -1161,30 +1178,31 @@ Proces zwiększania ilości danych w uczeniu maszynowym polega losowej zmianie o
 - zbliżanie,
 - obracanie obrazu o kilka stopni (kąt obracania powinien być niewielki). 
 Konwolucyjna sieć neuronowa jest w stanie nauczyć się lepiej rozpoznawać cechy zdjęcia jeśli otrzyma kilka modyfikowanych kopii tego samego obrazu. Należy jednak pamiętać że nie jest to metoda pozwalająca uzyskać setki obiektów uczących z każdego przykładu, tutaj znów ryzykuje się przeuczeniem. Zwyczajowo pięć sztuk z każdego obiektu pozwala zwiększyć znacząco zestaw uczący bez ryzyka przeuczenia. 
-Jak widać poniżej na przykładzie architektury ResNet34, dodatnie sztucznie wygenerowanych danych znacząco zwiększyło jakość klasyfikacji, aż o 12,5%. Niestety metoda nie jest jeszcze powszechnie stosowana, wynika to po części braku styczności z niewielką ilością danych badaczy dużych ośrodków takich jak DeepMind czy Microsoft AI Research. W największych laboratoriach programiści mają do dyspozycji ogromne ilości danych i na żądanie otrzymują zasoby na pozyskanie dodatkowych danych z centrów danych. Z tego powodu technika powielania nie ma odzwierciedlenia w bibliotekach rozwijanych przez duże ośrodki badawcze. 
+Jak widać poniżej na przykładzie architektury ResNet34, dodatnie sztucznie wygenerowanych danych znacząco zwiększyło jakość klasyfikacji, aż o 12,5\%. Niestety metoda nie jest jeszcze powszechnie stosowana, wynika to po części braku styczności z niewielką ilością danych badaczy dużych ośrodków takich jak DeepMind czy Microsoft AI Research. W największych laboratoriach programiści mają do dyspozycji ogromne ilości danych i na żądanie otrzymują zasoby na pozyskanie dodatkowych danych z centrów danych. Z tego powodu technika powielania nie ma odzwierciedlenia w bibliotekach rozwijanych przez duże ośrodki badawcze. 
 
-##Cykliczny współczynnik uczenia
+\subsection{Cykliczny współczynnik uczenia}
 Kolejną techniką poprawienia jakości uczenia jest zastosowanie algorytmu gradientu spadkowego z ponownym uruchamianiem. Metoda ta polega na wygaszaniu współczynnika uczenia, zmniejszając jego wartość w trakcie pracy algorytmu. Następnie wykonywana jest operacja próby wyjścia z minimum lokalnego celem znalezienia prawidłowej przestrzeni wag, takiej która będzie cechowała się stabilnością dla większej gamy przykładów, prócz samej dokładności. Znów celem jest generalizowanie rozpoznawanej klasy, a nie uczenie się wszystkich przykładów. \cite{DBLP:journals/corr/HuangLPLHW17}
 
-
-## Analiza wyników
-### AlexNet
-Nie ma co się spodziewać wielkich wyników po debiutancie z 2012 roku. Szczególnie dlatego będzie to świetny odnośnik do pozostałych architektur, by porównać jak wiele się zmieniło przez zaledwie kilka lat.
-### VGG,
-###Densenet,
-###Inception,
-###Resnet34,
+\section{Analiza wyników}
+\begin{itemize}
+\item ResNet,
+\item VGG,
+\item ResNeXt,
+\item Wide Residual Network,
+\item Inception,
+\item DeepNet,
+\end{itemize}
 Najpopularniejsza architektura dla uczenia zdjęć. Jest bardzo szybka do przetrenowania nowych modeli i posiada implementację w każdej bibliotece głębokiego uczenia. 
-// Zdjęcie
-### WideResidualNetwork
 
-## Porównanie czasu uczenia (CPU i GPU)
+ %Zdjęcie
+
+\subsection{Porównanie czasu uczenia (CPU i GPU)}
 Sekcja poświęcona na uświadomienie jak wielka przepaść wydajnościowa istnieje między uczeniem modelu na procesorze jednostki centralnej komputera, a procesorze jednostki graficznej. Trenowanie obrazów odbywa się tylko na ostatnich warstwach architektury ResNet, ponieważ uczenie całości zajęłoby wiele tygodni na zwykłym komputerze klasy PC.
-Oba pomiary dotyczą już przygotowanej sieci z dostrojeniem, a hiperparametry pozostają takie same, jak w najlepszym wyniku uczenia sieci w poprzednich sekcjach. 
+Oba pomiary dotyczą już przygotowanej sieci z dostrojeniem, a hiperparametry pozostają takie same, jak w najlepszym wyniku uczenia sieci w poprzednich sekcjach.
 CPU:
 GPU:
- 
-## Podsumowanie
+
+\section{Podsumowanie}
 Pierwszym wnioskiem jaki nasuwa się po przeprowadzeniu testów wydajności jest: nie zaczynać przygody z głębokimi sieciami neuronowymi bez dostępu do procesora graficznego ze średniej półki cenowej. Oczekiwanie na wyniki używając jedynie CPU, zniechęci każdego do eksperymentów, a na tym obecnie polega dobieranie świetnych modeli. Wybierając kartę graficzną również należy się kierować odpowiednio dużą pamięcią. Spora część zbioru danych uczących jest ładowana do pamięci GPU, stąd zaleca się minimum 6Gb.
 
 Wpływ wybranej architektury na wynik ma znaczenie, malejące z każdą nową siecią. Zbliżając się do blisko stuprocentowej skuteczności rozpoznawania obrazów, trudno jest stwierdzić że istnieją wyzwania w tej dziedzinie. Należałoby się raczej skupić na bezpieczeństwie sieci i zabezpieczeniami przed próbami oszukania. Ataki stają się popularne, kiedy agenci automatyczni zostają wdrożeni na szeroką skalę.
