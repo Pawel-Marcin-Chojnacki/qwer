@@ -506,17 +506,33 @@ Drugą poważną wadą tej architektury jest ignorowanie ułożenia lokalnego sy
 Wyspecjalizowany typ sieci neuronowych do przetwarzania danych ułożonych w siatkę. Sieci te są niezwykle skuteczne w przetwarzaniu siatek pikseli. Nie odbiegają znacząco od klasycznych feedforward'owych sieci. Ich dodatkową cechą jest jak wynika z nazwy, liniowa operacja konwolucji (splotu) matematycznej. Wraz z konwolucją dochodzi wymagana operacja łączenia (ang. pooling).  W sieciach konwolucyjnych łączy się trzy narzędzia, lokalne pola percepcji, współdzielenie wag, przestrzenne lub czasowe próbkowanie. Te narzędzia rozwiązują również trzy problemy, przesunięcie, skalowanie i zniekształcenie obrazu.
 Prosta i zwykła sieć konwolucyjna otrzymuje na wejściu obrazy o znormalizowanej wielkości i w miarę możliwości wycentrowane. Każdy neuron w wybranej warstwie otrzymuje wejście ze zbioru neuronów z poprzedniej warstwy, które znajdują się w jego sąsiedztwie. Połączenia lokalne były wielokrotnie używane w modelach uczenia maszynowego. Używając lokalnych pól recepcyjnych, jednostki są w stanie wyodrębnić pojedyncze cechy obrazu takie jak krzywizny, krańce płaszczyzn. Cechy te są przekazywane w grupach do kolejnych warstw, gdzie tworzy się z nich coraz wyższe poziomy abstrakcji obiektu, by w ostatniej warstwie nadać im już konkretny kształt obiektu. Zastosowanie warstw rozpoznających najbardziej podstawowe cechy, pozwala używać jednego neuronu do rozpoznania wielu części obrazu jeśli obiektów występuje więcej. Neurony wybranej warstwy zorganizowane są na płaszczyźnie, w której wszystkie jednostki dzielą zestaw wag. Zbiór wartości wyjściowych neuronów zadanej płaszczyzny jest nazywany mapą cech. Jednostki w mapie cech wykonują tę samą operację na różnych fragmentach zdjęcia. Warstwa konwolucyjna zatem jest złożona z wielu map cech, aby zebrać wiele cech w różnych miejscach obrazu. Jednostka w mapie cech ma połączone wejścia z polem recepcyjnym o mniejszym rozmiarze.
 
+Lokalność cech polega na zebraniu neuronów obecnej warstwy będących w sąsiedztwie ze sobą i przekazaniu ich wartości do neuronu kolejnej warstwy. Neurony oddalone o określoną odległość, nie zostają połączone do tego neuronu, a otrzymają już własne sąsiedztwo dla kolejnych neuronów wyższej warstwy. Wagi w takim układzie nazywane są filtrem. Mając wagi \(w1, w2\) połączone do neuronu kolejnej warstwy, otrzyma on na wyjściu w uproszonej formie \(y = x1*w1 + x2*w2 \), jeśli wagi \(w1, w2\) będą miały wartości \(1, -1\) równanie zostanie uproszczone do  \(y = x1 - x2 \). Prowadzi to do sytuacji w której wyjście jest największe dla wartości \( (x1,x2) = (1,0)\). Większa różnica oznacza przeskok wartości pikseli w obrazie, to znaczy zostaje wykryta krawędź. Operacja ta jest filtrem, ponieważ ''filtruje'' krawędzie obrazu.
 Operacja konwolucji jest działaniem wykonanym na dwóch funkcjach, w ujęciu uczenia maszynowego pierwsza funkcja jest wejściem, druga nazywana jądrem (ang. kernel). Wyjście konwolucji stanowi mapa cech.
 
-Dla zwizualizowania kompresji jaką narzuca konwolucja warto zaznajomić się ze wzorami na wielkość warstw łączącej i filtra, zwanego też polem recepcyjnym.
+Parametr marginesu wewnętrznego (ang. padding) pozwala na sprawienie by krawędzie obrazu również brały udział w definiowaniu wyjścia sieci neuronowych przez objęcie krawędzi obrazu dodatkowymi zerowymi neuronami. 
+
+\begin{figure}[ht]
+	\centering
+			\includegraphics[resolution=100]{Padding.png}
+		\caption{Wartości zerowe na krawędziach macierzy tworzą margines.}
+\end{figure}
+
+Dla zobrazowania kompresji jaką tworzy konwolucja warto zaznajomić się ze wzorami na wielkość warstw łączącej i filtra, zwanego też polem recepcyjnym.
 Wielkość pola recepcyjnego: 
-$$ Wys = (\frac{Wysokosc - Wysokosc\_filtra + 2 * Margines\_wewnetrzny}{Wysokosc\_kroku}) + 1 $$ 
-$$ Szer = (\frac{Szerokosc - Szerokosc\_filtra + 2 * Margines\_wewnetrzny}{Szerokosc\_kroku}) + 1 $$
+$$ Wysokosc = (\frac{W - WF + 2 * P}{WK}) + 1 $$ 
+$$ Szerokosc = (\frac{S - SF + 2 * MW}{SK}) + 1 $$
 Wielkość warstwy łączącej wyznacza się wzorem:
-$$ Macierz = (\frac{Macierz\_wejsciowa + 2 * Margines\_wewnetrzny - Filtr}{Krok}) + 1 $$
+$$ Macierz = (\frac{MW + 2 * PW - Filtr}{K}) + 1 $$
 
-Sieci konwolucyjne stosowane głównie do sygnałów wejściowych będących obrazem (zbiorem pikseli).
+Operacja łączenia to nieodłączny element sieci splotowych idący w parze za operacją nałożenia filtra. Filtr z dodaniem marginesu wewnętrznego  powoduje że wielkość mapy cech pozostaje taka sama jak poprzednia warstwa sygnału wejściowego, ale teraz ma dodatkowe warstwy filtru w zależności od liczby zdefiniowanej przez użytkownika. Łączenie zmniejsza wielkość mapy cech i pozwala jeszcze bardziej wyostrzyć cechy z poprzedniej warstwy oraz obniżyć ilość parametrów, a tym samym złożoność obliczeniową sieci. Dodatkowym atutem jest obniżenia ryzyka przeuczenia sieci. Do łączenia używa się operacji max(). Filtr tej warstwy o niewielkim rozmiarze 2x2 i przesunięciu o 2, wybiera maksymalną wartość z czterech pól, które są aktualnie przeglądane. W ten sposób następuje redukcja wysokości i szerokości mapy cech, głębokość (ilość filtrów) pozostaje  bez zmian. Przesunięcie i rozmiar filtra są hiperparametrami, zadanie odpowiedniego dobrania ich wartości należy do zadań użytkownika sieci. Zwyczajowo nie używa się zerowych marginesów dla warstw łączących.
 
+\begin{figure}[ht]
+	\centering
+			\includegraphics[resolution=100, scale=0.6]{MaxPooling.png}
+		\caption{Operacja łączenia MaxPooling  }
+\end{figure}
+
+Sieci konwolucyjne stosowane głównie do sygnałów wejściowych będących obrazem (zbiorem pikseli). Na pierwszych warstwach konwolucyjnych uczą się rozpoznawać ogólne krawędzie i przejścia między kolorami. Z każdą kolejną warstwą, idąc głębiej w sieć te kształty stają się coraz bardziej złożone i przypominają proste obiekty.
 
 \subsection{Recurrent Neural Networks}
 
