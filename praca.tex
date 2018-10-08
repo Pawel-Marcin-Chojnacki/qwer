@@ -475,18 +475,18 @@ Istnieją również analogiczne metod korekcji wag, jak szybka propagacja (ang. 
 %        DEEP LEARNING
 % ################################
 
-\chapter{Deep Learning}
-\section{Tworzenie głębokich sieci}
+\chapter{Głębokie sieci neuronowe}
+%\section{Tworzenie głębokich sieci}
 W tym rozdziale zostały przybliżone trzy interesujące techniki głębokiego uczenia. Zostały wybrane ze względu na ich obszerną ilość zastosowań oraz potencjał, który można wykorzystać przy rozpoznawaniu wzorców na obrazach. Jedna z nich zostanie używana wielokrotnie w dalszej części pracy, jest w szczególności istotna ze względu na wykorzystanie w rozpoznawaniu obrazów. Wszystkie opisywane architektury korzystają z konwolucyjnych sieci neuronowych.
-
-Podstawowe techniki znane z głębokiego uczenia znane są już od dziesięcioleci, należy teraz odpowiedzieć na pytanie dlaczego dopiero teraz zostają wykorzystane na masową skalę przez wszystkie firmy technologiczne, a powoli także przemysłowe. Sieci neuronowe z powodzeniem były wykorzystywane do prostych zadań jak rozpoznawanie cyfr, kodów kreskowych, kodów pocztowych, pisma odręcznego od wczesnych lat 90tych ubiegłego wieku. Ze względu na ograniczenia wydajnościowe komputerów osobistych i brak odpowiedniej architektury przetwarzania obliczeń równoległych modele wyprodukowane przez sieć musiały być bardzo małe, tak małe żeby mieściły się na dysku twardym o pojemności mniejszej niż płyta DVD. Wytrenowanie modelu, który jest przechowywany na dysku, zamiast pamięci podręcznej, bądź jak obecnie w jeszcze szybszej pamięci karty graficznej, jest zadaniem tak czasochłonnym, że nie opłacało się tworzyć głębokich sieci neuronowych z tysiącami parametrów na komputerach klasy PC. Wynalezienie osobnego procesora do zadań graficznych i jego późniejsze możliwości programowania na specjalistycznym SDK umożliwiły eksperymenty z głębokim uczeniem w czasie iteracji liczonym w tygodniach, nie miesiącach. Wydajność obliczeniowa procesorów GPU znalazła się na odpowiednim poziomie dopiero po roku 2010. Jak opisano w pracy, jeszcze w 2012 roku wytrenowanie sieci AlexNet zajęło dwa tygodnie na dwóch kartach NVIDIA GeForce 580 GTX, najmocniejszych na tą chwilę na rynku dla graczy. NVIDIA na swoim blogu chwali się informacjami jakoby przyspieszenie kart graficznych między latami 2012 a 2015 wzrosło pięćdziesięciokrotnie. \cite{siteNvidiaAcceleration} Drugim równie ważnym aspektem nagłego rozkwitu w rozwoju głębokich sieci jest ilość dostępnych danych. Smartfony umożliwiły generowanie danych tekstowych, dźwiękowych i miliardów gigabajtów zdjęć i filmów. Taka ilość danych idealnie współgra z rosnącą wydajnością sieci neuronowych. Innowacje w zakresie algorytmów odbyły w zakresie optymalizacji szybkości obliczeń. Jednym z głównych przykładów zwiększenia wydajności jest przejście z funkcji sigmoidy jako funkcji aktywacji do funkcji ReLU. Ta funkcja liczy się dużo szybciej, ponieważ dla wszystkich dodatnich wartości, nachylenie gradientu wynosi 1, w sigmoidzie zaś gdy wartość często wynosi 0, parametry zmieniają się dużo wolniej.
+\section{Zmiany na przestrzeni lat}
+Podstawowe techniki znane z głębokiego uczenia znane są już od dziesięcioleci, należy teraz odpowiedzieć na pytanie dlaczego dopiero teraz zostają wykorzystane na masową skalę przez wszystkie firmy technologiczne, a powoli także przemysłowe. Sieci neuronowe z powodzeniem były wykorzystywane do prostych zadań jak rozpoznawanie cyfr, kodów kreskowych, kodów pocztowych, pisma odręcznego od wczesnych lat 90tych ubiegłego wieku. Ze względu na ograniczenia wydajnościowe komputerów osobistych i brak odpowiedniej architektury przetwarzania obliczeń równoległych modele wyprodukowane przez sieć musiały być bardzo małe, tak małe żeby mieściły się na dysku twardym o pojemności mniejszej niż płyta DVD. Wytrenowanie modelu, który jest przechowywany na dysku, zamiast pamięci podręcznej, bądź jak obecnie w jeszcze szybszej pamięci karty graficznej, jest zadaniem tak czasochłonnym, że nie opłacało się tworzyć głębokich sieci neuronowych z tysiącami parametrów na komputerach klasy PC. Wynalezienie osobnego procesora do zadań graficznych i jego późniejsze możliwości programowania na specjalistycznym SDK umożliwiły eksperymenty z głębokim uczeniem w czasie iteracji liczonym w tygodniach, nie miesiącach. Wydajność obliczeniowa procesorów GPU znalazła się na odpowiednim poziomie dopiero po roku 2010. Jak opisano w pracy, jeszcze w 2012 roku wytrenowanie sieci AlexNet zajęło dwa tygodnie na dwóch kartach NVIDIA GeForce 580 GTX, najmocniejszych na tamtą chwilę na rynku dla graczy. NVIDIA na swoim blogu chwali się informacjami jakoby przyspieszenie kart graficznych między latami 2012 a 2015 wzrosło pięćdziesięciokrotnie. \cite{siteNvidiaAcceleration} Drugim równie ważnym aspektem nagłego rozkwitu w rozwoju głębokich sieci jest ilość dostępnych danych. Smartfony umożliwiły generowanie danych tekstowych, dźwiękowych i miliardów gigabajtów zdjęć i filmów. Taka ilość danych idealnie współgra z rosnącą wydajnością sieci neuronowych. Innowacje w zakresie algorytmów odbyły w zakresie optymalizacji szybkości obliczeń. Jednym z głównych przykładów zwiększenia wydajności jest przejście z funkcji sigmoidy jako funkcji aktywacji do funkcji ReLU. Ta funkcja liczy się dużo szybciej, ponieważ dla wszystkich dodatnich wartości, nachylenie gradientu wynosi 1, w sigmoidzie zaś gdy wartość często wynosi 0, parametry zmieniają się dużo wolniej.
 
 Innowacje dzieją się dużo szybciej kiedy cykl iteracyjny od pomysłu, przez kod do eksperymentu dzieje się prawie w czasie rzeczywistym, w przeciwieństwie do wcześniejszych możliwości gdy trening trwał często ponad miesiąc. Głębokie uczenie jeszcze większych sieci przyspieszy z ciągłym strumieniem nowych, opisanych danych, oraz coraz to szybszym sprzętem.
 
-\subsection{Głębokie sieci neuronowe}
+\section{Głębokie sieci neuronowe}
 Elementy sztucznych sieci neuronowych zostały opisane w poprzednim rozdziale, w tej sekcji uwaga skupiona jest na podziale architektur, głębokości warstw ukrytych oraz rodzajach dodatkowych warstw, takich jak filtr cech, warstwy łączące, konwolucje.
 
-Głębokie sieci neuronowe znane są również jako sieci neuronowe typu \textit{feedforward} (w literaturze autor nie znalazł polskiego odpowiednika na to słowo, również prof. Tadeusiewicz posługuje się angielską nazwą), kolejna nazwa to wielowarstwowy perceptron. Nazwa \textbf{feedforward} ma naznaczyć że wszystkie informacje przepływają przez funkcję wyliczaną z \(x\), przez pośrednie operacje wyliczające \(f\) by ostatecznie trafić do wyjścia \(y\). Przez brak informacji zwrotnej, która mogłaby natychmiast przekazać neuronowi wyliczone wartości. W przypadku jeśli sieć neuronowa ma otrzymywać natychmiastową informację zwrotną tworzona jest rekurencyjna sieć neuronowa przedstawiana w jednej z sekcji tego rozdziału. Wszystkie wymienione określenia opisują sieć której zadaniem jest przybliżyć funkcję \(f*\). Klasyfikator \(y = f*(x) \) mapuje wejście \(x\) do kategorii \(y\). Wielowarstwowy perceptron definiuje mapowanie \(y = f(x,\theta)\) ucząc się parametrów \(\theta\), w sposób pozwalający wydobyć jak najlepsze przybliżenie funkcji. Przykłady uczące serwowane sieci dają przybliżony obraz jak ma wyglądać funkcja. W typowej sieci, funkcji jest wiele i są one wywoływane jednak przez drugą, taki łańcuch funkcji pozwala określać głębokość wybranej sieci (stąd ich nazwa "głębokie sieci neuronowe"). Dokładanie kolejnych warstw można urozmaicić przez wybieranie innego typu jednostek dla każdej z warstw, co może ulepszyć jakość architektury. O skuteczności takich rozwiązań traktuje rozdział poświęcony porównaniu efektywnych architektur. Ten rodzaj sieci jest najbardziej użyteczny do zastosowań przetwarzania obrazów i jego modyfikacje będą opisane w dalszej części pracy.
+Głębokie sieci neuronowe znane są również jako sieci neuronowe typu \textit{feedforward} (w literaturze autor nie znalazł polskiego odpowiednika na to słowo, również prof. Tadeusiewicz posługuje się angielską nazwą), kolejna nazwa to wielowarstwowy perceptron. Nazwa \textbf{feedforward} ma naznaczyć że wszystkie informacje przepływają przez funkcję wyliczaną z \(x\), przez pośrednie operacje wyliczające \(f\) by ostatecznie trafić do wyjścia \(y\). Przez brak informacji zwrotnej, która mogłaby natychmiast przekazać neuronowi wyliczone wartości. W przypadku jeśli sieć neuronowa ma otrzymywać natychmiastową informację zwrotną tworzona jest rekurencyjna sieć neuronowa przedstawiana w jednej z sekcji tego rozdziału. Wszystkie wymienione określenia opisują sieć której zadaniem jest przybliżyć funkcję \(f*\). Klasyfikator \(y = f*(x) \) mapuje wejście \(x\) do kategorii \(y\). Wielowarstwowy perceptron definiuje mapowanie \(y = f(x,\theta)\) ucząc się parametrów \(\theta\), w sposób pozwalający wydobyć jak najlepsze przybliżenie funkcji. Przykłady uczące serwowane sieci dają przybliżony obraz jak ma wyglądać funkcja. W typowej sieci, funkcji aktywacji jest wiele i są one wywoływane jednak przez drugą, taki łańcuch funkcji pozwala określać głębokość wybranej sieci (stąd ich nazwa "głębokie sieci neuronowe"). Dokładanie kolejnych warstw można urozmaicić przez wybieranie innego typu jednostek dla każdej z warstw, co może ulepszyć jakość architektury. O skuteczności takich rozwiązań traktuje rozdział poświęcony porównaniu efektywnych architektur. Ten rodzaj sieci jest najbardziej użyteczny do zastosowań przetwarzania obrazów i jego modyfikacje będą opisane w dalszej części pracy.
 
 \begin{figure}[ht]
 	\centering
@@ -502,7 +502,7 @@ Zdjęcia są duże i ich rozmiar wraz z nowymi smartfonami rośnie dużo szybcie
 
 Drugą poważną wadą tej architektury jest ignorowanie ułożenia lokalnego sygnału wejściowego. Zdjęcie można w dowolny sposób poszatkować, pomieszać a wyjście pozostanie takie samo. Niestety w przypadku rozpoznania obiektu na zdjęciach jest to nie do przyjęcia. Rozwiązaniem tych problemów jest kolejny typ sieci wywodzący się z wielowarstwowego perceptronu, konwolucyjna sieć neuronowa  (ang. Convolutional Neural Network).
 
-\subsection{Konwolucyjne sieci neuronowe}
+\section{Konwolucyjne sieci neuronowe}
 Wyspecjalizowany typ sieci neuronowych do przetwarzania danych ułożonych w siatkę. Sieci te są niezwykle skuteczne w przetwarzaniu siatek pikseli i nowoczesne sieci splotowe zakładają użycie wyłącznie obrazów i posiadają wbudowane optymalizacje dla tego typu sygnałów. Sieci te nie odbiegają znacząco od klasycznych feedforward'owych. Ich dodatkową cechą jest jak wynika z nazwy, liniowa operacja konwolucji (splotu) matematycznej. Wraz z konwolucją dochodzi wymagana operacja łączenia (ang. pooling).  W sieciach konwolucyjnych łączy się trzy narzędzia, lokalne pola percepcji, współdzielenie wag, przestrzenne lub czasowe próbkowanie. Te narzędzia rozwiązują również trzy problemy, przesunięcie, skalowanie i zniekształcenie obrazu.
 
 Prosta i zwykła sieć konwolucyjna otrzymuje na wejściu obrazy o znormalizowanej wielkości i w miarę możliwości wycentrowane. Każdy neuron w wybranej warstwie otrzymuje wejście ze zbioru neuronów z poprzedniej warstwy, które znajdują się w jego sąsiedztwie. Połączenia lokalne były wielokrotnie używane w modelach uczenia maszynowego. Używając lokalnych pól recepcyjnych, jednostki są w stanie wyodrębnić pojedyncze cechy obrazu takie jak krzywizny, krańce płaszczyzn. Cechy te są przekazywane w grupach do kolejnych warstw, gdzie tworzy się z nich coraz wyższe poziomy abstrakcji obiektu, by w ostatniej warstwie nadać im już konkretny kształt obiektu. Zastosowanie warstw rozpoznających najbardziej podstawowe cechy, pozwala używać jednego neuronu do rozpoznania wielu części obrazu jeśli obiektów występuje więcej. Neurony wybranej warstwy zorganizowane są na płaszczyźnie, w której wszystkie jednostki dzielą zestaw wag. Zbiór wartości wyjściowych neuronów zadanej płaszczyzny jest nazywany mapą cech. Jednostki w mapie cech wykonują tę samą operację na różnych fragmentach zdjęcia. Warstwa konwolucyjna zatem jest złożona z wielu map cech, aby zebrać wiele cech w różnych miejscach obrazu. Jednostka w mapie cech ma połączone wejścia z polem recepcyjnym o mniejszym rozmiarze.
@@ -565,10 +565,37 @@ Gdzie:
 \end{figure}
 
 %Współdzielenie parametrów Parameter sharing
+\subsection{Współdzielenie parametrów}
+Wartości wag są współdzielone między zestaw neuronów podpiętych do wybranego jądra. Jest to technika, która umożliwia istnienie sieci konwolucyjnych. Bez tego głębokie sieci neuronowe byłyby zbyt przeładowane parametrami by podołać złożoności obliczeniowej. Założenie współdzielenia parametrów miedzy neuronami wynika z założenia, że jeśli dana cecha, np. krawędź, występuje w jednej części obrazu, prawdopodobnie będzie się powtarzać w również innych fragmentach. Można wykorzystać zjawisko powtarzalności wzorców i używać raz zdefiniowaną cechę, na całym obrazie zamiast definiować ją na nowo dla każdego fragmentu obrazu. 
+%Fully connected layer
 
 \subsection{Recurrent Neural Networks}
 
 \subsection{Fully Convolutional Networks}
+
+\subsection{Pozostałe typy sieci neuronowych} %https://towardsdatascience.com/the-mostly-complete-chart-of-neural-networks-explained-3fb6f2367464
+Radial basis network
+Long / Short Term Memory
+Gated Recurrent Unit
+Auto Encoder
+Variational Auto Encoder
+Denoising Auto Encoder
+Sparse Auto Encoder
+Markov Chain
+Hopfield Network
+Boltzman Machine
+Restricted Boltzman Machine
+Deep Belief Network
+Deconvolutional Network
+Deep Convolutional Inverse Graphics Network
+Generative Adversarial Network
+Liquid State Machine
+Extreme Learning Machine
+Echo State Network
+Deep Resisdual Network
+Kohonen Network
+Support Vector Machine
+Neural Turing Machine
 
 
 % ################################
@@ -1256,22 +1283,71 @@ Jak widać poniżej na przykładzie architektury ResNet34, dodatnie sztucznie wy
 Kolejną techniką poprawienia jakości uczenia jest zastosowanie algorytmu gradientu spadkowego z ponownym uruchamianiem. Metoda ta polega na wygaszaniu współczynnika uczenia, zmniejszając jego wartość w trakcie pracy algorytmu. Następnie wykonywana jest operacja próby wyjścia z minimum lokalnego celem znalezienia prawidłowej przestrzeni wag, takiej która będzie cechowała się stabilnością dla większej gamy przykładów, prócz samej dokładności. Znów celem jest generalizowanie rozpoznawanej klasy, a nie uczenie się wszystkich przykładów. \cite{DBLP:journals/corr/HuangLPLHW17}
 
 \section{Analiza wyników}
+Najważniejszą miarą wydajności sieci jest wskaźnik jak dobrze klasyfikuje nowe dane. Poważnym błędem jest założenie, że sieć jest w stanie nauczyć się w 100\% rozpoznawać wszystkie elementy. Analiza zawiera trzy parametry, które wykazują w jaki sposób konkretne architektury osiągają najwyższe możliwe osiągi na dostępnym sprzęcie. Należy zaznaczyć iż w przypadku kart graficznych z większą ilością pamięci wyniki znacząco uległyby zmianie. Wynika to z faktu iż cały zestaw uczący jest ładowany do pamięci i w przypadku bardziej rozbudowanych sieci, należy obrazy pierw przeskalować tak by nie otrzymać błędu braku dostępnej pamięci. Dzieje się tak szczególnie często, w trakcie stosowania sztucznego powielania danych.
+
+W tej pracy przyjęto dwa scenariusze reakcji na problem braku pamięci. Pierwszy, zmniejszone zostają rozmiary obrazów do rozdzielczości pozwalającej wszystkim architekturom na wytrenowanie od początku do końca z wszystkimi modyfikacjami algorytmu. Metoda najmniejszego wspólnego mianownika pozwala ocenić skuteczność bez uwzględniania ograniczeń sprzętowych. Drugi scenariusz zakłada największą możliwą rozdzielczość tylko dla podstawowego uczenia sieci nie uwzględniając zasobochłonnego strojenia.
+
+Dla pełnej nauki ze strojeniem (pełnym) określone zostały następujące parametry:
 \begin{itemize}
-\item ResNet,
-\item VGG,
-\item ResNeXt,
-\item Wide Residual Network,
-\item Inception,
-\item DenseNet.
+\item Ilość epok: 6
+\item Krok uczenia: 0,01
+\item Rozmiar obrazu: 200 pikseli
 \end{itemize}
+
+Dla podstawowego uczenia sieci bez dodatkowych technik usprawniających model dobrano parametry:
+\begin{itemize}
+\item Ilość epok: 6
+\item Krok uczenia: zmienny, wyliczany algorytmem dla różnych warstw od 0,001 do 1 
+\item Rozmiar obrazu: 600 pikseli
+\end{itemize}
+
+\subsection{ResNet}
+ResNet okazał się architekturą najłatwiejszą do wytrenowania. Jej kompaktowa struktura pozwala zmieścić cały zbiór danych w rozmiarze 500 pikseli również po dodaniu sztucznie wygenerowanych danych. Jest to świetna wiadomość dla osób pracujących na pojedynczych maszynach GPU. Wstępne nauczenie sieci dało świetny rezultat widoczny poniżej.
+
+\subsection{VGG}
+
+\subsection{ResNeXt}
+
+\subsection{Wide Residual Network}
+
+\subsection{Inception}
+
+\subsection{DenseNet}
 
 Najpopularniejsza architektura dla uczenia zdjęć. Jest bardzo szybka do przetrenowania nowych modeli i posiada implementację w każdej bibliotece głębokiego uczenia.
 
 \subsection{Porównanie czasu uczenia (CPU i GPU)}
-Sekcja poświęcona na uświadomienie jak wielka przepaść wydajnościowa istnieje między uczeniem modelu na procesorze jednostki centralnej komputera, a procesorze jednostki graficznej. Trenowanie obrazów odbywa się tylko na ostatnich warstwach architektury ResNet, ponieważ uczenie całości zajęłoby wiele tygodni na zwykłym komputerze klasy PC.
-Oba pomiary dotyczą już przygotowanej sieci z dostrojeniem, a hiperparametry pozostają takie same, jak w najlepszym wyniku uczenia sieci w poprzednich sekcjach.
-CPU:
+Sekcja poświęcona na uświadomienie jak wielka przepaść w czasie uczenia istnieje między uczeniem modelu na procesorze jednostki centralnej komputera, a procesorze jednostki graficznej. Trenowanie obrazów odbywa się tylko na ostatnich warstwach architektury ResNet, ponieważ uczenie całości zajęłoby wiele tygodni na zwykłym komputerze klasy PC.
+Oba pomiary dotyczą już przygotowanej sieci z dostrojeniem, a hiperparametry pozostają takie same, jak w najlepszym wyniku uczenia sieci w poprzednich sekcjach. Do pomiaru czasu użyto prostego narzędzia UNIX'owego ''time''.
+
+Trening podstawowy:
+CPU: 
+Epoki: 6, training_loss: 0.085107 validation_loss: 0.101677, accuracy: 1.0
+real	0m10.201s
+user	2m8.983s
+sys	0m5.774s
+
 GPU:
+Epoch: 6, training_loss: 0.080002 validation_loss: 0.10515, accuracy: 0.9375
+real	0m12.383s
+user	0m12.263s
+sys	0m8.115s
+
+Cały trening:
+CPU:
+Epoch: 6, training_loss: 0.075047 validation_loss: 0.037492 accuracy: 1.0
+real	43m32.039s
+user	496m49.894s
+sys	916m41.221s
+GPU:
+
+
+\begin{figure}[ht]
+	\centering
+			\includegraphics[resolution=100, scale=0.7]{neuronMozgowy.png}
+		\caption{Wizualizacja uproszczonego modelu neuronu mózgowego.}
+\end{figure}
+
 
 \section{Podsumowanie}
 Pierwszym wnioskiem jaki nasuwa się po przeprowadzeniu testów wydajności jest: nie zaczynać przygody z głębokimi sieciami neuronowymi bez dostępu do procesora graficznego ze średniej półki cenowej. Oczekiwanie na wyniki używając jedynie CPU, zniechęci każdego do eksperymentów, a na tym obecnie polega dobieranie świetnych modeli. Wybierając kartę graficzną również należy się kierować odpowiednio dużą pamięcią. Spora część zbioru danych uczących jest ładowana do pamięci GPU, stąd zaleca się minimum 6Gb.
