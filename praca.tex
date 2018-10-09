@@ -566,37 +566,104 @@ Gdzie:
 
 %Współdzielenie parametrów Parameter sharing
 \subsection{Współdzielenie parametrów}
-Wartości wag są współdzielone między zestaw neuronów podpiętych do wybranego jądra. Jest to technika, która umożliwia istnienie sieci konwolucyjnych. Bez tego głębokie sieci neuronowe byłyby zbyt przeładowane parametrami by podołać złożoności obliczeniowej. Założenie współdzielenia parametrów miedzy neuronami wynika z założenia, że jeśli dana cecha, np. krawędź, występuje w jednej części obrazu, prawdopodobnie będzie się powtarzać w również innych fragmentach. Można wykorzystać zjawisko powtarzalności wzorców i używać raz zdefiniowaną cechę, na całym obrazie zamiast definiować ją na nowo dla każdego fragmentu obrazu. 
-%Fully connected layer
+Wartości wag są współdzielone między zestaw neuronów podpiętych do wybranego jądra. Jest to technika, która umożliwia istnienie sieci konwolucyjnych. Bez tego głębokie sieci neuronowe byłyby zbyt przeładowane parametrami by podołać złożoności obliczeniowej. Założenie współdzielenia parametrów miedzy neuronami wynika z założenia, że jeśli dana cecha, np. krawędź, występuje w jednej części obrazu, prawdopodobnie będzie się powtarzać w również innych fragmentach. Można wykorzystać zjawisko powtarzalności wzorców i używać raz zdefiniowaną cechę, na całym obrazie zamiast definiować ją na nowo dla każdego fragmentu obrazu.
 
-\subsection{Recurrent Neural Networks}
+Współdzielone wagi filtru oznaczają że jeden filtr jest stały dla całej powierzchni obrazu wejściowego, przesunięcie filtra po całym obrazie nie zmienia jego wag, dzieje się to dopiero podczas aktualizacji wag w trakcie wykonania wstecznej propagacji błędu. Powtarzalne cechy są znajdowane niezależnie od tego, który region obrazu wejściowego jest rozpatrywany.
 
-\subsection{Fully Convolutional Networks}
+Dla przykładu obraz o rozmiarach 3x3, mając nałożony filtr o rozmiarach 2x2 otrzyma do przeliczenia operacje:
 
-\subsection{Pozostałe typy sieci neuronowych} %https://towardsdatascience.com/the-mostly-complete-chart-of-neural-networks-explained-3fb6f2367464
-Radial basis network
-Long / Short Term Memory
-Gated Recurrent Unit
-Auto Encoder
-Variational Auto Encoder
-Denoising Auto Encoder
-Sparse Auto Encoder
-Markov Chain
-Hopfield Network
-Boltzman Machine
-Restricted Boltzman Machine
-Deep Belief Network
-Deconvolutional Network
-Deep Convolutional Inverse Graphics Network
-Generative Adversarial Network
-Liquid State Machine
-Extreme Learning Machine
-Echo State Network
-Deep Resisdual Network
-Kohonen Network
-Support Vector Machine
-Neural Turing Machine
+ $$X = 
+ \begin{bmatrix} 
+ x_{11} & x_{12} & x_{13}  \\ x_{21} & x_{22} & x_{23} \\x_{31} & x_{32} & x_{33} 
+ \end{bmatrix}
+$$
+$$F =  
+ \begin{bmatrix} 
+ w_{11} & w_{12} \\ w_{21} & w_{22} 
+ \end{bmatrix}
+$$
+ $$\beta = 
+ \begin{bmatrix} 
+ w_{11}, & w_{12}, & w_{21}, & w_{22} 
+ \end{bmatrix}
+$$
+ $$F * X =  
+ \begin{bmatrix}  
+\beta \cdot [x_{11}, x_{12}, x_{21}, x_{22}] & \beta \cdot [x_{12}, x_{13}, x_{22}, x_{23}] \\
+\beta \cdot [x_{21}, x_{22}, x_{31}, x_{32}] & \beta \cdot [x_{22}, x_{23}, x_{32}, x_{33}] 
+ \end{bmatrix}
+$$
 
+\subsection{Warstwy gęste}
+Warstwa w której wszystkie neurony są połączone ze wszystkimi neuronami kolejnej warstwy nazywa się w pełni połączoną (ang. fully connected layer) oraz wartwą gęstą (ang. dense layer). Jest to typ warstwy używany w tradycyjnych sieciach neuronowych gdzie naturalnymi są połączenia każdy z każdym. W splotowej sieci neuronowej jest to ostatni niezbędny budulec zaraz za warstwami konwolucji i warstwami łączącymi.
+
+Warstwy gęste stosuje się na końcu architektury sieci, gdzie neurony już głosują jaka jest poprawna odpowiedź. Podczas trenowania sieci, korekcja wag sprawia że wybór klasy wyjściowej ma się odbyć na podstawie cech znalezionych w poprzednich warstwach. Kiedy już sieć jest wyuczona i otrzyma przykład do sklasyfikowania, następuje głosowanie przez wszystkie neurony, algorytm liczy średnie prawdopodobieństwo dla każdej wybranej przez każdy neuron klasy wyjściowej i wybiera jako odpowiedź o największym prawdopodobieństwie (największej średniej sumie wag). W ten sposób lista cech z poprzednich warstw staje się listą ''głosów''.
+
+\subsection{Rekurencyjne sieci neuronowe}
+Sieci które zawierają sprzężenia zwrotne, czyli połączenia które zwracają sygnał z neuronów do wcześniejszych warstw sieci. Ta charakterystyka daje sieci nowe możliwości. Sieć ze sprzężeniem zwrotnym generuje zjawiska niedostępne w sieciach jednokierunkowych. Sieć jednym wejściem może wygenerować sekwencję sygnałów, ponieważ sygnały z wyjścia jednego kroku, wracając na wejście neuronów warstw wcześniejszych generują nowe, zupełnie inne wartości. Kilka ciekawych zjawisk opisywanych w sieciach rekurencyjnych to nagły wzrost i osłabienie wag sygnałów, chaotyczne błądzenie wartości po sieci. Wymienione charakterystyki są ciekawe, ale powodują mała popularność sieci rekurencyjnych przez trudność analizy zachowań i złożoność obliczeniową. Na chwilę obecną, stosowane są głównie w miejscach mających dostęp do ogromnych centrów obliczeniowych, przykładami są, asystentka Siri w urządzeniach firmy Apple oraz Google Translator. W zastosowaniach medycznych, obiecujące są zastosowania do analizy składania białek i analiza sekwencji DNA.
+
+\begin{figure}[ht]
+	\centering
+			\includegraphics[resolution=100, scale=0.5]{recurrentNeuralNetwork.png}
+		\caption{Pojedynczy neuron ze sprzężeniem zwrotnym.}
+\end{figure}
+
+Dla poprawnego zakończenia przejścia przez sieć, sygnał musi osiągnąć stan równowagi. Stan równowagi osiąga się przez mnożenie iloczynu sygnału wejściowego z wagą wejścia. Wynik powinien być równy sygnałowi sprzężenia zwrotnego dający wartość do wytworzenia tego sygnału wejściowego.
+
+Obiecującą charakterystyką rekurencyjnych sieci neuronowych jest posiadanie wewnętrznej pamięci. Daje to możliwość zapamiętania informacji o sygnałach wejściowych, w wielu architekturach używa się pamięci do przewidywania co jaki będzie następny sygnał. Obecnie częstotliwość zastosowań tego typu sieci może wzrosnąć jeśli zostaną zaimplementowane z uwzględnieniem problemów wydajnościowych, tzn. ograniczenie głębokości sieci i skrócenie ilości przejść sygnału przez sieć. Testując prymitywną sieć rekurencyjną pierwszym zaskoczeniem staje się ilość przejść sygnału zanim wartości osiągną stan równowagi.
+
+Wielu badaczy \cite{siteRNN} przewiduje,  że po rozwiązaniu problemów wydajnościowych sprzężenie zwrotne okaże się preferowanym sposobem na uczenie neuronów. W szczególności świetnie sprawdzają się dla danych sekwencyjnych, takich jak mowa, text, audio oraz obrazy. Posiadają to czego brakuje w wielu innych sieciach, kontekst. Do standardowej rekurencyjnej sieci neuronowej posiadającej tylko pamięć krótkotrwałą, można dołączyć wynaleziony w 1997 roku, mechanizm LSTM (ang. Long-Short Term Memory). 
+
+Mająca dwa sygnały wejściowe sieć rekurencyjna stosuje liczenie wag na obu wejściach. Wagi są korygowane algorytmem gradientu spadkowego oraz wstecznej propagacji błędu w czasie (ang. Backpropagation Through Time). Istotną obserwacją jest możliwość mapowania jednego wejścia na wiele wyjść, wielu wejść do wielu wyjść oraz wiele wejść do jednego wyjścia, w dowolnej kombinacji ilości. Wsteczna propagacja błędu w czasie działa jak zwykła propagacja, z drobną różnicą, że sieć jest rozwijana. Korekta wag następuje od końca przez wszystkie cykle w których wystąpiła rekurencja, to znaczy jeśli sygnał przechodził przez ten sam neuron $t$ razy, wtedy następuje rozwinięcie sekwencji dla $t$ operacji i algorytm wykonuje korekcje jakby były to osobne sieci neuronowe zależne od siebie. Tutaj pojawia się wspomniana wcześniej złożoność obliczeniowa.
+
+\begin{figure}[ht]
+	\centering
+			\includegraphics[resolution=100]{backpropagationThroughTime.png}
+		\caption{Wsteczna propagacja błędu w czasie. x - sygnał wejściowy, s - funkcja aktywacji, E - funkcja błędu}
+\end{figure}
+
+\subsection{W pełni konwolucyjna sieć neuronowa}
+
+\begin{figure}[ht]
+	\centering
+			\includegraphics[resolution=100]{fullyConvolutionalNetwork.png}
+		\caption{Wizualizacja architektury FCN przeznaczonej do segmentacji obrazu.}
+\end{figure}
+W budowie sieć ta przypomina normalną konwolucyjną sieć neuronową, w której ostatnia warstwa jest zastąpiona warstwą konwolucyjną z dużym polem recepcyjnym. Warstwa ta ma pomóc określić kontekst całego obrazu, np. sytuację na drodze w systemie autopilota gdzie istotne jest położenie konkretnych elementów na drodze. Bardzo ważnym jest dobranie odpowiednio dużej ostatniej warstwy konwolucyjnej, pozwoli to na dokładne określenie rozmieszczenia wykrytych obiektów. Ta warstwa jest używana jako klasyfikator każdego piksela na obrazie.
+
+Docelowo wynik takiej sieci jest obrazem o identycznym rozmiarze co sygnał wejściowy. Obraz przypomina sygnał wejściowy w dużym uproszczeniu gdzie wykryte obiekty są zamalowane jednolicie każdy segment innym kolorem.
+
+Zamiana zwykłej CNN na FCN (ang. Fully Convolutional Network) może być stosowana dla dowolnej architektury, mając przewagę nad innymi, ponieważ wykorzystanie gotowych architektur znacząco skraca czas na tworzenie działających aplikacji. Mając wytrenowaną sieć konwolucyjną, należy podmienić wszystkie w pełni połączone warstwy (ang. fully connected) na warstwy konwolucyjne. Ostatnią warstwę wyjściową docelowo należy ustalić na rozmiar identyczny z warstwą wejściową z ilością kanałów odpowiadającą ilości klas.
+
+Jak wiadomo sieci splotowe zmniejszają przestrzenie obrazów na kolejnych warstwach, więc by uzyskać znów pierwotny rozmiar obrazu na wyjściu sieci, należy skorzystać z mechanizmu konwolucji wstecznej. Jest to ta sama operacja co konwolucja, operacje są wykonywane w odwróconej kolejności, a wagi korygowane są identycznie.\cite{DBLP:journals/corr/LongSD14}
+
+\subsection{Pozostałe typy sieci neuronowych}
+Opisanie topologii pozostałych typów sieci neuronowych jest zadaniem wykraczającym za niniejszą pracę. Poniżej znajduje się lista najczęściej stosowanych topologii. Lista została opublikowana w 2016 roku przez Fjodor van Veen wraz z opisem każdego elementu.\cite{siteFjodorList}
+
+\begin{itemize}
+\item Radial basis network,
+\item Long / Short Term Memory,
+\item Gated Recurrent Unit,
+\item Auto Encoder,
+\item Variational Auto Encoder,
+\item Denoising Auto Encoder,
+\item Sparse Auto Encoder,
+\item Markov Chain,
+\item Hopfield Network,
+\item Boltzman Machine,
+\item Restricted Boltzman Machine,
+\item Deep Belief Network,
+\item Deconvolutional Network,
+\item Deep Convolutional Inverse Graphics Network,
+\item Generative Adversarial Network,
+\item Liquid State Machine,
+\item Extreme Learning Machine,
+\item Echo State Network,
+\item Deep Resisdual Network,
+\item Kohonen Network,
+\item Support Vector Machine,
+\item Neural Turing Machine.
+\end{itemize}
 
 % ################################
 %        BIBLIOTEKI
@@ -996,9 +1063,9 @@ Licencja: MIT
 \section{Znaczenie architektury dla wydajności sieci}
 Elementy sieci neuronowych można ułożyć na nieskończenie wiele sposobów, wystarczy dodać kolejną warstwę neuronów lub zmodyfikować wielkość warstwy i wyniki będą zgoła inne. Celem szukania odpowiedniej dla danego zadania architektury jest otrzymanie najlepszej wydajności klasyfikacji przy skończonym i możliwie jak najkrótszym czasie uczenia. Chcąc uzyskać dobre rezultaty bez eksperymentów od zera, należy wybrać architekturę, która została wykorzystana do rozwiązania podobnego zadania bądź przetestować kilka gotowych architektur z wyuczonymi modelami, a następnie sprawdzić jak się zachowują dla posiadanych zbiorów danych na różnych hiperparametrach.
 
-Stworzenie efektywnej architektury przesądziło o wynikach zawodów ''ImageNet Competition 2012''. Pierwsze miejsce w klasyfikacji obrazów wyłącznie z użyciem głębokiej sieci neuronowej zapoczątkowało prawdziwą rewolucję nie tylko wśród społeczności uczenia maszynowego, ale całego przemysłu technologicznego. Pierwszy zespół, któremu udało się zejść z błędem rozpoznania do mniej niż 25\% Geoffrey Hinton, zwany ojcem chrzestnym głębokich sieci neuronowych (ang. Godfather of Deep Learning) udowodnił że jego przekonania, którymi się kierował w trakcie kilkudziesięcioletniej kariery naukowej są słuszne. Poprzeczką, której profesor Hinton nie mógł wcześniej przeskoczyć były ograniczenia obliczeniowe procesorów, kiedy technologia GPU wraz z możliwością programowania równoległego w CUDA umożliwiły przetestowanie idei, podejście do rozpoznawania obrazów zmieniło świat przemysłu, a wkrótce zmieni życie każdego człowieka. Dlatego Gartner, uważa że już w 2019 roku głębokie uczenie maszynowe 
+Architektury ze względu na bardzo zróżnicowaną wydajność obliczeniową zyskały niesamowicie na znaczeniu. Stworzenie efektywnej architektury przesądziło o wynikach zawodów ''ImageNet Competition 2012''. Pierwsze miejsce w klasyfikacji obrazów wyłącznie z użyciem głębokiej sieci neuronowej zapoczątkowało prawdziwą rewolucję nie tylko wśród społeczności uczenia maszynowego, ale całego przemysłu technologicznego. Pierwszy zespół, któremu udało się zejść z błędem rozpoznania do mniej niż 25\% Geoffrey Hinton, zwany ojcem chrzestnym głębokich sieci neuronowych (ang. Godfather of Deep Learning) udowodnił że jego przekonania, którymi się kierował w trakcie kilkudziesięcioletniej kariery naukowej są słuszne. Poprzeczką, której profesor Hinton nie mógł wcześniej przeskoczyć były ograniczenia obliczeniowe procesorów, kiedy technologia GPU wraz z możliwością programowania równoległego w CUDA umożliwiły przetestowanie idei, podejście do rozpoznawania obrazów zmieniło świat przemysłu, a wkrótce zmieni życie każdego człowieka. Dlatego Gartner, uważa że już w 2019 roku głębokie uczenie maszynowe stanie się kluczowym elementem w skutecznym wykrywaniu oszustw i prognozowaniu awarii.\cite{siteGartner2019}
 
-Rok 2017 został uznany za czas kiedy wysokie wyniki na zawodach ''ImageNet Competition'' oznaczały rozwiązanie problemu klasyfikacji obrazu. Błędne rozpoznanie algorytmów wśród najlepszych drużyn wyniosło zaledwie 2\%. Przez pięć lat od czasu debiutu \textit{AlexNet} powstało wiele architektur sieci neuronowych, bibliotek wyspecjalizowanych w szybkim tworzeniu nowych prototypów, a te dające obiecujące wyniki zostały podzielone względem zastosowania. Obecnie wyróżniane typy sieci neuronowych są sklasyfikowane względem typu danych wejściowych. Dla sygnału wejściowego w postaci pikseli najlepiej sprawdza się konwolucyjna sieć neuronowa. Warstwy konwolucyjne potrafią bardzo dokładnie wyodrębnić cechy obrazu na różnych poziomach złożoności, od pojedynczych kresek do kształtów całych obiektów, jak kontur ręki czy marka samochodu. W dalszej części pracy wyjaśniane jest działanie tych sieci.
+Rok 2017 został uznany za czas kiedy wysokie wyniki na zawodach ''ImageNet Competition'' oznaczały rozwiązanie problemu klasyfikacji obrazu. Błędne rozpoznanie algorytmów wśród najlepszych drużyn wyniosło zaledwie 2\%. Przez pięć lat od czasu debiutu \textit{AlexNet} powstało wiele architektur sieci neuronowych, bibliotek wyspecjalizowanych w szybkim tworzeniu nowych prototypów, a te dające obiecujące wyniki zostały podzielone względem zastosowania. Obecnie wyróżniane typy sieci neuronowych są sklasyfikowane względem typu danych wejściowych. Dla sygnału wejściowego w postaci pikseli najlepiej sprawdza się konwolucyjna sieć neuronowa. Warstwy konwolucyjne potrafią bardzo dokładnie wyodrębnić cechy obrazu na różnych poziomach złożoności, od pojedynczych kresek do kształtów całych obiektów, jak kontur ręki czy marka samochodu. W rozdziale drugim zostało wyjaśnione działanie tych sieci.
 
 Polskim ekspertem i popularyzatorem sieci neuronowych, od wielu lat jest profesor doktor habilitowany inżynier Ryszard Tadeusiewicz. Osoba bardzo zasłużona w naukach technicznych, trzykrotny rektor Akademii Górniczo-Hutniczej, dwukrotnie odznaczony orderami Odrodzenia Polski, a także zdobywca tytułu Mistrza Mowy Polskiej. Jego książki stały się częścią bibliografii niniejszej pracy. Profesor w swoich publikacjach istotnie zwraca uwagę na architekturę jako element konieczny w budowaniu wydajnych systemów uczących.
 
