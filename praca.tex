@@ -1122,7 +1122,7 @@ Trenowanie sieci przy użyciu zestawu MINST (bez zniekształceń) pozwala zaobse
 
 \begin{figure}[ht]
 	\centering
-			\includegraphics[resolution=100, scale=0.6]{leNetTraining.png}
+			\includegraphics[resolution=100, scale=0.45]{leNetTraining.png}
 		\caption{Współczynnik błędu po kolejnych iteracjach na zbiorze danych.}
 \end{figure}
 
@@ -1130,8 +1130,8 @@ Trenowanie sieci przy użyciu zestawu MINST (bez zniekształceń) pozwala zaobse
 \subsection{AlexNet}
 \begin{figure}[ht]
 	\centering
-			\includegraphics[resolution=100, scale=0.7]{AlexNet.png}
-		\caption{Architektura sieci AlexNet}
+			\includegraphics[resolution=100, scale=0.65]{AlexNet.png}
+		\caption{Wizualizacja architektury sieci AlexNet}
 \end{figure}
 
  [Alex Krizhevsky, Ilya Sutskever, Geoffrey E. Hinton, 2012] - pierwsza prawdziwa konwolucyjna sieć neuronowa (CNN), która pomogła zmienić opinię na temat uczenia głębokiego. Została zaimplementowana z użyciem biblioteki CUDA. Pierwsza sieć neuronowa, ucząca się z powodzeniem dla dużego zbioru danych.
@@ -1150,7 +1150,7 @@ Trenowanie sieci przy użyciu zestawu MINST (bez zniekształceń) pozwala zaobse
 \subsection{VGG Net}
 \begin{figure}[ht]
 	\centering
-			\includegraphics[resolution=100, scale=0.6]{VGGarchitecture.png}
+			\includegraphics[resolution=100, scale=0.8]{VGGarchitecture.png}
 		\caption{Klasyczna architektura sieci VGG-16}
 \end{figure}
 
@@ -1160,14 +1160,14 @@ W trakcie trenowania sieci wyjście jest ustawione na ustalony rozmiar (224 x 22
 \subsection{GoogleNet / Inception}
 \begin{figure}[h]
 	\centering
-			\includegraphics[resolution=100, scale=0.6]{inceptionv3architecture.png}
+			\includegraphics[resolution=100, scale=0.36]{inceptionv3architecture.png}
 		\caption{Architektura sieci Inception v3}
 \end{figure}
 
 \begin{figure}[ht]
 	\centering
-			\includegraphics[resolution=100]{inceptionModule.png}
-		\caption{Architektura sieci ResNet}
+			\includegraphics[resolution=100, scale=0.7]{inceptionModule.png}
+		\caption{Moduł Incepcja}
 \end{figure}
 
 [Christian Szegedy, Wei Liu, Yangqing Jia, Pierre Sermanet, Scott Reed, Dragomir Anguelov, Dumitru Erhan, Vincent Vanhoucke, Andrew Rabinovich, 2014] -- produkt jak nazwa wskazuje wyszedł z firmy Google. Charakteryzuje się przełomową poprawą użycia zasobów wewnętrznych. ImageNet jest zaprojektowana na jak największą szerokość i głębokość jednocześnie utrzymując stałe zużycie mocy obliczeniowej. Optymalizacja jakości opiera się na zasadzie Hebbian’a (jest to teoria neuronauki, która mówi o adaptacji neuronów w trakcie nauki). Błędy klasyfikacji wynoszą top-1: 17,2\% i top-5: 3,58\% (dla v3). Sieć składa się łącznie z 22 warstw. Sieć jest modułowa, gdzie każdy moduł pełni rolę wielopoziomowego ekstraktora cech przeliczającego konwolucje na macierzach rozmiarów 1x1, 3x3, 5x5. Zaletą tej architektury są bardzo małe rozmiary wag (mniej niż 100MB dla v3). Kolejną ważną zaletą jest ilość parametrów, tylko 4 miliony co jest wynikiem 12 razy lepszym od AlexNet. Jest to jedna z najbardziej złożonych sieci względem architektury modułowej. W wersji naiwnej każda warstwa posiada 4 ekstraktory cech (3 konwolucyjne i jedną 3x3 max pooling), następnie wartości te są składane i wysyłane do warstwy wyżej. Do poprawienia wydajności obliczeniowej pozbyto się warstwy “w pełni połączonej”. \cite{DBLP:journals/corr/SzegedyLJSRAEVR14}
@@ -1175,7 +1175,7 @@ W trakcie trenowania sieci wyjście jest ustawione na ustalony rozmiar (224 x 22
 \subsection{ResNet}
 \begin{figure}[ht]
 	\centering
-			\includegraphics[resolution=100]{ResNet.png}
+			\includegraphics[resolution=100, scale=0.5]{ResNet.png}
 		\caption{Architektura sieci ResNet}
 \end{figure}
 
@@ -1185,8 +1185,8 @@ W trakcie trenowania sieci wyjście jest ustawione na ustalony rozmiar (224 x 22
 \subsection{ResNeXt}
 \begin{figure}[h]
 	\centering
-			\includegraphics[resolution=120]{ResNeXt.png}
-		\caption{Architektura sieci ResNeXt}
+			\includegraphics[resolution=100, scale=0.9]{ResNeXt.png}
+		\caption{Architektura modułu sieci ResNeXt}
 \end{figure}
 
 [Saining Xie, Ross Girshick, Piotr Dollar Zhuowen Tu Kaiming He, 2017] - modularyzowalna 
@@ -1195,9 +1195,10 @@ W trakcie trenowania sieci wyjście jest ustawione na ustalony rozmiar (224 x 22
 \subsection{YOLO - You Only Look Once}
 \begin{figure}[ht]
 	\centering
-			\includegraphics[resolution=100, scale=0.6]{YOLO.png}
-		\caption{Architektura sieci YOLO}
+			\includegraphics[resolution=100, scale=0.5]{YOLO.png}
+		\caption{Wizualizacja architektury sieci YOLO}
 \end{figure}
+
 [Joseph Redmon, Santosh Divvala, Ross Girshick, Ali Farhadi, 2016] - You Only Look Once jest systemem wykrywania obiektów w czasie rzeczywistym. Obraz jest dzielony na części oddzielonymi od siebie prostokątami.
 Cały przepływ danych do wykrycia obiektów jest jedną siecią, dlatego może być zoptymalizowany \cite{DBLP:journals/corr/RedmonDGF15}
 
@@ -1205,7 +1206,7 @@ Cały przepływ danych do wykrycia obiektów jest jedną siecią, dlatego może 
 \subsection{SqueezeNet}
 \begin{figure}[ht]
 	\centering
-			\includegraphics[resolution=100, scale=0.8]{SqueezeNet.png}
+			\includegraphics[resolution=100, scale=0.75]{SqueezeNet.png}
 		\caption{Architektura sieci SqueezeNet}
 \end{figure}
 [Authors, Year] - \cite{DBLP:journals/corr/IandolaMAHDK16}
@@ -1214,16 +1215,16 @@ Cały przepływ danych do wykrycia obiektów jest jedną siecią, dlatego może 
 \subsection{SegNet}
 \begin{figure}[ht]
 	\centering
-			\includegraphics[resolution=100, scale=0.5]{SegNet.png}
-		\caption{Architektura sieci SegNet}
+			\includegraphics[resolution=100, scale=0.4]{SegNet.png}
+		\caption{Wizualizacja architektury sieci SegNet}
 \end{figure}
 [Authors, Year] - \cite{DBLP:journals/corr/BadrinarayananH15}
 
 \subsection{Generative Adversarial Network}
 \begin{figure}[ht]
 	\centering
-			\includegraphics[resolution=100,scale=0.3]{GAN.png}
-		\caption{Architektura sieci GAN}
+			\includegraphics[resolution=100,scale=0.36]{GAN.png}
+		\caption{Wysokopoziomowe moduły sieci GAN}
 \end{figure}
 
 [Ian J. Goodfellow, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, Sherjil Ozair†, Aaron Courville, Yoshua Bengio‡, 2014] - w skrócie GAN. Są architekturą sieci neuronowych skomponowanych z dwóch sieci przeciwstawionych wobec siebie. Zaprojektowane na uniwersytecie w Montrealu (gdzie powstało większość przełomów dotyczących neuronów) przez największe obecnie autorytety w dziedzinie. GAN obudził duże nadzieje na szybkie i "twórcze" działania algorytmów, jego najczęstszym zastosowaniem jest tworzenie komputerowych "dzieł sztuki". Jak to działa? Jedna sieć generuje kandydatów, a druga ich ocenia wytworzone obiekty. W ten sposób obie sieci uczą się od siebie wzajemnie. - \cite{NIPS2014_5423}
