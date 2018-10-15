@@ -1090,6 +1090,12 @@ Dowodem na znaczenie ułożenia neuronów w strukturze warstwowej o różnych ty
 \section{Przegląd efektywnych architektur}
 
 \subsection{LeNet}
+\begin{figure}[ht]
+	\centering
+			\includegraphics[resolution=100, scale=0.6]{LeNet.png}
+		\caption{Architektura sieci LeNet}
+\end{figure}
+
 [Yann LeCun, Leon Bottou, Yoshua Bengio, Patrick Haffner, 1998] - Pierwsze praktyczne zastosowanie sieci konwolucyjnej do rozpoznawania cyfr. Sieć oparta o tą architekturę używana była do czytania kodów pocztowych, oraz krótkich ciągów liczb. Systemów implementujących LeNet używało około 10\% banków i instytucji pocztowych w Stanach Zjednoczonych Ameryki. Architektura została zaprezentowana w publikacji ''Gradient-Based Learning Applied to Document Recognition''.
 
 Głównym przesłaniem publikacji jest pokazanie że systemy uczące lepiej nadają się do systemów rozpoznawania wzorców niż te polegające na opisywaniu wszystkich reguł. Używając najnowszych na te czasy osiągnięć uczenia maszynowego, autorzy prezentują w jaki sposób zastąpić ręcznie wykonane ekstraktory cech używając dobrze zaprojektowanego agenta, który pracuje wyłącznie w oparciu o piksele. Opierając się na paradygmacie programistycznym sieci transformatorowej, pozwalającej wszystkim modułom optymalizować kryteria wydajności dla całościowego zbioru domeny, wykluczono wszystkie reguły opisujące zbiór danych do rozpoznania.
@@ -1100,98 +1106,128 @@ Lecun z zespołem, zaproponowali system oparty o ''gradientową propagację wste
 
 Sieć na wejście przyjmuje sygnał złożony z obrazów 32x32 piksele w różnych odcieniach szarości (bez kolorów). Największa cyfra w bazie ma rozmiar 20x20 pikseli wyśrodkowane na polu o rozmiarach 28x28 pikseli. Wartości danych wejściowych są znormalizowane, wartość tła (białe piksele) wyrażona jest wartością -0,1, a wartość rozpoznawanych danych (czarne piksele) odpowiada wartości 1,175. Pozwala to uzyskać średnie wartości 0 i wariancje na poziomie 1, takie wartości znacząco przyspieszają proces uczenia. Używa filtra konwolucyjnego o rozmiarach 5x5 pikseli z przesunięciem o 1.
 
-Pierwsza warstwa jest warstwą konwolucyjną w sześcioma mapami cech. Każdy neuron w mapie cech jest połączony do wejścia sąsiadującej drugiej warstwy o rozmiarach 5x5. Rozmiar każde mapy cech wynosi 28x28 pikseli, ma to zapobiegać wyjściem poza granice obrazu. Pierwsza warstwa zawiera 156 parametrów i aż 122 304 połączenia.
+Pierwsza warstwa jest warstwą konwolucyjną w sześcioma mapami cech. Każdy neuron w mapie cech jest połączony do wejścia sąsiadującej drugiej warstwy o rozmiarach 5x5. Rozmiar każde mapy cech wynosi 28x28 pikseli, ma to zapobiegać wyjściem poza granice obrazu. Pierwsza warstwa zawiera 156 parametrów i aż 122 3 04 połączenia.
 
 Druga warstwa jest przeznaczona do próbkowania i jak tak samo jak pierwsza, posiada 6 map cech o większym rozmiarze bo 14x14 pikseli. Każdy neuron w każdej z mapy cech jest połączony w sąsiedztwie rozmiarów 2x2 z cechą poprzedniej warstwy. Cztery wejścia do neuronu w drugiej warstwie są dodane, następnie mnożone przez współczynnik wag, na koniec wynik do wyniku operacji dodawany jest próg. Wynik podawany jest jako argument dla funkcji sygmoidalnej. Pola recepcyjne nie nachodzą na siebie, dlatego mapy cech są połowę mniejsze od tych w pierwszej warstwie. Druga warstwa ma 12 parametrów i już tylko 5 880 połączeń.
 
-Trzecia warstwa jest warstwą konwolucyjną, tak samo jak pierwsza. Jest zaś większa od pierwszej i posiada 16 map cech. Każdy neuron w każdej mapie cech jest połączony do kilku sąsiadów o rozmiarach 5x5 pikseli w identycznych lokalizacjach podzbioru mapy cech drugiej warstwy. Nie łączy się wszystkich map cech drugiej warstwy z trzecią celem ograniczenia liczby parametrów oraz uniknięcia symetryczności sieci. Kiedy sieć nie jest symetryczna, każda mapa cech może nauczyć się zupełnie innych parametrów obrazu. Schemat połączeń działa następująco: pierwsze sześć map cech z warstwy trzeciej jest zasilanych wejściem z wyjścia kolejnych trzech map cech poprzedniej warstwy.
+Trzecia warstwa jest warstwą konwolucyjną, tak samo jak pierwsza. Jest zaś większa od pierwszej i posiada 16 map cech. Każdy neuron w każdej mapie cech jest połączony do kilku sąsiadów o rozmiarach 5x5 pikseli w identycznych lokalizacjach podzbioru mapy cech drugiej warstwy. Nie łączy się wszystkich map cech drugiej warstwy z trzecią celem ograniczenia liczby parametrów oraz uniknięcia symetryczności sieci. Kiedy sieć nie jest symetryczna, każda mapa cech może nauczyć się zupełnie innych parametrów obrazu. Schemat połączeń działa następująco: pierwsze sześć map cech z warstwy trzeciej jest zasilanych wejściem z wyjścia kolejnych trzech map cech poprzedniej warstwy. Kolejne sześć wejść jest podłączonych do czterech wyjść z warstwy drugiej. Ostatnie wejście pobiera informację ze wszystkich sygnałów wyjściowych poprzedniej warstwy. Trzecia warstwa składa się z 1 516 parametrów i zawiera 151 600 połączeń.
 
- Wyjście pierwszej warstwy konwolucyjnej daje rozmiar 28x28 pikseli złożony z 6 map cech. Następnie przychodzi warstwa druga ''łącząca'' o rozmiarach 14x14 pikseli złożona z 6 map cech, każda jednostka mapy cech jest podłączona z sąsiedztwem o rozmiarach 2x2 odpowiadającym cechom z pierwszej warstwy. \cite{Lecun98gradient-basedlearning}
+Czwarta warstwa, jest tak samo jak druga, warstwą próbkowania złożoną z 16 map cech o rozmiarach 5x5 pikseli. Każda jednostka jest połączona w sąsiedztwo o rozmiarze 2x2 piksele z odpowiadającą mapą cech poprzedniej warstwy. Działa to identycznie jak łączenia między pierwszą a drugą warstwą. Czwarta warstwa składa się z 32 parametrów i zawiera 2 000 połączeń.
 
-\begin{figure}[h]
+Piąta warstwa jest warstwą konwolucyjną ze 120 mapami cech. Każdy neuron jest połączony do sąsiedztwa 5x5 ze wszystkimi mapami cech z czwartej warstwy. Ponieważ poprzednia warstwa ma te same rozmiary, mapy cech w piątej warstwie będą rozmiarów 1x1, tworząc pełne połączenie między warstwami. Piąta warstwa złożona jest z 10 164 parametrów.
+
+Szósta warstwa zrobiona jest z 84 neuronów w pełni połączonych z piątą warstwą. Składa się z 10 164 parametrów.
+
+Trenowanie sieci przy użyciu zestawu MINST (bez zniekształceń) pozwala zaobserwować, że funkcja błędu stabilizuje się dla zestawu uczącego i testowego po 12 przejściach przez sieć. Dodanie zniekształceń do zestawu treningowego (zwiększając jego ilość tysiąckrotnie) pozwoliło autorowi architektury na obniżenie błędu z 1\% do 0,8\%.
+
+\begin{figure}[ht]
 	\centering
-			\includegraphics[resolution=100, scale=0.6]{LeNet.png}
-		\caption{Architektura sieci LeNet}
+			\includegraphics[resolution=100, scale=0.6]{leNetTraining.png}
+		\caption{Współczynnik błędu po kolejnych iteracjach na zbiorze danych.}
 \end{figure}
 
-\subsection{AlexNet}
- [Alex Krizhevsky, Ilya Sutskever, Geoffrey E. Hinton, 2012] - pierwsza prawdziwa konwolucyjna sieć neuronowa (CNN), która pomogła zmienić opinię na temat uczenia głębokiego. Została zaimplementowana z użyciem biblioteki CUDA. Pierwsza sieć neuronowa, ucząca się z powodzeniem dla dużego zbioru danych.
- Została wytrenowana na zbiorze danych złożonym z ponad 15 milionów obrazów podzielonych na 22000 klas. 
- W testach top-1 i top-5 uzyskała wartości kolejno 37,5\% i 17\%, co pozwoliło wygrać konkurs ImageNet Large Scale Visual Recognition Challenge. 
- Sieć neuronowa zawiera 60 milionów parametrów i 650 000 neuronów. Architekturę tworzy 8 warstw, gdzie pierwsze 5 to warstwy konwolucyjne, a pozostałe 3 są warstwami w pełni połączonymi, ta ostatnia ma oczywiście 1000 wyjść z funkcji softmax. AlexNet znacząco przewyższyła swoją wydajnością poprzednich uczestników i wygrała zawody redukując błąd top-5 do 15,32\%. Drugie miejsce to błąd ok 26.2\% (nie była to CNN). Sieć jest głęboką modyfikacją architektury Yann’a LeCunn’a. AlexNet była zaplanowana na dwie karty graficzne, stąd rozdzielenie przepływu informacji na 2 części. Trenowanie sieci na 2 GPU było nowością na te czasy. Sieć została wytrenowana na zbiorze ImageNet. Do wyliczenia funkcji nieliniowych były używane ReLU (tutaj po raz pierwszy okazało się że ReLU działa dużo szybciej niż tangens hiperboliczny). Sieć o której będą uczyli się studenci Data Science na lekcjach historii. \cite{NIPS2012_4824}
 
-\begin{figure}[h]
+\subsection{AlexNet}
+\begin{figure}[ht]
 	\centering
 			\includegraphics[resolution=100, scale=0.7]{AlexNet.png}
 		\caption{Architektura sieci AlexNet}
 \end{figure}
 
-
+ [Alex Krizhevsky, Ilya Sutskever, Geoffrey E. Hinton, 2012] - pierwsza prawdziwa konwolucyjna sieć neuronowa (CNN), która pomogła zmienić opinię na temat uczenia głębokiego. Została zaimplementowana z użyciem biblioteki CUDA. Pierwsza sieć neuronowa, ucząca się z powodzeniem dla dużego zbioru danych.
+ 
+ Została wytrenowana na zbiorze danych złożonym z ponad 15 milionów obrazów podzielonych na 22000 klas. 
+ W testach top-1 i top-5 uzyskała wartości kolejno 37,5\% i 17\%, co pozwoliło wygrać konkurs ImageNet Large Scale Visual Recognition Challenge. 
+ 
+ Sieć neuronowa zawiera 60 milionów parametrów i 650 000 neuronów. Architekturę tworzy 8 warstw, gdzie pierwsze 5 to warstwy konwolucyjne, a pozostałe 3 są warstwami w pełni połączonymi, ta ostatnia ma oczywiście 1000 wyjść z funkcji softmax. AlexNet znacząco przewyższyła swoją wydajnością poprzednich uczestników i wygrała zawody redukując błąd top-5 do 15,32\%. Drugie miejsce to błąd ok 26.2\% (nie była to CNN). Sieć jest głęboką modyfikacją architektury Yann’a LeCunn’a. AlexNet była zaplanowana na dwie karty graficzne, stąd rozdzielenie przepływu informacji na 2 części. Trenowanie sieci na 2 GPU było nowością na te czasy. Sieć została wytrenowana na zbiorze ImageNet. Do wyliczenia funkcji nieliniowych były używane ReLU (tutaj po raz pierwszy okazało się że ReLU działa dużo szybciej niż tangens hiperboliczny). Sieć o której obecnie uczy się studentów Data Science na lekcjach historii głębokich sieci neuronowych.
+ 
+ Motywacja stojąca za stworzeniem tej przełomowej architektury była banalna: stworzyć narzędzie pozwalające uczyć oprogramowanie na dużych zbiorach danych.
+ Wcześniejsze podejście wykorzystywało metody uczenia maszynowego na małych zbiorach, liczonych w dziesiątkach tysięcy obrazów. Rozpoznanie prostych kategorii w małych bazach było o tyle proste że nie odpowiadało różnym sytuacjom spotykanym w życiu codziennym, gdzie obiekty są ujęte w różnych proporcjach, rozmiarach, umieszczeniu na zdjęciu. Różność w szczegółach prawdziwych obiektów (np. kolor i typ ubrania na człowieku) również uniemożliwiają uczenie na starych zasadach. Aby wyuczyć program ponad 22 000 kategorii w 15 milionach zdjęć, z konkursu ImageNet należało stworzyć nową architekturę, zdolną przetworzyć tak duży zbiór danych.
+ 
+ Wybór padł na splotowe sieci neuronowe. Są dużo mniej złożone obliczeniowo od klasycznych w pełni połączonych sieci neuronowych i mają wystarczająco dobrą wydajność w klasyfikacji obrazów. Autorzy zdecydowali się napisać własną implementację konwolucji dwuwymiarowej i pozostałych operacji trenowania sieci, zoptymalizowane do pracy na procesorach graficznych używających CUDA. Po zastosowaniu wszystkich znanych w tym czasie metod zapobiegania przeuczenia oraz złożeniu pięciu warstw konwolucyjnych z trzema w pełni połączonymi warstwami, otrzymano architekturę wydajnościowo ograniczoną tylko pamięcią operacyjną kart graficznych i czasem oddanym na trening. W konkluzji Hinton sugeruje, że szybsze karty graficzne i większe zbiory danych pozwolą sukcesywnie zwiększać wydajność jego architektury.
+  \cite{NIPS2012_4824}
 
 \subsection{VGG Net}
+\begin{figure}[ht]
+	\centering
+			\includegraphics[resolution=100, scale=0.6]{VGGarchitecture.png}
+		\caption{Klasyczna architektura sieci VGG-16}
+\end{figure}
+
  [Simoyan i Zisserman, 2014] - sieć złożona z 16 warstw konwolucyjnych, która charakteryzuje się małymi filtrami i duża głębokość sieci.
 W trakcie trenowania sieci wyjście jest ustawione na ustalony rozmiar (224 x 224 x 3). Przetwarzanie wstępne obejmuje odjęcie mediany wartości RGB dla każdego piksela. Zdjęcie jest przetwarzanie przez stos warstw konwolucyjnych, gdzie używane są filtry o bardzo małym polu widzenia (3x3) [najmniejszy możliwy rozmiar by móc rozpoznać kierunek]. Operacja Max-pooling jest wykonana na polu 4 pikseli, co pokazuje że jest to pobieranie jak najmniejszych cech z obrazu. Ukryte warstwy są wyposażone w nieliniową funkcję aktywacji ReLU. Po stosie warstw konwolucyjnych, następuje nałożenie 3 warstw w pełni połączonych (to takie duże warstwy zawierające wszystkie cechy?). Pierwsze dwie mają 4096 kanałów, trzecia już tylko 1000 (po jednym kanale na klasę obiektu). Obecnie architektura ta jest dość popularnym wyborem dla wyodrębniania cech ze zdjęć. Konfiguracje wag dla zbioru obrazów z ImageNet są dostępne online. W tej sieci problemem jest 140 milionów parametrów, którymi czasem trzeba zarządzać. \cite{DBLP:journals/corr/SimonyanZ14a}
 
 \subsection{GoogleNet / Inception}
+\begin{figure}[h]
+	\centering
+			\includegraphics[resolution=100, scale=0.6]{inceptionv3architecture.png}
+		\caption{Architektura sieci Inception v3}
+\end{figure}
+
+\begin{figure}[ht]
+	\centering
+			\includegraphics[resolution=100]{inceptionModule.png}
+		\caption{Architektura sieci ResNet}
+\end{figure}
+
 [Christian Szegedy, Wei Liu, Yangqing Jia, Pierre Sermanet, Scott Reed, Dragomir Anguelov, Dumitru Erhan, Vincent Vanhoucke, Andrew Rabinovich, 2014] -- produkt jak nazwa wskazuje wyszedł z firmy Google. Charakteryzuje się przełomową poprawą użycia zasobów wewnętrznych. ImageNet jest zaprojektowana na jak największą szerokość i głębokość jednocześnie utrzymując stałe zużycie mocy obliczeniowej. Optymalizacja jakości opiera się na zasadzie Hebbian’a (jest to teoria neuronauki, która mówi o adaptacji neuronów w trakcie nauki). Błędy klasyfikacji wynoszą top-1: 17,2\% i top-5: 3,58\% (dla v3). Sieć składa się łącznie z 22 warstw. Sieć jest modułowa, gdzie każdy moduł pełni rolę wielopoziomowego ekstraktora cech przeliczającego konwolucje na macierzach rozmiarów 1x1, 3x3, 5x5. Zaletą tej architektury są bardzo małe rozmiary wag (mniej niż 100MB dla v3). Kolejną ważną zaletą jest ilość parametrów, tylko 4 miliony co jest wynikiem 12 razy lepszym od AlexNet. Jest to jedna z najbardziej złożonych sieci względem architektury modułowej. W wersji naiwnej każda warstwa posiada 4 ekstraktory cech (3 konwolucyjne i jedną 3x3 max pooling), następnie wartości te są składane i wysyłane do warstwy wyżej. Do poprawienia wydajności obliczeniowej pozbyto się warstwy “w pełni połączonej”. \cite{DBLP:journals/corr/SzegedyLJSRAEVR14}
 
 \subsection{ResNet}
-[Kaiming He et al, 2015] -- architektura oparta na mikro modułach. Charakteryzuje się możliwością odrzucania połączeń i posiada ogromny moduł na normalizację zbioru iteracji (ang. batch normalization). Normalizacja jest pomysłem zaczerpniętym z rekurencyjnych sieci neuronowych. Ta technika pozwala stworzyć sieć ze 152 warstwami ukrytymi przy zachowaniu złożoności mniejszej niż VGG. \cite{DBLP:journals/corr/XieGDTH16}
-\begin{figure}[h]
+\begin{figure}[ht]
 	\centering
 			\includegraphics[resolution=100]{ResNet.png}
 		\caption{Architektura sieci ResNet}
 \end{figure}
 
+[Kaiming He et al, 2015] -- architektura oparta na mikro modułach. Charakteryzuje się możliwością odrzucania połączeń i posiada ogromny moduł na normalizację zbioru iteracji (ang. batch normalization). Normalizacja jest pomysłem zaczerpniętym z rekurencyjnych sieci neuronowych. Ta technika pozwala stworzyć sieć ze 152 warstwami ukrytymi przy zachowaniu złożoności mniejszej niż VGG. \cite{DBLP:journals/corr/XieGDTH16}
+
+
 \subsection{ResNeXt}
-[Saining Xie, Ross Girshick, Piotr Dollar Zhuowen Tu Kaiming He, 2017] - modularyzowalna 
-\cite{DBLP:journals/corr/abs-1805-08700}
 \begin{figure}[h]
 	\centering
 			\includegraphics[resolution=120]{ResNeXt.png}
 		\caption{Architektura sieci ResNeXt}
 \end{figure}
 
-\subsection{RCNN -- obrazek jest zastępczy nie ma nic w internecie interesującego (zrobić własną wizualizację)}
-[Authors, Year] - \cite{DBLP:journals/corr/RenHG015}
-\begin{figure}[h]
-	\centering
-			\includegraphics[resolution=120]{ResNeXt.png}
-		\caption{Architektura sieci RCNN}
-\end{figure}
+[Saining Xie, Ross Girshick, Piotr Dollar Zhuowen Tu Kaiming He, 2017] - modularyzowalna 
+\cite{DBLP:journals/corr/abs-1805-08700}
 
 \subsection{YOLO - You Only Look Once}
-[Joseph Redmon, Santosh Divvala, Ross Girshick, Ali Farhadi, 2016] - You Only Look Once jest systemem wykrywania obiektów w czasie rzeczywistym. Obraz jest dzielony na części oddzielonymi od siebie prostokątami.
-Cały przepływ danych do wykrycia obiektów jest jedną siecią, dlatego może być zoptymalizowany \cite{DBLP:journals/corr/RedmonDGF15}
-\begin{figure}[h]
+\begin{figure}[ht]
 	\centering
 			\includegraphics[resolution=100, scale=0.6]{YOLO.png}
 		\caption{Architektura sieci YOLO}
 \end{figure}
+[Joseph Redmon, Santosh Divvala, Ross Girshick, Ali Farhadi, 2016] - You Only Look Once jest systemem wykrywania obiektów w czasie rzeczywistym. Obraz jest dzielony na części oddzielonymi od siebie prostokątami.
+Cały przepływ danych do wykrycia obiektów jest jedną siecią, dlatego może być zoptymalizowany \cite{DBLP:journals/corr/RedmonDGF15}
+
 
 \subsection{SqueezeNet}
-[Authors, Year] - \cite{DBLP:journals/corr/IandolaMAHDK16}
-\begin{figure}[h]
+\begin{figure}[ht]
 	\centering
 			\includegraphics[resolution=100, scale=0.8]{SqueezeNet.png}
 		\caption{Architektura sieci SqueezeNet}
 \end{figure}
+[Authors, Year] - \cite{DBLP:journals/corr/IandolaMAHDK16}
+
 
 \subsection{SegNet}
-[Authors, Year] - \cite{DBLP:journals/corr/BadrinarayananH15}
-\begin{figure}[h]
+\begin{figure}[ht]
 	\centering
 			\includegraphics[resolution=100, scale=0.5]{SegNet.png}
 		\caption{Architektura sieci SegNet}
 \end{figure}
+[Authors, Year] - \cite{DBLP:journals/corr/BadrinarayananH15}
 
 \subsection{Generative Adversarial Network}
-[Ian J. Goodfellow, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, Sherjil Ozair†, Aaron Courville, Yoshua Bengio‡, 2014] - w skrócie GAN. Są architekturą sieci neuronowych skomponowanych z dwóch sieci przeciwstawionych wobec siebie. Zaprojektowane na uniwersytecie w Montrealu (gdzie powstało większość przełomów dotyczących neuronów) przez największe obecnie autorytety w dziedzinie. GAN obudził duże nadzieje na szybkie i "twórcze" działania algorytmów, jego najczęstszym zastosowaniem jest tworzenie komputerowych "dzieł sztuki". Jak to działa? Jedna sieć generuje kandydatów, a druga ich ocenia wytworzone obiekty. W ten sposób obie sieci uczą się od siebie wzajemnie. - \cite{NIPS2014_5423}
-\begin{figure}[h]
+\begin{figure}[ht]
 	\centering
 			\includegraphics[resolution=100,scale=0.3]{GAN.png}
 		\caption{Architektura sieci GAN}
 \end{figure}
+
+[Ian J. Goodfellow, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, Sherjil Ozair†, Aaron Courville, Yoshua Bengio‡, 2014] - w skrócie GAN. Są architekturą sieci neuronowych skomponowanych z dwóch sieci przeciwstawionych wobec siebie. Zaprojektowane na uniwersytecie w Montrealu (gdzie powstało większość przełomów dotyczących neuronów) przez największe obecnie autorytety w dziedzinie. GAN obudził duże nadzieje na szybkie i "twórcze" działania algorytmów, jego najczęstszym zastosowaniem jest tworzenie komputerowych "dzieł sztuki". Jak to działa? Jedna sieć generuje kandydatów, a druga ich ocenia wytworzone obiekty. W ten sposób obie sieci uczą się od siebie wzajemnie. - \cite{NIPS2014_5423}
+
 
 
 % ################################
