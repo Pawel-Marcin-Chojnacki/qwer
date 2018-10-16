@@ -1156,10 +1156,7 @@ Trenowanie sieci przy użyciu zestawu MINST (bez zniekształceń) pozwala zaobse
  
  Połączenia między warstwami, widoczne na załączonym rysunku, prezentują się następująco. Neurony z drugiej, czwartej oraz piątej warstwy konwolucyjnej są połączone do neuronów warstwy poprzedniej położonych na tym samym GPU. Ukazuje to jak bardzo sieć ta jest zależna od sprzętu. Neurony z trzeciej warstwy są połączone ze wszystkimi neuronami z drugiej warstwy. Jednostki w warstwach w pełni połączonych są połączone ze wszystkimi jednostkami z warstwy poprzedniej. Za pierwszą i drugą warstwą konwolucyjną ustawione są warstwy normalizujące syngał wyjściowy. Warstwy łączące odbierają sygnał od warstw normalizujących. Każdy neuron z warstw konwolucyjnej oraz w pełni połączonej jest wyposażony w rektyfikowaną jednostkę liniową jako funkcję aktywacji.
 
-Rozmiary warstw oraz ilość parametrów są oszczędne w porównaniu z dzisiejszymi architekturami. Pierwsza warstwa konwolucyjna posiada wejście rozmiarów 224x224x3 pikseli (obrazy w ImageNet są kolorowe), przekazywane do 96 neuronów o rozmiarach 11x11x3 z przesunięciem wynoszącym 4 piksele. Druga warstwa konwolucyjna, odbiera obraz po łączeniu. Wartości są przetwarzane przez 256 neuronów o rozmiarze 5x5x48, 48 map cech, każda złożona z 25 pikseli. Trzecia, czwarta i piąta warstwa konwolucyjna są połączone ze sobą bez jakichkolwiek pośredników w rodzaju warstw łączących i normalizujących. Trzecia warstwa konwolucyjna złożona jest z 384 neuronów o rozmiarach 3 x 3 x 256, połączona pośrednio z drugą warstwą konwolucyjną przez normalizacje syngału i warstwę łączenia. Czwarta warstwa konwolucyjna również jest złożona z 384 jednostek, jednak ilość map cech, ogranicza się do 192. Ostatnia warstwa konwolucyjna ma 256 jednostek o rozmiarze 3 x 3 x 192 (tak samo jak czwarta). Ostatnie, w pełni połączone warstwy są identyczne, każda ma 4096 neurnów. Całość złożona jest z 60 milionów parametrów.
-
- 
-  \cite{NIPS2012_4824}
+Rozmiary warstw oraz ilość parametrów są oszczędne w porównaniu z dzisiejszymi architekturami. Pierwsza warstwa konwolucyjna posiada wejście rozmiarów 224x224x3 pikseli (obrazy w ImageNet są kolorowe), przekazywane do 96 neuronów o rozmiarach 11x11x3 z przesunięciem wynoszącym 4 piksele. Druga warstwa konwolucyjna, odbiera obraz po łączeniu. Wartości są przetwarzane przez 256 neuronów o rozmiarze 5x5x48, 48 map cech, każda złożona z 25 pikseli. Trzecia, czwarta i piąta warstwa konwolucyjna są połączone ze sobą bez jakichkolwiek pośredników w rodzaju warstw łączących i normalizujących. Trzecia warstwa konwolucyjna złożona jest z 384 neuronów o rozmiarach 3 x 3 x 256, połączona pośrednio z drugą warstwą konwolucyjną przez normalizacje syngału i warstwę łączenia. Czwarta warstwa konwolucyjna również jest złożona z 384 jednostek, jednak ilość map cech, ogranicza się do 192. Ostatnia warstwa konwolucyjna ma 256 jednostek o rozmiarze 3 x 3 x 192 (tak samo jak czwarta). Ostatnie, w pełni połączone warstwy są identyczne, każda ma 4096 neurnów. Całość złożona jest z 60 milionów parametrów. \cite{NIPS2012_4824}
 
 \subsection{VGG Net}
 \begin{figure}[ht]
@@ -1168,8 +1165,30 @@ Rozmiary warstw oraz ilość parametrów są oszczędne w porównaniu z dzisiejs
 		\caption{Klasyczna architektura sieci VGG-16}
 \end{figure}
 
- [Simoyan i Zisserman, 2014] - sieć złożona z 16 warstw konwolucyjnych, która charakteryzuje się małymi filtrami i duża głębokość sieci.
-W trakcie trenowania sieci wyjście jest ustawione na ustalony rozmiar (224 x 224 x 3). Przetwarzanie wstępne obejmuje odjęcie mediany wartości RGB dla każdego piksela. Zdjęcie jest przetwarzanie przez stos warstw konwolucyjnych, gdzie używane są filtry o bardzo małym polu widzenia (3x3) [najmniejszy możliwy rozmiar by móc rozpoznać kierunek]. Operacja Max-pooling jest wykonana na polu 4 pikseli, co pokazuje że jest to pobieranie jak najmniejszych cech z obrazu. Ukryte warstwy są wyposażone w nieliniową funkcję aktywacji ReLU. Po stosie warstw konwolucyjnych, następuje nałożenie 3 warstw w pełni połączonych (to takie duże warstwy zawierające wszystkie cechy?). Pierwsze dwie mają 4096 kanałów, trzecia już tylko 1000 (po jednym kanale na klasę obiektu). Obecnie architektura ta jest dość popularnym wyborem dla wyodrębniania cech ze zdjęć. Konfiguracje wag dla zbioru obrazów z ImageNet są dostępne online. W tej sieci problemem jest 140 milionów parametrów, którymi czasem trzeba zarządzać. \cite{DBLP:journals/corr/SimonyanZ14a}
+ [Simoyan i Zisserman, 2015] - %sieć złożona z 16 warstw konwolucyjnych, która charakteryzuje się małymi filtrami i dużą głębokością sieci.
+%W trakcie trenowania sieci wyjście jest ustawione na ustalony rozmiar (224 x 224 x 3). Przetwarzanie wstępne obejmuje odjęcie mediany wartości RGB dla każdego piksela. Zdjęcie jest przetwarzanie przez stos warstw konwolucyjnych, gdzie używane są filtry o bardzo małym polu widzenia (3x3) [najmniejszy możliwy rozmiar by móc rozpoznać kierunek]. Operacja Max-pooling jest wykonana na polu 4 pikseli, co pokazuje że jest to pobieranie jak najmniejszych cech z obrazu. Ukryte warstwy są wyposażone w nieliniową funkcję aktywacji ReLU. Po stosie warstw konwolucyjnych, następuje nałożenie 3 warstw w pełni połączonych (to takie duże warstwy zawierające wszystkie cechy?). Pierwsze dwie mają 4096 kanałów, trzecia już tylko 1000 (po jednym kanale na klasę obiektu). Obecnie architektura ta jest dość popularnym wyborem dla wyodrębniania cech ze zdjęć. Konfiguracje wag dla zbioru obrazów z ImageNet są dostępne online. W tej sieci problemem jest 140 milionów parametrów, którymi czasem trzeba zarządzać. 
+Sieć jest wielokrotnie bardziej złożona obliczeniowo od AlexNet, że posiadając cztery karty graficzne NVIDIA Titan Black (10-krotnie więcej mocy niż dwie karty GeForce 580 GTX), wytrenowanie pojedynczej sieci zajęło ponad dwa tygodnie.
+
+Sygnały wejściowe dla sieci skomponowane są z obrazów o stałym rozmiarze 224 x 224 x 3 pikseli. Zdjęcia są przesyłane przez stos warstw konwolucyjnych z filtrami o małych rozmiarach 3 x 3 piksele. W jednej z dostępnych konfiguracji używane są filtry o rozmiarze 1 x 1, które służą wyłącznie przekształceniu liniowemu kanałów wejściowych. Przesunięcie konwolucyjne jest ustawione sztywno na jeden piksel, podobnie jak w AlexNet, występuje tutaj nachodzenie warstw łączących. Tak małe przesunięcie pozwala zachować cechy przestrzenne obrazu po konwolucji. Pięć warstw łączących wykorzystuje metodę Max-Pooling na oknie rozmiarów 2 x 2 piksele z przesunięciem o 2 piksele.
+
+Warstwy konwolucyjne różnią się głębokością, między kolejnymi implementacjami architektury VGG. W każdej z nich jednak umieszczone są na stosie, po którym następują zawsze trzy warstwy w pełni połączone. Pierwsze dwie warstwy połączone mają razem 8192 neuronów (4096 na warstwę), trzecia oczywiście złożona jest z 1000 jednostek, ponieważ tyle klas przewiduje zbiór ILSVRC. Mapy cech rosną wgłąb sieci, zaczynając od 64 na pierwszej warstwie konwolucyjnej i podwajają szerokość z każdą warstwą łączącą do osiągnięcia 512 filtrów. Ilość parametrów waha się od 133 milionów do 144 milionów w zależności od konfiguracji sieci.
+
+Wszystkie warstwy ukryte korzystają z rektyfikowanej jednostki liniowej jako funkcji aktywacji.
+
+Rozdział testujący wydajność architektur, przedstawia sieć neuronową w wariancie 19 warstwowym (16 warstw konwolucyjnych, oraz 3 w pełni połączone).
+
+W tej architekturze również widać jej wiekowość. Najbardziej wymyślna i skomplikowana konfiguracja sieci jest powolna i nie klasyfikuje zbyt dobrze obrazów. Błędy plasują się następująco:
+\begin{itemize}
+\item Top-1 23,7\%,
+\item Top-5 6,8\%.
+\cite{DBLP:journals/corr/SimonyanZ14a}
+
+\begin{figure}[ht]
+	\centering
+			\includegraphics[resolution=100, scale=0.8]{vggArchComparison.png}
+		\caption{Porównanie architektury warstwowej różnych konfiguracji VGG}
+\end{figure}
+
 
 \subsection{GoogleNet / Inception}
 \begin{figure}[h]
