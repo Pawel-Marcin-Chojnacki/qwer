@@ -618,7 +618,7 @@ Mająca dwa sygnały wejściowe sieć rekurencyjna stosuje liczenie wag na obu w
 
 \begin{figure}[ht]
 	\centering
-			\includegraphics[resolution=100]{backpropagationThroughTime.png}
+			\includegraphics[resolution=100, scale=0.55]{backpropagationThroughTime.png}
 		\caption{Wsteczna propagacja błędu w czasie. x - sygnał wejściowy, s - funkcja aktywacji, E - funkcja błędu}
 \end{figure}
 
@@ -626,7 +626,7 @@ Mająca dwa sygnały wejściowe sieć rekurencyjna stosuje liczenie wag na obu w
 
 \begin{figure}[ht]
 	\centering
-			\includegraphics[resolution=100]{fullyConvolutionalNetwork.png}
+			\includegraphics[resolution=100, scale=0.8]{fullyConvolutionalNetwork.png}
 		\caption{Wizualizacja architektury FCN przeznaczonej do segmentacji obrazu.}
 \end{figure}
 W budowie sieć ta przypomina normalną konwolucyjną sieć neuronową, w której ostatnia warstwa jest zastąpiona warstwą konwolucyjną z dużym polem recepcyjnym. Warstwa ta ma pomóc określić kontekst całego obrazu, np. sytuację na drodze w systemie autopilota gdzie istotne jest położenie konkretnych elementów na drodze. Bardzo ważnym jest dobranie odpowiednio dużej ostatniej warstwy konwolucyjnej, pozwoli to na dokładne określenie rozmieszczenia wykrytych obiektów. Ta warstwa jest używana jako klasyfikator każdego piksela na obrazie.
@@ -1181,6 +1181,7 @@ W tej architekturze również widać jej wiekowość. Najbardziej wymyślna i sk
 \begin{itemize}
 \item Top-1 23,7\%,
 \item Top-5 6,8\%.
+\end{itemize}
 \cite{DBLP:journals/corr/SimonyanZ14a}
 
 \begin{figure}[ht]
@@ -1190,7 +1191,7 @@ W tej architekturze również widać jej wiekowość. Najbardziej wymyślna i sk
 \end{figure}
 
 
-\subsection{GoogleNet / Inception v3}
+\section{GoogLeNet}
 \begin{figure}[h]
 	\centering
 			\includegraphics[resolution=100, scale=0.36]{inceptionv3architecture.png}
@@ -1203,7 +1204,7 @@ W tej architekturze również widać jej wiekowość. Najbardziej wymyślna i sk
 		\caption{Moduł Incepcja}
 \end{figure}
 
-[Christian Szegedy, Wei Liu, Yangqing Jia, Pierre Sermanet, Scott Reed, Dragomir Anguelov, Dumitru Erhan, Vincent Vanhoucke, Andrew Rabinovich, 2014] -- produkt jak nazwa wskazuje wyszedł z firmy Google. Częściej używana nazwa Incepcja wywodzi się częściowo z nazwy filmu Christophera Nolana. Inspiracją jest ''wchodzenie głębiej w konwolucje'', analogiczne do wchodzenia w kolejne warstwy podświadomości. 
+[Christian Szegedy, Wei Liu, Yangqing Jia, Pierre Sermanet, Scott Reed, Dragomir Anguelov, Dumitru Erhan, Vincent Vanhoucke, Andrew Rabinovich, 2014] -- produkt jak nazwa wskazuje wyszedł z firmy Google. Częściej używana nazwa Incepcja wywodzi się częściowo z nazwy filmu Christophera Nolana. Inspiracją jest mem internetowy ''wchodzenie głębiej w konwolucje''. Analogia do schodzenia w kolejne warstwy podświadomości.\cite{siteDeeper}
 
 Sieć charakteryzuje przełomowa poprawa wykorzystania zasobów wewnętrznych. GoogleNet jest zaprojektowana na jak największą szerokość i głębokość, co ma jej zapewnić świetną wydajność uczenia, jednocześnie utrzymując użycie mocy obliczeniowej na stałym poziomie. Autorzy w publikacji dotyczącej działania sieci chwalą się, że ich architektura ma aż 12 razy mniej parametrów niż zwycięzca z ImageNet 2012 (mowa o AlexNet), jednocześnie będąc zdecydowanie dokładniejszym klasyfikatorem. Ograniczenie obliczeniowym w postaci 1,5 miliarda mnożeń i dodawań, jakie zostało narzucone na autorów jest wymuszenie możliwości praktycznego użycia modeli opartych o tą architekturę. Kolejnym rozważnym elementem dlaczego wymagania pamięciowe modelu sieci są tak istotne, jest rosnąca popularność inteligentnych aplikacji mobilnych. Każda aplikacja może być wyposażona w specjalistyczny model wspomagający działanie, nie można jednak zakładać nieskończonej ilości pamięci, bo te telefony mają ograniczone. Należy się tutaj również liczyć z ilością przesyłanych danych komórkowych. 
 
@@ -1301,7 +1302,27 @@ Różnicą szczególnie widoczną względem pozostałych sieci splotowych jest b
 			\includegraphics[resolution=100, scale=0.4]{SegNet.png}
 		\caption{Wizualizacja architektury sieci SegNet}
 \end{figure}
-[Authors, Year] - \cite{DBLP:journals/corr/BadrinarayananH15}
+[Vijay Badrinarayanan, Alex Kendall, Roberto Cipolla, 2016] -- rozwinięcie nazwy to ''Segmentation Network'' sugeruje zastosowanie sieci. Została zaprojektowana do dzielenia obrazu na segmenty definiujące rozpoznany obiekt. Do segregacji zastosowano architekturę koderów i dekoderów. Jest to nowatorskie podejście do ułożenia sieci. Silnik segmentacji złożony jest z sieci koderów oraz dekoderów, na wyjściu znajduje się warstwa klasyfikacji oparta o semantykę pikseli. Topologicznie, architektura kodera jest kopią warstw konwolucyjnych opisywanej wcześniej sieci VGG. Dekoder w sieci zajmuje się mapowaniem zakodowanych map cech o niskiej rozdzielczości na mapy cech o wysokiej rozdzielczości (identycznej do sygnału wejściowego). Nowością w SegNet jest sposób w jaki dekoder zwiększa rozdzielczość sygnałów wejściowych zawierających mapy cech. Dokładniej dekoder używa łączenia indeksów, wyliczanego w warstwie łączącej, dając przekształcenie nieliniowe. Dzięki temu pomija się potrzebę dodatkowego uczenia sieci w jaki sposób ma skalować rozdzielczość. Mapy poddane próbkowaniu są rzadkie i poddane konwolucji celem wyprodukowania gęstych map cech.
+
+Segnet ma w założeniu być podstawą aplikacji mających zrozumienie przedstawianego obrazu. Bardzo ważnym aspektem projektowym jest wydajność pamięciowa i czas potrzebny na rozpoznanie obiektów po treningu, powinno się to odbywać w czasie rzeczywistym.
+
+Architektura podzielona jest na trzy części:
+\begin{itemize}
+\item podsieć kodująca,
+\item podsieć dekodująca,
+\item warstwa klasyfikacji.
+\end{itemize}
+
+Pierwsza podsieć złożona jest z 13 warstw splotowych, skopiowanych z sieci VGG16 przedstawionej we wcześniejszej sekcji. Taki układ umożliwia przeniesienie zestawu wag z wytrenowanych już modeli na wielkich zbiorach danych. W pełni połączone warstwy zostały całkowicie porzucone na rzecz uczenia map cech z wysoką rozdzielczością na najgłębszym (w ostatniej warstwie) wyjściu kodera. Zabieg ten zmniejsza ilość parametrów prawie dziesięciokrotnie, w porównaniu z innymi architekturami o podobnej złożoności. Wszystkie warstwy kodujące posiadają swoje odpowiedniki w warstwach dekodujących. Ostatnie wyjście warstwy dekodującej jest przekazane do klasyfikatora soft-max (jak każda sieć neuronowa), który zwraca prawdopodobieństwo wystąpienia klasy w każdym pikselu z osobna.
+Każda warstwa kodująca w sieci wykonuje konwolucje na banku filtrów, które następnie po utworzeniu map cech zostają znormalizowane. Znormalizowane mapy cech zostają przeliczone przez funkcję aktywacji ReLU. Po każdej warstwie kodującej następuje warstwa łącząca MaxPooling z rozmiarem okna 2 x 2 piksele i przesunięciem o 2 piksele (okna na siebie nie nachodzą). Warstwa łącząca zapobiega zmianom przy niewielkich przesunięciach przestrzennych obrazu. Próbkowanie, które następuje zaraz za warstwą łączącą, zwraca kontekst w obrazie, z osobna dla każdego pliku.
+
+Ze względu na konieczność wykrywania brzegów każdego elementu, autorzy wystrzegają się wszelkich rozwiązań wytracających szczegóły krawędzi. Przechwycenie i przechowanie informacji o krawędziach obiektu musi nastąpić w koderze map cech przed wykonaniem próbkowania. Proponowanym rozwiązaniem, z zachowaniem oszczędności pamięci jest zapamiętanie indeksów z warstwy łączącej. W ten sposób lokalizacje są przechowywane tylko dla wartości maksymalnych z każdego obszaru pola receptywnego, zachowując największe różnice ilość pamięci jest ograniczona czterokrotnie bez narażania się na znaczącą utratę jakości. Przechowując tak małą ilość danych, w architekturze zdecydowano się na użycie dwóch bitów na każde pole łączące (zamiast standardowego 32 bitowego pola zmiennoprzecinkowego).
+
+Dekodery w sieci skalują mapę cech, którą dostają na wejście używając zapisanych wcześniej indeksów z warstwy łączącej. Dekoder mając te informacje tworzy rzadką mapę cech. Po utworzeniu map cech, dekoder przekazuje wyniki do konwolucji z bankiem filtrującym dekodera. Wynikiem splecenia jest normalna gęsta mapa cech. Każda z nowo utworzonych map jest poddawana procesowi normalizacji. Pierwszy dekoder tworzy wielokanałową mapę cech, mimo że odpowiadający mu dekoder posiada tylko 3 kanały (te z obrazu na wejściu). Jest to jedyny dekoder, który nie posiada tej samej ilości kanałów co odpowiadający mu koder.
+
+Lista cech złożona z wielowymiarowego tensora, jest przekazywana z ostatniego dekodera do warstwy zawierającej klasyfikator z funkcja aktywacji soft-max. Jak już wcześniej wspomniano, każdy piksel otrzymuje własną klasyfikację. Wartością wyjściową tej warstwy jest obraz o ilości kanałów równej ilości klas, z aktywnym kanałem klasy o najwyższym prawdopodobieństwie na każdym z pikseli.
+
+\cite{DBLP:journals/corr/BadrinarayananH15}
 
 \subsection{Generative Adversarial Network}
 \begin{figure}[ht]
@@ -1310,8 +1331,9 @@ Różnicą szczególnie widoczną względem pozostałych sieci splotowych jest b
 		\caption{Wysokopoziomowe moduły sieci GAN}
 \end{figure}
 
-[Ian J. Goodfellow, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, Sherjil Ozair†, Aaron Courville, Yoshua Bengio‡, 2014] - w skrócie GAN. Są architekturą sieci neuronowych skomponowanych z dwóch sieci przeciwstawionych wobec siebie. Zaprojektowane na uniwersytecie w Montrealu (gdzie powstało większość przełomów dotyczących neuronów) przez największe obecnie autorytety w dziedzinie. GAN obudził duże nadzieje na szybkie i "twórcze" działania algorytmów, jego najczęstszym zastosowaniem jest tworzenie komputerowych "dzieł sztuki". Jak to działa? Jedna sieć generuje kandydatów, a druga ich ocenia wytworzone obiekty. W ten sposób obie sieci uczą się od siebie wzajemnie. - \cite{NIPS2014_5423}
+[Ian J. Goodfellow, Jean Pouget-Abadie, Mehdi Mirza, Bing Xu, David Warde-Farley, Sherjil Ozair, Aaron Courville, Yoshua Bengio, 2014] Zupełnie inny typ sieci od pozostałych. Opiera się o zamysł dwóch sieci, traktowanych jako przeciwnicy. Pierwsza sieć generująca model, zwana generatorem G, tworzy swoje wyjście na podstawie rozkładu danych uczących. Druga sieć, model rozróżniający, znany jako dyskryminator D, którego zadaniem jest oszacowanie prawdopodobieństwa że sygnał otrzymany na wejściu pochodzi z danych treningowych a nie z generatora. Zadaniem G jest wytwarzać dane zmuszające sieć D do pomyłki. Jest to odpowiednik algorytmu min-max, czyli metodzie minimalizowania maksymalnych możliwych strat. Obu agentów można stworzyć używając głębokich sieci neuronowych, ograniczając proces treningu do wstecznej propagacji błędu. Po publikacji dokumentu prezentującego działanie modelu, pojawiły się dziesiątki aplikacji przypominających tworzenie ''sztuki''. Generowane były nie tylko obrazy, ale również muzyka i książki. 
 
+ Są architekturą sieci neuronowych skomponowanych z dwóch sieci przeciwstawionych wobec siebie. Zaprojektowane na uniwersytecie w Montrealu (gdzie powstało większość przełomów dotyczących neuronów) przez największe obecnie autorytety w dziedzinie. GAN obudził duże nadzieje na szybkie i "twórcze" działania algorytmów, jego najczęstszym zastosowaniem jest tworzenie komputerowych "dzieł sztuki". Jak to działa? Jedna sieć generuje kandydatów, a druga ich ocenia wytworzone obiekty. W ten sposób obie sieci uczą się od siebie wzajemnie. \cite{NIPS2014_5423}
 
 
 % ################################
