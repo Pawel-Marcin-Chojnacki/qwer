@@ -289,7 +289,7 @@ Uproszczeniem które pozwala na sprawną implementację, jest wyodrębnienie zas
 
 \begin{figure}[ht]
 	\centering
-			\includegraphics[resolution=100, scale=0.8]{sztucznyNeuron.png}
+			\includegraphics[resolution=100, scale=0.68]{sztucznyNeuron.png}
 		\caption{Wizualizacja prostego sztucznego neuronu.}
 \end{figure}
 
@@ -456,7 +456,7 @@ Do minimalizowania funkcji kosztu algorytm oblicza pochodne w odwrotnej kolejno�
 
 \begin{figure}[ht]
 	\centering
-			\includegraphics[resolution=100, scale=0.5]{ComputationGraph.png}
+			\includegraphics[resolution=100, scale=0.4]{ComputationGraph.png}
 		\caption{Wykres obliczeniowy dla funkcji \(J(a,b,c) = 3(a+bc)\)}
 \end{figure}
 
@@ -1087,9 +1087,9 @@ Dowodem na znaczenie ułożenia neuronów w strukturze warstwowej o różnych ty
 \end{figure}
 
 
-\section{Przegląd efektywnych architektur}
+%\section{Przegląd efektywnych architektur}
 
-\subsection{LeNet}
+\section{LeNet}
 \begin{figure}[ht]
 	\centering
 			\includegraphics[resolution=100, scale=0.6]{LeNet.png}
@@ -1116,9 +1116,11 @@ Czwarta warstwa, jest tak samo jak druga, warstwą próbkowania złożoną z 16 
 
 Piąta warstwa jest warstwą konwolucyjną ze 120 mapami cech. Każdy neuron jest połączony do sąsiedztwa 5x5 ze wszystkimi mapami cech z czwartej warstwy. Ponieważ poprzednia warstwa ma te same rozmiary, mapy cech w piątej warstwie będą rozmiarów 1x1, tworząc pełne połączenie między warstwami. Piąta warstwa złożona jest z 10 164 parametrów.
 
-Szósta warstwa zrobiona jest z 84 neuronów w pełni połączonych z piątą warstwą. Składa się z 10 164 parametrów.
+Szósta warstwa zrobiona jest z 84 neuronów w pełni połączonych z piątą warstwą. Składa się z 10 164 parametrów. Jest to tradycyjna warstwa złożona z prostych neuronów. Funkcję aktywacji tej warstwy pełni softmax, zwracająca na wyjściu rozkład prawdopodobieństwa dla każdej z klas.
 
 Trenowanie sieci przy użyciu zestawu MINST (bez zniekształceń) pozwala zaobserwować, że funkcja błędu stabilizuje się dla zestawu uczącego i testowego po 12 przejściach przez sieć. Dodanie zniekształceń do zestawu treningowego (zwiększając jego ilość tysiąckrotnie) pozwoliło autorowi architektury na obniżenie błędu z 1\% do 0,8\%.
+
+
 
 \begin{figure}[ht]
 	\centering
@@ -1127,7 +1129,7 @@ Trenowanie sieci przy użyciu zestawu MINST (bez zniekształceń) pozwala zaobse
 \end{figure}
 
 
-\subsection{AlexNet}
+\section{AlexNet}
 \begin{figure}[ht]
 	\centering
 			\includegraphics[resolution=100, scale=0.65]{AlexNet.png}
@@ -1158,7 +1160,7 @@ Trenowanie sieci przy użyciu zestawu MINST (bez zniekształceń) pozwala zaobse
 
 Rozmiary warstw oraz ilość parametrów są oszczędne w porównaniu z dzisiejszymi architekturami. Pierwsza warstwa konwolucyjna posiada wejście rozmiarów 224x224x3 pikseli (obrazy w ImageNet są kolorowe), przekazywane do 96 neuronów o rozmiarach 11x11x3 z przesunięciem wynoszącym 4 piksele. Druga warstwa konwolucyjna, odbiera obraz po łączeniu. Wartości są przetwarzane przez 256 neuronów o rozmiarze 5x5x48, 48 map cech, każda złożona z 25 pikseli. Trzecia, czwarta i piąta warstwa konwolucyjna są połączone ze sobą bez jakichkolwiek pośredników w rodzaju warstw łączących i normalizujących. Trzecia warstwa konwolucyjna złożona jest z 384 neuronów o rozmiarach 3 x 3 x 256, połączona pośrednio z drugą warstwą konwolucyjną przez normalizacje syngału i warstwę łączenia. Czwarta warstwa konwolucyjna również jest złożona z 384 jednostek, jednak ilość map cech, ogranicza się do 192. Ostatnia warstwa konwolucyjna ma 256 jednostek o rozmiarze 3 x 3 x 192 (tak samo jak czwarta). Ostatnie, w pełni połączone warstwy są identyczne, każda ma 4096 neurnów. Całość złożona jest z 60 milionów parametrów. \cite{NIPS2012_4824}
 
-\subsection{VGG Net}
+\section{VGG Net}
 \begin{figure}[ht]
 	\centering
 			\includegraphics[resolution=100, scale=0.8]{VGGarchitecture.png}
@@ -1216,7 +1218,7 @@ Wprowadzona idea organizacji grup warstw w moduły jest przełomowe w sposobie, 
 
 \cite{DBLP:journals/corr/SzegedyLJSRAEVR14}
 
-\subsection{ResNet}
+\section{ResNet}
 \begin{figure}[ht]
 	\centering
 			\includegraphics[resolution=100, scale=0.5]{ResNet.png}
@@ -1229,7 +1231,7 @@ Wprowadzona idea organizacji grup warstw w moduły jest przełomowe w sposobie, 
 \cite{DBLP:journals/corr/HeZRS15}
 
 
-\subsection{ResNeXt}
+\section{ResNeXt}
 \begin{figure}[h]
 	\centering
 			\includegraphics[resolution=100, scale=0.9]{ResNeXt.png}
@@ -1240,7 +1242,7 @@ Wprowadzona idea organizacji grup warstw w moduły jest przełomowe w sposobie, 
 [Saining Xie, Ross Girshick, Piotr Dollar Zhuowen Tu Kaiming He, 2017] - modularyzowalna 
 \cite{DBLP:journals/corr/abs-1805-08700}
 
-\subsection{YOLO - You Only Look Once}
+\section{YOLO - You Only Look Once}
 \begin{figure}[ht]
 	\centering
 			\includegraphics[resolution=100, scale=0.5]{YOLO.png}
@@ -1251,7 +1253,7 @@ Wprowadzona idea organizacji grup warstw w moduły jest przełomowe w sposobie, 
 Cały przepływ danych do wykrycia obiektów jest jedną siecią, dlatego może być zoptymalizowany \cite{DBLP:journals/corr/RedmonDGF15}
 
 
-\subsection{SqueezeNet}
+\section{SqueezeNet}
 \begin{figure}[ht]
 	\centering
 			\includegraphics[resolution=100, scale=0.65]{SqueezeNet.png}
@@ -1324,7 +1326,7 @@ Lista cech złożona z wielowymiarowego tensora, jest przekazywana z ostatniego 
 
 \cite{DBLP:journals/corr/BadrinarayananH15}
 
-\subsection{Generative Adversarial Network}
+\section{Generative Adversarial Network}
 \begin{figure}[ht]
 	\centering
 			\includegraphics[resolution=100,scale=0.36]{GAN.png}
