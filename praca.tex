@@ -1525,51 +1525,94 @@ Dla podstawowego uczenia sieci bez dodatkowych technik usprawniających model do
 \item Rozmiar obrazu wejściowego: zmienny dla każdej architektury ustalany indywidualnie wg. maksymalnie możliwego rozmiaru.
 \end{itemize}
 
+Wartosci po podstawowym nauczaniu sieci:
+\begin{center}
+    \begin{tabular}{ | l | l | l | l | l |}
+    \hline
+    Sieć & Rozmiar wejścia & Dokładność & Błąd treningowy & Błąd walidacyjny \\ \hline
+    ResNet34 & 500 & 93,75\% & 6,67\% & 9,31\% \\ \hline
+    VGG19 & 350 & 100\%& 8,10\% & 8,10\%\\ \hline
+    Wide Residual Network & 350 & 93,75\% & 4,22\% & 25,64\% \\ \hline
+    ResNeXt 101 & 350 & 100\%& 4,67\% & 4,86\%\\\hline
+    Inception v4 & 350 & 7,46\% & 8,98\% & 93,75\% \\ \hline
+    DenseNet 201 & 350 & 100\% & 3,56\% & 3,82\% \\ \hline
+    \end{tabular}
+\end{center}
+
+
+Wartości po nauczaniu sieci ze strojeniem:
+\begin{center}
+    \begin{tabular}{ | l | l | l | l | l |}
+    \hline
+    Sieć & Rozmiar wejścia & Dokładność & Błąd treningowy & Błąd walidacyjny \\ \hline
+    ResNet34 & 300 & 100\% & 5,45\% & 3,22\% \\ \hline
+    VGG19 &  &  &  & \\ \hline
+    ResNeXt &  &  &  &  \\ \hline
+    Inception v4 &  &  &  &  \\ \hline
+    DenseNet 201 &  &  &  &  \\ \hline
+    \end{tabular}
+\end{center}
+
 \subsection{ResNet} % 300px
 ResNet jest architekturą najłatwiejszą do wytrenowania. Jej kompaktowa struktura pozwala zmieścić cały zbiór danych w rozmiarze 500 pikseli. Również po dodaniu sztucznie wygenerowanych danych, niewielka ilość parametrów bez problemu pozwala na trenowanie w ograniczonych pamięciowo środowiskach. Jest to świetna wiadomość dla osób pracujących na pojedynczych maszynach GPU. Wstępne nauczenie sieci dało świetny rezultat widoczny poniżej.
-\begin{itemize}
-\item Dokładność sieci: 100\%
-\item Błąd zestawu treningowego: 5,45\%
-\item Błąd zestawu walidacyjnego: 3,22\%
-\end{itemize}
+
+%Wartosci po podstawowym nauczaniu sieci:
+%\begin{itemize}
+%\item Dokładność sieci: 93,75\%
+%\item Błąd zestawu treningowego: 7,17\%
+%\item Błąd zestawu walidacyjnego: 24,08\%
+%\item Rozmiar sygnału wejściowego: 300 pikseli
+%\end{itemize}
+%
+%Wartości po nauczaniu sieci ze strojeniem:
+%\begin{itemize}
+%\item Dokładność sieci: 100\%
+%\item Błąd zestawu treningowego: 5,45\%
+%\item Błąd zestawu walidacyjnego: 3,22\%
+%\item Rozmiar sygnału wejściowego: 300 pikseli
+%\end{itemize}
+
 Słowem wyjaśnienia, dokładność sieci na poziomie 100\%, udało się osiągnąć tworząc duży rozmiar sygnału wejściowego, dlatego sieć jest w stanie dokładniej rozróżnić cechy występujące na obrazie. Stosunkowo prosty podział zbioru uczącego na dwie klasy, umożliwia klasyfikację z prostym podziałem płaszczyzny. Domena obrazowania medycznego ma zaletę wyłonienia okreśłonej (zazwyczaj jednej) cechy obrazu bez szumu środowiskowego. Przez szum rozumiane jest otoczenie obrazu (pozostałe przedmioty na scenie), specyficzne ułożenie czy kąt pod jakim został wykonany obraz. Można to porównać do rysowania podziału liczb ujemnych i dodatnich na osi x.
 Błąd zestawu walidacyjnego jest niższy ze względu na wiele czynników. Błąd zestawu treningowy jest średnią strat ze wszystkich partii uczących, model zmieniając się w czasie zmniejsza błąd, ale pozostają wpływy z wczesnych etapów uczenia. Drugim aspektem jest mechanizm odrzucania połączeń, aktywny w trakcie uczenia (dla przypomnienia, zapobiega on przeuczeniu sieci). Mechanizm ten jest wyłączony w trakcie walidacji.
 
 \subsection{VGG}
-\begin{itemize}
-\item Dokładność sieci: \%
-\item Błąd zestawu treningowego: \%
-\item Błąd zestawu walidacyjnego: \%
-\end{itemize}
+%Wartosci po podstawowym nauczaniu sieci:
+%\begin{itemize}
+%\item Dokładność sieci: \%
+%\item Błąd zestawu treningowego: \%
+%\item Błąd zestawu walidacyjnego: \%
+%\item Rozmiar sygnału wejściowego: 300 pikseli
+%\end{itemize}
 
 \subsection{ResNeXt}
-\begin{itemize}
-\item Dokładność sieci: \%
-\item Błąd zestawu treningowego: \%
-\item Błąd zestawu walidacyjnego: \%
-\end{itemize}
+%Wartości po nauczaniu sieci ze strojeniem:
+%\begin{itemize}
+%\item Dokładność sieci: \%
+%\item Błąd zestawu treningowego: \%
+%\item Błąd zestawu walidacyjnego: \%
+%\end{itemize}
 
 \subsection{Wide Residual Network}
-\begin{itemize}
-\item Dokładność sieci: \%
-\item Błąd zestawu treningowego: \%
-\item Błąd zestawu walidacyjnego: \%
-\end{itemize}
+%\begin{itemize}
+%\item Dokładność sieci: \%
+%\item Błąd zestawu treningowego: \%
+%\item Błąd zestawu walidacyjnego: \%
+%\end{itemize}
 
 \subsection{Inception} % rozmiar 200 pikseli
-\begin{itemize}
-\item Dokładność sieci: 93,75\%
-\item Błąd zestawu treningowego: 5,89\%
-\item Błąd zestawu walidacyjnego: 21,99\%
-\end{itemize}
+%\begin{itemize}
+%\item Dokładność sieci: 93,75\%
+%\item Błąd zestawu treningowego: 5,89\%
+%\item Błąd zestawu walidacyjnego: 21,99\%
+%\end{itemize}
 
 \subsection{DenseNet} %na rozmiarze 100 pikseli
 Najpopularniejsza architektura dla uczenia zdjęć. Jest bardzo szybka w trenowaniu nowych modeli i posiada implementację w każdej bibliotece głębokiego uczenia. Najlepszy wynik jaki autor zdołał uzyskać:
-\begin{itemize}
-\item Dokładność sieci: 93,75\%
-\item Błąd zestawu treningowego: 5,89\%
-\item Błąd zestawu walidacyjnego: 21,99\%
-\end{itemize}
+%\begin{itemize}
+%\item Dokładność sieci: 93,75\%
+%\item Błąd zestawu treningowego: 5,89\%
+%\item Błąd zestawu walidacyjnego: 21,99\%
+%\end{itemize}
 
 \subsection{Porównanie czasu uczenia (CPU i GPU)}
 Sekcja poświęcona na uświadomienie jak wielka przepaść w czasie uczenia istnieje między uczeniem modelu na procesorze jednostki centralnej komputera, a procesorze jednostki graficznej. Trenowanie obrazów odbywa się tylko na ostatnich warstwach architektury ResNet, ponieważ uczenie całości zajęłoby wiele tygodni na zwykłym komputerze klasy PC.
