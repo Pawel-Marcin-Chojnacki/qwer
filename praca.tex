@@ -1513,25 +1513,27 @@ W tej pracy przyjęto dwa scenariusze reakcji na problem braku pamięci. Pierwsz
 
 Dla pełnej nauki ze strojeniem (pełnym) określone zostały następujące parametry:
 \begin{itemize}
-\item Ilość epok: 6
+\item Ilość epok: 6, wraz 
 \item Krok uczenia: 0,01
-\item Rozmiar obrazu: 200 pikseli
+\item Rozmiar obrazu wejściowego: ilość pikseli jest zmienna. Ograniczeniem jest ilość parametrów sieci. Dla kompaktowych, takich jak szczątkowe sieci neuronowe, używana karta graficzna jest w stanie przechować nawet obrazy nawet do rozmiaru powyżej 500 pikseli. Dla tych największych, jak DenseNet należy ograniczyć rozmiar sygnału wejściowego do 200 pikseli.
 \end{itemize}
 
 Dla podstawowego uczenia sieci bez dodatkowych technik usprawniających model dobrano parametry:
 \begin{itemize}
 \item Ilość epok: 6
-\item Krok uczenia: zmienny, wyliczany algorytmem dla różnych warstw od 0,001 do 1 
-\item Rozmiar obrazu: ilość pikseli jest zmienna. Ograniczeniem jest ilość parametrów sieci. Dla kompaktowych, takich jak szczątkowe sieci neuronowe, używana karta graficzna jest w stanie przechować nawet obrazy nawet do rozmiaru powyżej 500 pikseli. Dla tych największych, jak DenseNet należy ograniczyć rozmiar sygnału wejściowego do 200 pikseli.
+\item Krok uczenia: zmienny, wyliczany algorytmem dla różnych warstw od 0,001 do 1
+\item Rozmiar obrazu wejściowego: zmienny dla każdej architektury ustalany indywidualnie wg. maksymalnie możliwego rozmiaru.
 \end{itemize}
 
 \subsection{ResNet} % 300px
 ResNet jest architekturą najłatwiejszą do wytrenowania. Jej kompaktowa struktura pozwala zmieścić cały zbiór danych w rozmiarze 500 pikseli. Również po dodaniu sztucznie wygenerowanych danych, niewielka ilość parametrów bez problemu pozwala na trenowanie w ograniczonych pamięciowo środowiskach. Jest to świetna wiadomość dla osób pracujących na pojedynczych maszynach GPU. Wstępne nauczenie sieci dało świetny rezultat widoczny poniżej.
 \begin{itemize}
-\item Dokładność sieci: \%
-\item Błąd zestawu treningowego: \%
-\item Błąd zestawu walidacyjnego: \%
+\item Dokładność sieci: 100\%
+\item Błąd zestawu treningowego: 5,45\%
+\item Błąd zestawu walidacyjnego: 3,22\%
 \end{itemize}
+Słowem wyjaśnienia, dokładność sieci na poziomie 100\%, udało się osiągnąć tworząc duży rozmiar sygnału wejściowego, dlatego sieć jest w stanie dokładniej rozróżnić cechy występujące na obrazie. Stosunkowo prosty podział zbioru uczącego na dwie klasy, umożliwia klasyfikację z prostym podziałem płaszczyzny. Domena obrazowania medycznego ma zaletę wyłonienia okreśłonej (zazwyczaj jednej) cechy obrazu bez szumu środowiskowego. Przez szum rozumiane jest otoczenie obrazu (pozostałe przedmioty na scenie), specyficzne ułożenie czy kąt pod jakim został wykonany obraz. Można to porównać do rysowania podziału liczb ujemnych i dodatnich na osi x.
+Błąd zestawu walidacyjnego jest niższy ze względu na wiele czynników. Błąd zestawu treningowy jest średnią strat ze wszystkich partii uczących, model zmieniając się w czasie zmniejsza błąd, ale pozostają wpływy z wczesnych etapów uczenia. Drugim aspektem jest mechanizm odrzucania połączeń, aktywny w trakcie uczenia (dla przypomnienia, zapobiega on przeuczeniu sieci). Mechanizm ten jest wyłączony w trakcie walidacji.
 
 \subsection{VGG}
 \begin{itemize}
