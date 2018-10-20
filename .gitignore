@@ -10,16 +10,10 @@ praca.synctex.gz
 praca.tex.orig
 praca.toc
 papers/
-praca.blg
-praca.bbl
 .gitignore
 praca.run.xml
 .vscode/settings.json
 praca-blx.bib
-praca-blx.bib
-praca.blg
-praca.blg
-praca.bbl
 praca-mpgraph.mp
 praca.tui
 praca.top
