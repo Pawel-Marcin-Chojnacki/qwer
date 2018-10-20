@@ -1120,8 +1120,6 @@ Szósta warstwa zrobiona jest z 84 neuronów w pełni połączonych z piątą wa
 
 Trenowanie sieci przy użyciu zestawu MINST (bez zniekształceń) pozwala zaobserwować, że funkcja błędu stabilizuje się dla zestawu uczącego i testowego po 12 przejściach przez sieć. Dodanie zniekształceń do zestawu treningowego (zwiększając jego ilość tysiąckrotnie) pozwoliło autorowi architektury na obniżenie błędu z 1\% do 0,8\%.
 
-
-
 \begin{figure}[ht]
 	\centering
 			\includegraphics[resolution=100, scale=0.45]{leNetTraining.png}
@@ -1208,10 +1206,11 @@ W tej architekturze również widać jej wiekowość. Najbardziej wymyślna i sk
 
 [Christian Szegedy, Wei Liu, Yangqing Jia, Pierre Sermanet, Scott Reed, Dragomir Anguelov, Dumitru Erhan, Vincent Vanhoucke, Andrew Rabinovich, 2014] -- produkt jak nazwa wskazuje wyszedł z firmy Google. Częściej używana nazwa Incepcja wywodzi się częściowo z nazwy filmu Christophera Nolana. Inspiracją jest mem internetowy ''wchodzenie głębiej w konwolucje''. Analogia do schodzenia w kolejne warstwy podświadomości.\cite{siteDeeper}
 
-Sieć charakteryzuje przełomowa poprawa wykorzystania zasobów wewnętrznych. GoogleNet jest zaprojektowana na jak największą szerokość i głębokość, co ma jej zapewnić świetną wydajność uczenia, jednocześnie utrzymując użycie mocy obliczeniowej na stałym poziomie. Autorzy w publikacji dotyczącej działania sieci chwalą się, że ich architektura ma aż 12 razy mniej parametrów niż zwycięzca z ImageNet 2012 (mowa o AlexNet), jednocześnie będąc zdecydowanie dokładniejszym klasyfikatorem. Ograniczenie obliczeniowym w postaci 1,5 miliarda mnożeń i dodawań, jakie zostało narzucone na autorów jest wymuszenie możliwości praktycznego użycia modeli opartych o tą architekturę. Kolejnym rozważnym elementem dlaczego wymagania pamięciowe modelu sieci są tak istotne, jest rosnąca popularność inteligentnych aplikacji mobilnych. Każda aplikacja może być wyposażona w specjalistyczny model wspomagający działanie, nie można jednak zakładać nieskończonej ilości pamięci, bo te telefony mają ograniczone. Należy się tutaj również liczyć z ilością przesyłanych danych komórkowych. 
+Sieć charakteryzuje przełomowa poprawa wykorzystania zasobów wewnętrznych. GoogleNet jest zaprojektowana na jak największą szerokość i głębokość, co ma jej zapewnić świetną wydajność uczenia, jednocześnie utrzymując użycie mocy obliczeniowej na stałym poziomie. Autorzy w publikacji dotyczącej działania sieci chwalą się, że ich architektura ma aż 12 razy mniej parametrów niż zwycięzca z ImageNet 2012 (mowa o AlexNet), jednocześnie będąc zdecydowanie dokładniejszym klasyfikatorem. Ograniczenie obliczeniowym w postaci 1,5 miliarda mnożeń i dodawań, jakie zostało narzucone na autorów jest wymuszenie możliwości praktycznego użycia modeli opartych o tą architekturę. Kolejnym rozważnym elementem dlaczego wymagania pamięciowe modelu sieci są tak istotne, jest rosnąca popularność inteligentnych aplikacji mobilnych. Każda aplikacja może być wyposażona w specjalistyczny model wspomagający działanie, nie można jednak zakładać nieskończonej ilości pamięci, bo te telefony mają ograniczone. Należy się tutaj również liczyć z ilością przesyłanych danych komórkowych. Sieć złożona jest z tylko 22 warstw.
 
 Wprowadzona idea organizacji grup warstw w moduły jest przełomowe w sposobie, w jaki postrzega się sieci neuronowe. Do tej pory był to zbiór neuronów podzielonych na warstwy, dodanie jednostki zwanej modułem, tworzy abstrakcje wykraczające na wyższy stopień. Świadczy to o wielkości zasobów obliczeniowych dostępnych w dopiero ostatnich latach.
 
+Motywacją do wprowadzenia warstwy incepcji jest umożliwienie pokrycia jak największej powierzchni zdjęcia i utrzymanie dobrej rozdzielczości małych cech obrazu. Moduł ma za zadania wykonać równoległą konwolucję w różnych rozmiarach, od 1x1 do 5x5. Zastosowanie kilku filtrów Gabora o różnych rozmiarach daje możliwość rozpoznania wielu obiektów w różnej skali. W przedstawionej architekturze znajduje się 9 modułów incepcji. Celem uniknięcia zbyt wielkiej ilości parametrów zastosowano techniki wąskiego gardła. Używając konkatenacji parametrów można zbudować moduł incepcji z większą ilością przekształceń nieliniowych, wykorzystując mniejszą liczbę parametrów. Warstwa łącząca dodawana jest na koniec modułu aby zsumować wartości z poprzednich warstw. Konkatenacja odbywa się przez ułożenie szeregowe wartości z filtrów wszystkich wielkości.
 
 
 %Optymalizacja jakości opiera się na zasadzie Hebbian’a (jest to teoria neuronauki, która mówi o adaptacji neuronów w trakcie nauki). Błędy klasyfikacji wynoszą top-1: 17,2\% i top-5: 3,58\% (dla v3). Sieć składa się łącznie z 22 warstw. Sieć jest modułowa, gdzie każdy moduł pełni rolę wielopoziomowego ekstraktora cech przeliczającego konwolucje na macierzach rozmiarów 1x1, 3x3, 5x5. Zaletą tej architektury są bardzo małe rozmiary wag (mniej niż 100MB dla v3). Kolejną ważną zaletą jest ilość parametrów, tylko 4 miliony co jest wynikiem 12 razy lepszym od AlexNet. Jest to jedna z najbardziej złożonych sieci względem architektury modułowej. W wersji naiwnej każda warstwa posiada 4 ekstraktory cech (3 konwolucyjne i jedną 3x3 max pooling), następnie wartości te są składane i wysyłane do warstwy wyżej. Do poprawienia wydajności obliczeniowej pozbyto się warstwy “w pełni połączonej”. 
@@ -1231,16 +1230,16 @@ Wprowadzona idea organizacji grup warstw w moduły jest przełomowe w sposobie, 
 \cite{DBLP:journals/corr/HeZRS15}
 
 
-\section{ResNeXt}
-\begin{figure}[h]
-	\centering
-			\includegraphics[resolution=100, scale=0.9]{ResNeXt.png}
-		\caption{Architektura modułu sieci ResNeXt}
-\end{figure}
-\cite{DBLP:journals/corr/XieGDTH16}
+%\section{ResNeXt}
+%\begin{figure}[h]
+%	\centering
+%			\includegraphics[resolution=100, scale=0.9]{ResNeXt.png}
+%		\caption{Architektura modułu sieci ResNeXt}
+%\end{figure}
+%\cite{DBLP:journals/corr/XieGDTH16}
 
-[Saining Xie, Ross Girshick, Piotr Dollar Zhuowen Tu Kaiming He, 2017] - modularyzowalna 
-\cite{DBLP:journals/corr/abs-1805-08700}
+%[Saining Xie, Ross Girshick, Piotr Dollar Zhuowen Tu Kaiming He, 2017] - modularyzowalna 
+%\cite{DBLP:journals/corr/abs-1805-08700}
 
 \section{YOLO - You Only Look Once}
 \begin{figure}[ht]
@@ -1523,56 +1522,84 @@ Dla podstawowego uczenia sieci bez dodatkowych technik usprawniających model do
 \begin{itemize}
 \item Ilość epok: 6
 \item Krok uczenia: zmienny, wyliczany algorytmem dla różnych warstw od 0,001 do 1 
-\item Rozmiar obrazu: 600 pikseli
+\item Rozmiar obrazu: ilość pikseli jest zmienna. Ograniczeniem jest ilość parametrów sieci. Dla kompaktowych, takich jak szczątkowe sieci neuronowe, używana karta graficzna jest w stanie przechować nawet obrazy nawet do rozmiaru powyżej 500 pikseli. Dla tych największych, jak DenseNet należy ograniczyć rozmiar sygnału wejściowego do 200 pikseli.
 \end{itemize}
 
-\subsection{ResNet}
-ResNet okazał się architekturą najłatwiejszą do wytrenowania. Jej kompaktowa struktura pozwala zmieścić cały zbiór danych w rozmiarze 500 pikseli również po dodaniu sztucznie wygenerowanych danych. Jest to świetna wiadomość dla osób pracujących na pojedynczych maszynach GPU. Wstępne nauczenie sieci dało świetny rezultat widoczny poniżej.
+\subsection{ResNet} % 300px
+ResNet jest architekturą najłatwiejszą do wytrenowania. Jej kompaktowa struktura pozwala zmieścić cały zbiór danych w rozmiarze 500 pikseli. Również po dodaniu sztucznie wygenerowanych danych, niewielka ilość parametrów bez problemu pozwala na trenowanie w ograniczonych pamięciowo środowiskach. Jest to świetna wiadomość dla osób pracujących na pojedynczych maszynach GPU. Wstępne nauczenie sieci dało świetny rezultat widoczny poniżej.
+\begin{itemize}
+\item Dokładność sieci: \%
+\item Błąd zestawu treningowego: \%
+\item Błąd zestawu walidacyjnego: \%
+\end{itemize}
 
 \subsection{VGG}
+\begin{itemize}
+\item Dokładność sieci: \%
+\item Błąd zestawu treningowego: \%
+\item Błąd zestawu walidacyjnego: \%
+\end{itemize}
 
 \subsection{ResNeXt}
+\begin{itemize}
+\item Dokładność sieci: \%
+\item Błąd zestawu treningowego: \%
+\item Błąd zestawu walidacyjnego: \%
+\end{itemize}
 
 \subsection{Wide Residual Network}
+\begin{itemize}
+\item Dokładność sieci: \%
+\item Błąd zestawu treningowego: \%
+\item Błąd zestawu walidacyjnego: \%
+\end{itemize}
 
-\subsection{Inception}
+\subsection{Inception} % rozmiar 200 pikseli
+\begin{itemize}
+\item Dokładność sieci: 93,75\%
+\item Błąd zestawu treningowego: 5,89\%
+\item Błąd zestawu walidacyjnego: 21,99\%
+\end{itemize}
 
-\subsection{DenseNet}
-
-Najpopularniejsza architektura dla uczenia zdjęć. Jest bardzo szybka do przetrenowania nowych modeli i posiada implementację w każdej bibliotece głębokiego uczenia.
+\subsection{DenseNet} %na rozmiarze 100 pikseli
+Najpopularniejsza architektura dla uczenia zdjęć. Jest bardzo szybka w trenowaniu nowych modeli i posiada implementację w każdej bibliotece głębokiego uczenia. Najlepszy wynik jaki autor zdołał uzyskać:
+\begin{itemize}
+\item Dokładność sieci: 93,75\%
+\item Błąd zestawu treningowego: 5,89\%
+\item Błąd zestawu walidacyjnego: 21,99\%
+\end{itemize}
 
 \subsection{Porównanie czasu uczenia (CPU i GPU)}
 Sekcja poświęcona na uświadomienie jak wielka przepaść w czasie uczenia istnieje między uczeniem modelu na procesorze jednostki centralnej komputera, a procesorze jednostki graficznej. Trenowanie obrazów odbywa się tylko na ostatnich warstwach architektury ResNet, ponieważ uczenie całości zajęłoby wiele tygodni na zwykłym komputerze klasy PC.
 Oba pomiary dotyczą już przygotowanej sieci z dostrojeniem, a hiperparametry pozostają takie same, jak w najlepszym wyniku uczenia sieci w poprzednich sekcjach. Do pomiaru czasu użyto prostego narzędzia UNIX'owego ''time''.
 
-Trening podstawowy:
-CPU: 
-Epoki: 6, training_loss: 0.085107 validation_loss: 0.101677, accuracy: 1.0
-real	0m10.201s
-user	2m8.983s
-sys	0m5.774s
+%Trening podstawowy. Bez dostrajania parametrów sieci:
+%CPU:  Epoki: 6, training_loss: 0.085107 validation_loss: 0.101677, accuracy: 1.0
+%real	0m10.201s
+%user	2m8.983s
+%sys	0m5.774s
+%
+%GPU: Epoch: 6, training_loss: 0.080002 validation_loss: 0.10515, accuracy: 0.9375
+%real	0m12.383s
+%user	0m12.263s
+%sys	0m8.115s
+%
+%Cały trening:
+%CPU: Epoch: 6, training_loss: 0.075047 validation_loss: 0.037492 accuracy: 1.0
+%real	43m32.039s
+%user	496m49.894s
+%sys	916m41.221s
 
-GPU:
-Epoch: 6, training_loss: 0.080002 validation_loss: 0.10515, accuracy: 0.9375
-real	0m12.383s
-user	0m12.263s
-sys	0m8.115s
-
-Cały trening:
-CPU:
-Epoch: 6, training_loss: 0.075047 validation_loss: 0.037492 accuracy: 1.0
-real	43m32.039s
-user	496m49.894s
-sys	916m41.221s
-GPU:
-
-
-\begin{figure}[ht]
-	\centering
-			\includegraphics[resolution=100, scale=0.7]{neuronMozgowy.png}
-		\caption{Wizualizacja uproszczonego modelu neuronu mózgowego.}
-\end{figure}
-
+\begin{center}
+    \begin{tabular}{ | l | l | l | l | l |}
+    \hline
+    Parametr & CPU & GPU & CPU ze strojeniem & GPU ze strojeniem \\ \hline
+    Czas & 10,2s & 12,4s & 2612s &  \\ \hline
+    Dokładność & 100\% & 93,7\% & 100\% & \\ \hline
+    Błąd treningowy & 8,5\% & 8\% & 7,5\% &  \\ \hline
+    Błąd walidacyjny & 10,2\% & 10\% & 3,7\% &  \\ \hline
+    \end{tabular}
+\end{center}
 
 \section{Podsumowanie}
 Pierwszym wnioskiem jaki nasuwa się po przeprowadzeniu testów wydajności jest: nie zaczynać przygody z głębokimi sieciami neuronowymi bez dostępu do procesora graficznego ze średniej półki cenowej. Oczekiwanie na wyniki używając jedynie CPU, zniechęci każdego do eksperymentów, a na tym obecnie polega dobieranie świetnych modeli. Wybierając kartę graficzną również należy się kierować odpowiednio dużą pamięcią. Spora część zbioru danych uczących jest ładowana do pamięci GPU, stąd zaleca się minimum 6Gb.
@@ -1588,6 +1615,7 @@ Dużo ważniejsze od ułożenia kolejnych warstw neuronów okazują się technik
 \chapter*{Podsumowanie}
 \markboth{}{Podsumowanie}
 \addcontentsline{toc}{chapter}{Podsumowanie}
+Głębokie sieci neuronowe w ciągu ostatnich kilku lat stały się ogólnodostępnym narzędziem. Wykorzystanie ich zminiło postać z zastosowań naukowych, na bardziej uniwersalne mechanizmy wspierające życie codzienne.
 
 % ################################
 %        SPIS RYSUNKÓW
