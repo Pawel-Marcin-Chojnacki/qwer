@@ -29,6 +29,11 @@
 %Image source
 \newcommand{\source}[1]{\caption*{Źródło: {#1}} }
 
+
+\makeatletter
+\define@key{Gin}{resolution}{\pdfimageresolution=#1\relax}
+\makeatother
+
 %\usepackage{showframe} % debug
 \marginparwidth 0pt
 \marginparsep 0pt
@@ -1181,6 +1186,7 @@ W tej architekturze również widać jej wiekowość. Najbardziej wymyślna i sk
 \begin{itemize}
 \item Top-1 23,7\%,
 \item Top-5 6,8\%.
+\end{itemize}
 \cite{DBLP:journals/corr/SimonyanZ14a}
 
 \begin{figure}[ht]
@@ -1439,7 +1445,7 @@ array([[169, 171, 156, 167],
 \noindent
 \begin{minipage}{\linewidth}
 \begin{lstlisting}[caption=Wyświetlenie obrazu w środowisku graficznym, label=lst:test]
-plt.imshow (img = plt.imread(f'{PATH}val/normal/{files[4]}’))
+plt.imshow (img = plt.imread(f'{PATH}val/normal/{files[4]}'))
 \end{lstlisting}
 \end{minipage}
 
@@ -1523,20 +1529,20 @@ Oba pomiary dotyczą już przygotowanej sieci z dostrojeniem, a hiperparametry p
 
 Trening podstawowy:
 CPU: 
-Epoki: 6, training_loss: 0.085107 validation_loss: 0.101677, accuracy: 1.0
+Epoki: 6, training\_loss: 0.085107 validation\_loss: 0.101677, accuracy: 1.0
 real	0m10.201s
 user	2m8.983s
 sys	0m5.774s
 
 GPU:
-Epoch: 6, training_loss: 0.080002 validation_loss: 0.10515, accuracy: 0.9375
+Epoch: 6, training\_loss: 0.080002 validation\_loss: 0.10515, accuracy: 0.9375
 real	0m12.383s
 user	0m12.263s
 sys	0m8.115s
 
 Cały trening:
 CPU:
-Epoch: 6, training_loss: 0.075047 validation_loss: 0.037492 accuracy: 1.0
+Epoch: 6, training\_loss: 0.075047 validation\_loss: 0.037492 accuracy: 1.0
 real	43m32.039s
 user	496m49.894s
 sys	916m41.221s
