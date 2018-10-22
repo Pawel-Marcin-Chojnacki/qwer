@@ -383,9 +383,9 @@ Algorytm stosowany do szukania minimum lokalnego płaszczyzny wyznaczonej funkcj
 \begin{algorytm}
 i = 0\;
 \While{i \textless x}{
-	\(w = w - \alpha \cdot \frac{\partial J(w,b)}{\partial w}\)\;
-	\(b = b - \alpha \cdot \frac{\partial J(w,b)}{\partial b}\)\;
-	\(i++\)\;
+	\(w := w - \alpha \cdot \frac{\partial J(w,b)}{\partial w}\)\;
+	\(b := b - \alpha \cdot \frac{\partial J(w,b)}{\partial b}\)\;
+	\(i := i + 1\)\;
 }
 \caption{Schemat algorytmu}
 \end{algorytm}
@@ -1237,7 +1237,20 @@ Motywacją do wprowadzenia warstwy incepcji jest umożliwienie pokrycia jak najw
 		\caption{Architektura sieci ResNet}
 \end{figure}
 
-Opracowana w 2015 roku przez zespół badaczy architektura oparta na mikro-modułach. Ze względu na trudności pojawiające się w uczeniu bardzo głębokich sieci neuronowych (długi czas nauczania, łatwość przeuczenia), zespół badaczy z Microsoftu zaproponował szczątkowe uczenie w bardzo głębokich sieciach. \cite{DBLP:journals/corr/HeZRS15}
+Architektura opracowana w 2015 roku przez zespół badaczy, oparta na mikro-modułach. Ze względu na trudności pojawiające się w uczeniu bardzo głębokich sieci neuronowych (długi czas nauczania, łatwość przeuczenia), zespół badaczy z Microsoftu zaproponował szczątkowe uczenie w bardzo głębokich sieciach. Zaproponowany model sieci pozwolił autorom wygrać \textit{ILSVRC 2015} w klasyfikacji top-5 z wynikiem -- 3,57\%. Sieć została zgłoszona również na zawody COCO 2015, wygrywając pierwsze miejsce w kategoriach: wykrywania obiektów, segregacji obiektów i segmentacji. \cite{DBLP:journals/corr/HeZRS15}
+
+Zastosowania ResNet'u wychodza poza samą sieć. Jej szybkość, powoduje że architektura ta służy jako fundament innnych nowszych sieci. Autorzy architektury \textit{Faster R-CNN} po zmianie warstw początkowych z VGG-16 na ResNet-101 zanotowali wzrost w szybkości nauczania na poziomie 20\%. Osoby eksperymentujące z ResNet informują o możliwościach wydajnego treningu sieci złożonych nawet z 1000 warstw. \cite{siteResnetOverview}
+
+W sieciach szczątkowych ResNet i jej pochodnych, podstawową ideę stanowi ,,skrót połączenia toższamości''. Jego zadaniem jest pominięcie jednej lub większej ilości warstw. Autorzy architektury twierdzą, że dodawanie kolejnych warstw nie powinno obniżać wydajności sieci. Takie rozumowanie zakłada, że jakakolwiek sieć neuronowa nie będzie miała wyższego błędu treningowego niż jej płytki odpowiednik. Utworzenie połączeń skrótów jest łatwiejsze niż umożliwienie ne bezpośrednie dopasowanie do odpowiadającego zasadniczego mapowania połączeń.
+
+Autorzy zrewidowali swoje idee, i obecnie stosuje się wariant modułu resztkowego z preaktywacją. Ta modyfikacja zezwala wartościom gradientowym na przepływ wartości skrótem bez przeszkód w obie strony sieci. W eksperymentach wykazano, że modyfikacja ResNet, umożliwiająca prekatywację pozwala na wytrenowanie wydajnych sieci nawet z 1000 warstw ukrytych, przewyższając wydajnością płytsze odpowiedzniki (wcześniej przy głębokości tego poziomu, wydajność zaczynała spadać w skutek zanikającego gradientu).
+
+\begin{figure}[ht]
+	\centering
+			\includegraphics[resolution=100, scale=0.4]{residualBlock.png}
+		\caption{Blok sieci szczątkowej}
+				\label{fig:residualBlock}
+\end{figure}
 
 %Charakteryzuje się możliwością odrzucania połączeń i posiada ogromny moduł na normalizację zbioru iteracji (ang. batch normalization). Normalizacja jest pomysłem zaczerpniętym z rekurencyjnych sieci neuronowych. Ta technika pozwala stworzyć sieć ze 152 warstwami ukrytymi przy zachowaniu złożoności mniejszej niż VGG. 
 
@@ -1570,8 +1583,10 @@ Słowem wyjaśnienia, dokładność sieci na poziomie 100\%, udało się osiągn
 Błąd zestawu walidacyjnego jest niższy ze względu na wiele czynników. Błąd zestawu treningowy jest średnią strat ze wszystkich partii uczących, model zmieniając się w czasie zmniejsza błąd, ale pozostają wpływy z wczesnych etapów uczenia. Drugim aspektem jest mechanizm odrzucania połączeń, aktywny w trakcie uczenia (dla przypomnienia, zapobiega on przeuczeniu sieci). Mechanizm ten jest wyłączony w trakcie walidacji.
 
 \subsection{VGG}
+Ze względu na ogromny rozmiar tej sieci, jest unikana przez osoby nie mające do dyspozycji centrów danych. Mając do dyspozycji 6 GB, należy się liczyć z szybkim wyczerpaniem zasobów. Podczas treningu ze strojeniem na 5000 obrazów, pamięć została przekroczona już dla rozmiaru sygnałów wejściowych 150 pikseli. 
 
 \subsection{ResNeXt}
+Architektura szczątkowa sieci, sprawiła najmniej problemów podczas ładowania zbioru danych uczących do pamięci. Podobnie jak ResNet, ograniczenie ilości parametrów dało spore możliwości sztucznego powielania danych bez przepełnienia bufora. ResNeXt to idealny kandydat dla entuzjastów mających do dyspozycji wyłącznie komputer osobisty.
 
 \subsection{Wide Residual Network}
 
