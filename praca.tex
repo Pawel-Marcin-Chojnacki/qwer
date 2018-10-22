@@ -464,7 +464,7 @@ $$i = b \cdot c$$
 Następnym krokiem jest dodanie zmiennej a.
 $$k = a + i$$
 Trzecim i ostatnim krokiem jest wyjście funkcji kosztu \(J = 3k\).
-Graf obliczeniowy powyższej funkcji znajduje się na rysunku poniżej.\ref{fig:costFunction}
+Graf obliczeniowy powyższej funkcji znajduje się na rysunku \ref{fig:costFunction}.
 
 Do minimalizowania funkcji kosztu algorytm oblicza pochodne w odwrotnej kolejności do przedstawionej na poprzednim przykładzie grafu.
 
@@ -877,7 +877,7 @@ Zmienne (ang. \textit{variables}) są inicjalizowane wartościami tensorów, co 
 
 Operacje (ang. \textit{operations [Ops]}) to metody pozwalające na modyfikacje danych. \textit{Tensorflow.js} udostępnia całą gamę operacji do pracy z uczeniem maszynowym. Działają one na tensorach przez zwracanie wyniku operacji jako nowy tensor.
 
-Powyższe struktury danych należą do CoreAPI. Druga warstwa operacji, LayerAPI, operuje na wyższym poziomie abstrakcji i zapewnia zupełnie inne bloki do budowy sieci neuronowych. Najważniejsze atuty tej warstwy to wysokie podobieństwo do kodu tworzonego w Keras, oraz możliwość naśladowania stylu programowania znanego z języka Python. Poniżej prezentowany jest kod porównawczy między pythonową wersją tego samego kodu\ref{lst:pyKeras} i javascriptową reprezentacją z użyciem \textit{Tensorflow.js}\ref{lst:jsTensorflow}. Kod wykonujący intensywne operacje napisany jest asynchronicznie. Największą zaletą może się jednak okazać brak konieczności używania NumPy, którego w JavaScript brakuje. Wszystkie operacje matematyczne wymagane do uczenia maszynowego z NumPy zostały zaimplementowane w bibliotece. \cite{siteTensorflowJSConcepts}
+Powyższe struktury danych należą do CoreAPI. Druga warstwa operacji, LayerAPI, operuje na wyższym poziomie abstrakcji i zapewnia zupełnie inne bloki do budowy sieci neuronowych. Najważniejsze atuty tej warstwy to wysokie podobieństwo do kodu tworzonego w Keras, oraz możliwość naśladowania stylu programowania znanego z języka Python. Poniżej prezentowany jest kod porównawczy między pythonową wersją tego samego kodu (lising \ref{lst:pyKeras}) i javascriptową reprezentacją z użyciem \textit{Tensorflow.js} (listing \ref{lst:jsTensorflow}). Kod wykonujący intensywne operacje napisany jest asynchronicznie. Największą zaletą może się jednak okazać brak konieczności używania NumPy, którego w JavaScript brakuje. Wszystkie operacje matematyczne wymagane do uczenia maszynowego z NumPy zostały zaimplementowane w bibliotece. \cite{siteTensorflowJSConcepts}
 
 \noindent
 \begin{minipage}{\linewidth}
