@@ -1254,16 +1254,16 @@ Autorzy zrewidowali swoje idee, i obecnie stosuje się wariant modułu resztkow
 
 %Charakteryzuje się możliwością odrzucania połączeń i posiada ogromny moduł na normalizację zbioru iteracji (ang. batch normalization). Normalizacja jest pomysłem zaczerpniętym z rekurencyjnych sieci neuronowych. Ta technika pozwala stworzyć sieć ze 152 warstwami ukrytymi przy zachowaniu złożoności mniejszej niż VGG. 
 
-%\section{ResNeXt}
-%\begin{figure}[h]
-%	\centering
-%			\includegraphics[resolution=100, scale=0.9]{ResNeXt.png}
-%		\caption{Architektura modułu sieci ResNeXt}
-%\end{figure}
-%\cite{DBLP:journals/corr/XieGDTH16}
+\section{ResNeXt}
+\begin{figure}[h]
+	\centering
+			\includegraphics[resolution=100, scale=0.9]{ResNeXt.png}
+		\caption{Architektura modułu sieci ResNeXt}
+\end{figure}
+Wariant sieci ResNet zaproponowany przez zespół pod przywództwem Xie. Podstawową różnicą są bloki  . \cite{DBLP:journals/corr/XieGDTH16}
 
-%[Saining Xie, Ross Girshick, Piotr Dollar Zhuowen Tu Kaiming He, 2017] - modularyzowalna 
-%\cite{DBLP:journals/corr/abs-1805-08700}
+
+\cite{DBLP:journals/corr/abs-1805-08700}
 
 \section{YOLO -- You Only Look Once}
 \begin{figure}[ht]
@@ -1436,7 +1436,7 @@ Jest to de facto standard struktury ułożenia danych. W każdym z wyżej wymien
 Podział danych na zestawy treningowe, uczące i walidacyjne zwyczajowo w proporcjach 70\%/25\%/5\%. Tutaj zastosowano proporcje 89\%/11,8\%/0,2\%.
 Skrypt, który przygotowuje algorytm, jest podobny dla wszystkich architektur. Jest to naturalne, ponieważ określa się w nim hiperparametry dla algorytmu. Po wielokrotnych eksperymentach na różnych parametrach, okazuje się, że użyta karta graficzna dość szybko wyczerpuje ograniczenia pamięciowe, a załadowanie całego zbioru danych jest niemożliwe. Zmusza to użytkownika do skalowania zdjęć do dużo niższej rozdzielczości. Najmniejszym wspólnym mianownikiem dla wszystkich zastosowanych architektur jest przeskalowanie zdjęć do rozmiaru 400 x 400 pikseli pozostawiając 3 warstwy na kolor. Pozostawiona jest również liczba epok dla każdej z architektury dla wyrównania szans uczenia. Współczynnik uczenia został na sztywno ustawiony na wartość 0,01. W późniejszych badaniach zastosowany został algorytm wygaszania stałej uczenia, czyli zmianę wraz ze znajdowaniem kolejnych minimów lokalnych płaszczyzny funkcji szukanej przez sieć.
 
-Dla uniknięcia tworzenia nowych modeli, co na dostępnym sprzęcie wymagałoby tygodni obliczeń dla każdej z architektur, użyto w eksperymencie modeli uczonych na zawody ImageNet. Każdy model jest uczony na zbiorze 1,2 miliona zdjęć przydzielonych do 1000 klas. 
+Dla uniknięcia tworzenia nowych modeli, co na dostępnym sprzęcie wymagałoby tygodni obliczeń dla każdej z architektur, użyto w eksperymencie modeli uczonych na zawody ImageNet. Każdy model jest uczony na zbiorze 1,2 miliona zdjęć przydzielonych do 1000 klas.
 
 Eksperymenty zostały wykonane w kolejności od najstarszej architektury spełniającej wymóg klasyfikacji obrazów, który został ustalony na powyżej 80\%. Następnie każda z architektur przechodzi strojenie indywidualne, tak by uzyskać najwyższy możliwy jej wynik. Zwycięzca otrzymuje możliwość honorowego porównania pomiaru uczenia zarówno na CPU oraz GPU.
 
@@ -1556,7 +1556,7 @@ Wartosci po podstawowym nauczaniu sieci:
     VGG19 & 350 & 100\%& 8,10\% & 8,10\%\\ \hline
     Wide Residual Network & 350 & 93,75\% & 4,22\% & 25,64\% \\ \hline
     ResNeXt 101 & 350 & 100\%& 4,67\% & 4,86\%\\\hline
-    Inception v4 & 350 & 7,46\% & 8,98\% & 93,75\% \\ \hline
+    Inception v4 & 350 & 93,75\% & 8,98\% & 7,46\% \\ \hline
     DenseNet 201 & 350 & 100\% & 3,56\% & 3,82\% \\ \hline
     \end{tabular}
 \end{center}
@@ -1567,33 +1567,36 @@ Wartości po nauczaniu sieci ze strojeniem:
     \hline
     Sieć & Rozmiar wejścia & Dokładność & Błąd treningowy & Błąd walidacyjny \\ \hline
     ResNet34 & 300 & 100\% & 5,45\% & 3,22\% \\ \hline
-    VGG19 &  &  &  & \\ \hline
-    ResNeXt &  &  &  &  \\ \hline
-    Inception v4 &  &  &  &  \\ \hline
-    DenseNet 201 &  &  &  &  \\ \hline
+    VGG19 & 100 & 68,75\% & 7,72\% & 36,53\% \\ \hline
+    Wide Residual Network & 100 & 87,5\% & 5,21\% & 40,55\% \\ \hline    
+	ResNeXt & 100 & 100\% & 5,61\% & 8,83\% \\ \hline
+    Inception v4 & 100 & 81,25\% & 17,82\% & 49,46\% \\ \hline
+    DenseNet & 100 & 87,5\% & 7,05\% & 38,32\%\\ \hline
     \end{tabular}
 \end{center}
 
 Trening sieci ze strojeniem jest zadaniem wymagającym sporej dozy cierpliwości. Nie można uruchomić algorymu uczącego z nadzieją na zadowalające wyniki. Rozmiar pamięci potrzebnej na TTA, cykliczne współczynniki uczenia, czy stochastic gradient descent algo with restarts (jak to po polsku nazwać?) wzrasta wielokrotnie z każdą kolejną epoką. Należy dobierać parametry metodą prób i błędów, starając się maksymalnie wykorzystać dostępny sprzęt. Hiperparametry, na które należy zwrócić szczególną uwagę to: rozmiar sygnałów wejściowych, wybrane typy próbkowania przekształceń obrazu (TTA), ilość cykli dla każdej epoki.
 
-\subsection{ResNet} % 300px
+\subsection{ResNet}
 ResNet jest architekturą najłatwiejszą do wytrenowania. Jej kompaktowa struktura pozwala zmieścić cały zbiór danych w rozmiarze 500 pikseli. Również po dodaniu sztucznie wygenerowanych danych, niewielka ilość parametrów bez problemu pozwala na trenowanie w ograniczonych pamięciowo środowiskach. Jest to świetna wiadomość dla osób pracujących na pojedynczych maszynach GPU. Wstępne nauczenie sieci dało świetny rezultat widoczny poniżej.
 
 Słowem wyjaśnienia, dokładność sieci na poziomie 100\%, udało się osiągnąć tworząc duży rozmiar sygnału wejściowego, dlatego sieć jest w stanie dokładniej rozróżnić cechy występujące na obrazie. Stosunkowo prosty podział zbioru uczącego na dwie klasy, umożliwia klasyfikację z prostym podziałem płaszczyzny. Domena obrazowania medycznego ma zaletę wyłonienia okreśłonej (zazwyczaj jednej) cechy obrazu bez szumu środowiskowego. Przez szum rozumiane jest otoczenie obrazu (pozostałe przedmioty na scenie), specyficzne ułożenie czy kąt pod jakim został wykonany obraz. Można to porównać do rysowania podziału liczb ujemnych i dodatnich na osi x.
 Błąd zestawu walidacyjnego jest niższy ze względu na wiele czynników. Błąd zestawu treningowy jest średnią strat ze wszystkich partii uczących, model zmieniając się w czasie zmniejsza błąd, ale pozostają wpływy z wczesnych etapów uczenia. Drugim aspektem jest mechanizm odrzucania połączeń, aktywny w trakcie uczenia (dla przypomnienia, zapobiega on przeuczeniu sieci). Mechanizm ten jest wyłączony w trakcie walidacji.
 
 \subsection{VGG}
-Ze względu na ogromny rozmiar tej sieci, jest unikana przez osoby nie mające do dyspozycji centrów danych. Mając do dyspozycji 6 GB, należy się liczyć z szybkim wyczerpaniem zasobów. Podczas treningu ze strojeniem na 5000 obrazów, pamięć została przekroczona już dla rozmiaru sygnałów wejściowych 150 pikseli. 
+Ze względu na ogromny rozmiar tej sieci, jest unikana przez osoby nie mające do dyspozycji centrów danych. Mając do dyspozycji 6 GB, należy się liczyć z szybkim wyczerpaniem zasobów. Podczas treningu ze strojeniem na 5000 obrazów, pamięć została przekroczona już dla rozmiaru sygnałów wejściowych 150 pikseli. Trening ze strojeniem dla tej sieci wymaga ok 16 GB pamięci operacyjnej urzędzania wykonującego obliczenia.
 
 \subsection{ResNeXt}
-Architektura szczątkowa sieci, sprawiła najmniej problemów podczas ładowania zbioru danych uczących do pamięci. Podobnie jak ResNet, ograniczenie ilości parametrów dało spore możliwości sztucznego powielania danych bez przepełnienia bufora. ResNeXt to idealny kandydat dla entuzjastów mających do dyspozycji wyłącznie komputer osobisty.
+Architektura szczątkowa sieci, sprawiła najmniej problemów podczas ładowania zbioru danych uczących do pamięci. Podobnie jak ResNet, ograniczenie ilości parametrów dało spore możliwości sztucznego powielania danych bez przepełnienia bufora. ResNeXt to idealny kandydat dla entuzjastów mających do dyspozycji wyłącznie komputer osobisty. Należy zastrzec, że bezproblemowe ładowanie zbioru danych odbywa się wyłącznie na niezmodyfikownej sieci. Proces sztucznego zwiększania ilości danych, bardzo szybko wyczerpał zasoby sieci, bo już przy 150 pikselach rozmiaru wejściowego, architektura odmówiła współpracy. Wyniki na tak niskiej rozdzielczości okazały się mierne.
 
 \subsection{Wide Residual Network}
+Mało popularna architektura WRN okazała się wadliwa do wybranego przez autora pracy zbioru danych. W każdym przypadku testowym dochodziło do przeuczenia sieci na zestawie treningowym. Mimo wielu prób, nie zdołano poprawić wyniku dla zestawu walidacyjnego. Testy ze zwielokrotnioną ilością danych, zwróciły jeszcze gorsze wyniki, błąd zestawu walidacyjnego wyniósł ponad 40\%.
 
 \subsection{Inception}
+Architektura GoogLeNet z modułami incepcji jest najbardziej wymagającą pamięciowo siecią z przetestowanych przez autora. Po wynikach widać, że póki starczyło pamięci na załadowanie zdjęć o wysokiej rozdzielczości, 300 x 300 pikseli, wyniki były zadowalające. Po wykonaniu -- zwielokrotnienia danych, dodania cyklicznej stałej uczenia, moduły incepcji przeuczyły sieć. Stopień przeuczenia jest tak widoczny, że nowe dane są błędnie rozpoznawane w prawie połowie przypadków, oznacza to że sieć nie widzi cech obrazu wskazujących określoną klasę.
 
-\subsection{DenseNet} %na rozmiarze 100 pikseli
-Najpopularniejsza architektura dla uczenia zdjęć. Jest bardzo szybka w trenowaniu nowych modeli i posiada implementację w każdej bibliotece głębokiego uczenia. Najlepszy wynik jaki autor zdołał uzyskać:
+\subsection{DenseNet}
+Najpopularniejsza architektura dla uczenia zdjęć. Jest bardzo szybka w trenowaniu nowych modeli i posiada implementację w każdej bibliotece głębokiego uczenia. Sieć poprawnie rozdzieliła przestrzeń klas dla zbioru obrazów. Uzyskała wynik na poziomie błędu 3\%, jest to światowej klasy model uzyskany już po kilku próbach dostrojenia parametrów.
 
 \subsection{Porównanie czasu uczenia (CPU i GPU)}
 Sekcja poświęcona na uświadomienie, jak wielka przepaść w czasie uczenia istnieje między uczeniem modelu na procesorze jednostki centralnej komputera, a procesorze jednostki graficznej. Trenowanie obrazów odbywa się tylko na ostatnich warstwach architektury ResNet, ponieważ uczenie całości zajęłoby wiele tygodni na zwykłym komputerze klasy PC.
@@ -1616,6 +1619,8 @@ Pierwszym wnioskiem, jaki nasuwa się po przeprowadzeniu testów wydajności, je
 Wpływ wybranej architektury na wynik ma znaczenie malejące z każdą nową siecią. Zbliżając się do blisko stuprocentowej skuteczności rozpoznawania obrazów trudno jest stwierdzić, że istnieją wyzwania w tej dziedzinie. Należałoby się raczej skupić na bezpieczeństwie sieci i zabezpieczeniami przed próbami oszukania. Ataki stają się popularne, kiedy agenci automatyczni zostają wdrożeni na szeroką skalę.
 
 Dużo ważniejsze od ułożenia kolejnych warstw neuronów okazują się techniki pozwalające optymalizować znajdywanie globalnego minimum funkcji określającej model. Nowe techniki pojawiające się z każdym miesiącem pozwalają na skuteczne wykorzystanie algorytmu przez osoby nieznające matematyki stojącej za algorytmami głębokiego uczenia.
+
+W przypadku testowanego przez autora zbioru, mogło nastąpić zatracenie cech wskazujących klasę obrazu przy zmniejszeniu rozdzielczości obrazu wejściowego do 100 pikseli na krawędź. Należałoby skonsultować z ekspertem do obrazów rentgenowskich, czy ktokolwiek jest w stanie sprawnie rozpoznać zapalenie płuc na przeskalowanych obrazach. Kolejną sugestią jest zwiększenie dostępnych zasobów -- dodanie kolejnych procesorów jednostek graficznych, bądź wymiana na obecnej na sprzęt wyższej klasy. Testy przeprowadzane przez ekspertów od uczenia maszynowego na przedstawionym zbiorze danych wskazują, że jakość obrazu ma ogromne znaczenie przy wykrywaniu anomalii na prześwietleniach rentgenowskich. Stąd istotnie wyższa jakość modelu kiedy nie dodano żadnych modyfikacji zmuszających do kilkukrotnego obniżenia rozdzielczości sygnałów wejściowych.
 
 % ################################
 %        PODSUMOWANIE
