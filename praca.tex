@@ -1517,7 +1517,121 @@ Kolejnym wspólnym elementem dla każdego z programów głębokiego uczenia masz
 \item odpowiedzi dla każdej z klas z najwyższą pewnością (prawdopodobieństwem) niepoprawnie sklasyfikowanie,
 \item odpowiedzi najbardziej niepewne, najbliższe przejścia do innej klasy.
 \end{itemize}
-Wyświetlenie po kilka obrazów z każdej z powyższych kategorii pozwoli zrozumieć dlaczego algorytm zachowuje się w dany sposób i znacząco ułatwia jego modyfikacje. Jak wspomniano we wcześniejszych rozdziałach, uczenie głębokie jest jeszcze praktyką skazaną na metodykę prób i błędów, dlatego wizualizacja jest najprostszym sposobem na uwidocznienie błędów.
+Wyświetlenie po kilka obrazów z każdej z powyższych kategorii pozwoli zrozumieć dlaczego algorytm zachowuje się w dany sposób i znacząco ułatwia jego modyfikacje. Dla oszczędności miejsca, poniżej umieszczono obrazy z wartości granicznych tylko dla jednej architektury. Powtarzanie zabiegu próbkowania dla każdej z architektury jest zbędne, ponieważ ma na celu głównie uwidocznić osobie badającej zbiór danych, niezależnie od używanego algorytmu. Jak wspomniano we wcześniejszych rozdziałach, uczenie głębokie jest jeszcze praktyką skazaną na metodykę prób i błędów, dlatego wizualizacja jest najprostszym sposobem na uwidocznienie błędów.
+
+\subsection{Przegląd danych}
+%Prawidłowe klasyfikacje
+Poniżej zaprezntowanych jest kilka losowo wybranych obrazów, prawidłowo rozpoznanych przez sieć \ref{fig:randomCorrect1} \ref{fig:randomCorrect2} \ref{fig:randomCorrect3} \ref{fig:randomCorrect4} . W opisie obrazu znajduje się wartość oznaczająca prawdopodobieństwo z jakim sieć jest pewna swojej decyzji. Wartości bliżej 0, określają płuca zdrowe, zaś wartości zbliżone do 1 przedstawiają płuca z infekcją. Wartości bliżej 0,5 oznaczają mniejszą sieci w klasyfikacji.
+
+\begin{figure}[ht]
+	\centering
+			\includegraphics[resolution=100, scale=0.65]{randomCorrect1.png}
+		\caption{Zdrowe płuca. Wartość określona przez sieć: 0,11994.}
+				\label{fig:randomCorrect1}
+\end{figure}
+
+\begin{figure}[ht]
+	\centering
+			\includegraphics[resolution=100, scale=0.65]{randomCorrect2.png}
+		\caption{Zapalenie płuc. Wartość określona przez sieć: 0,99967.}
+				\label{fig:randomCorrect2}
+\end{figure}
+
+\begin{figure}[ht]
+	\centering
+			\includegraphics[resolution=100, scale=0.65]{randomCorrect3.png}
+		\caption{Zapalenie płuc. Wartość określona przez sieć: 0,99262}
+				\label{fig:randomCorrect3}
+\end{figure}
+
+\begin{figure}[ht]
+	\centering
+			\includegraphics[resolution=100, scale=0.65]{randomCorrect4.png}
+		\caption{Zdrowe płuca. Wartość określona przez sieć: 0,10775}
+				\label{fig:randomCorrect4}
+\end{figure}
+
+%\subsection{Nieprawidłowe klasyfikacje}
+Następnie przedstawiam kilka losowo wybranych niepoprawnie sklasyfikowanych odpowiedzi \ref{fig:randomIncorrect1} \ref{fig:randomIncorrect2} \ref{fig:randomIncorrect3} \ref{fig:randomIncorrect4} .
+
+\begin{figure}[ht]
+	\centering
+			\includegraphics[resolution=100, scale=0.65]{randomIncorrect1.png}
+		\caption{Zdrowe płuca. Wartość określona przez sieć: 0,92501.}
+				\label{fig:randomIncorrect1}
+\end{figure}
+
+\begin{figure}[ht]
+	\centering
+			\includegraphics[resolution=100, scale=0.65]{randomIncorrect2.png}
+		\caption{Zdrowe płuca. Wartość określona przez sieć: 0,97996.}
+				\label{fig:randomIncorrect2}
+\end{figure}
+
+\begin{figure}[ht]
+	\centering
+			\includegraphics[resolution=100, scale=0.65]{randomIncorrect3.png}
+		\caption{Zdrowe płuca. Wartość określona przez sieć: 0,97754.}
+				\label{fig:randomIncorrect3}
+\end{figure}
+
+\begin{figure}[ht]
+	\centering
+			\includegraphics[resolution=100, scale=0.65]{randomIncorrect4.png}
+		\caption{Zdrowe płuca. Wartość określona przez sieć: 0,99775.}
+				\label{fig:randomIncorrect4}
+\end{figure}
+
+Rysunki \ref{fig:randomCertain1} \ref{fig:randomCertain2} \ref{fig:randomCertain3} \ref{fig:randomCertain4} przedstawiają odpowiedzi dla każdej z klas z najwyższą pewnością (prawdopodobieństwem) poprawnie sklasyfikowane odpowiedzi. Te obrazy wykazują się cechami na tyle wróżniającymi klasę, że stanowią ,,reprezentantów'' cech.
+
+
+\begin{figure}[ht]
+	\centering
+			\includegraphics[resolution=100, scale=0.65]{randomCertain1.png}
+		\caption{Zdrowe płuca. Wartość określona przez sieć: 0,00157.}
+				\label{fig:randomCertain1}
+\end{figure}
+
+\begin{figure}[ht]
+	\centering
+			\includegraphics[resolution=100, scale=0.65]{randomCertain2.png}
+		\caption{Zdrowe płuca. Wartość określona przez sieć: 0,00585.}
+				\label{fig:randomCertain2}
+\end{figure}
+
+\begin{figure}[ht]
+	\centering
+			\includegraphics[resolution=100, scale=0.65]{randomCertain3.png}
+		\caption{Zapalenie płuc. Wartość określona przez sieć: 0,99666.}
+				\label{fig:randomCertain3}
+\end{figure}
+
+\begin{figure}[ht]
+	\centering
+			\includegraphics[resolution=100, scale=0.65]{randomCertain4.png}
+		\caption{Zapalenie płuc. Wartość określona przez sieć: 0,99996.}
+				\label{fig:randomCertain4}
+\end{figure}
+
+
+Odpowiedzi dla każdej z klas z najwyższą pewnością (prawdopodobieństwem) niepoprawnie sklasyfikowanie odpowiedzi \ref{fig:randomIncorrect1} \ref{fig:randomIncorrect2}. 
+
+Odpowiedzi najbardziej niepewne, najbliższe przejścia do innej klasy \ref{fig:randomUncertain1} \ref{fig:randomUncertain2}.
+
+\begin{figure}[ht]
+	\centering
+			\includegraphics[resolution=100, scale=0.65]{randomUncertain1.png}
+		\caption{Zdrowe płuca. Wartość określona przez sieć: 0,99779.}
+				\label{fig:randomUncertain1}
+\end{figure}
+
+\begin{figure}[ht]
+	\centering
+			\includegraphics[resolution=100, scale=0.65]{randomUncertain2.png}
+		\caption{Zdrowe płuca. Wartość określona przez sieć: 0,99737.}
+				\label{fig:randomUncertain2}
+\end{figure}
+
 
 \section{Optymalizacja wyników}
 \subsection{Wybór stałej uczenia}
