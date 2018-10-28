@@ -266,6 +266,7 @@ Do prezentacji działania bibliotek, architektur i algorytmów użyty został go
 \item zdrowe płuca,
 \item zapalenie płuc.
 \end{itemize} 
+
 Dane są anonimowe, zapewniając zgodność z prawem europejskim dotyczącym regulacji o ochronie danych osobowych, i zostały zweryfikowane przez Kaggle.\cite{siteMendeley}
 
 Badanym obszarem jest zagadnienie klasyfikacji obrazów przy pomocy głębokich sieci neuronowych. Algorytm sieci tworzy mapę cech każdej z klas. Na przykładzie zbioru zdjęć rentgenowskich, zaprezentowano w jaki sposób wykorzystać gotowe modele sieci oraz przedstawiono metody optymalizacji procesu uczenia. Użycie wstępnie wyuczonej sieci pozwoliło autorowi niniejszej pracy uniknąć wysokich kosztów tworzenia własnych modeli od zera.
@@ -368,12 +369,14 @@ Uczenie nadzorowane ma wiele zastosowań do których należą (wraz z używanym 
 \item samochody autonomiczne (sieci hybrydowe lub inne niestandardowe sieci),
 \item rozpoznawanie obiektów na obrazach (konwolucyjna sieć neuronowa).
 \end{itemize}
+
 Ostatnie z wyżej wymienionych zastosowań stanowi badany temat w tej pracy.
 
 Uczenie nadzorowane dzieli się również binarnie ze względu na strukturę dostarczonych danych:
 \begin{itemize}
 \item dane strukturyzowane,
 \item danie nieustrukturyzowane.
+\end{itemize}
 
 Pierwszy element z wymienionej listy rodzaj danych -- zawieraja konkretną strukturę, najczęściej spotykaną strukturą jest tabela. Są dobrze obsługiwane przez większość znanych wcześniej algorytmów uczenia maszynowego i nie wymagają ogromnej mocy obliczeniowej. Choć sieci neuronowe świetnie się sprawdzają przy tego typu danych, używanie ich ma sens dopiero gdy danych jest bardzo dużo (wielkość tabel przekraczająca miliony rekordów). Drugi typ danych, nieustrukturyzowane zdjęcia, pliki audio, tekst, jest znacznie trudniejszy do rozpoznania przez komputer, za to dużo bardziej naturalny dla ludzi. Dzięki głębokim sieciom neuronowym i wielkiej mocy obliczeniowej komputerów, dokładność algorytmów uczących się na tego typu danych znacząco wzrosła, z 70\% do ok 95--99\% dokładności, zależnie od ilości danych.
 
@@ -413,7 +416,7 @@ Obecnie nie jest zalecane używanie funkcji sigmoidalnej poza przypadkami na war
 
 Tangens hiperboliczny jest wydajną funkcją aktywacji. Jego wartości zawierają się między -1 i 1. Definicja funkcji tangensu hiperbolicznego:
 
-$$tanh(x) = \frac{e^{x} - e^{-x}}{e^{x} + e^{-x}}$$. 
+$$tanh(x) = \frac{e^{x} - e^{-x}}{e^{x} + e^{-x}}$$
 
 Jak widać na załączonych rysunkach, ta funkcja jest przesunięciem sigmoidy względem osi \(y\), tak że przechodzi przez punkt \((0,0)\). Dla warstw ukrytych charakterystyka neuronu będąca tangensem hiperbolicznym ma lepszą skuteczność. Mediana wartości wychodzących z warstw ukrytych wynosi 0. Nie trzeba wtedy stosować skalowania względem sigmoidy, co znacząco ułatwia uczenie.
 
@@ -495,6 +498,7 @@ Istnieją również analogiczne metody korekcji wag, jak np. szybka propagacja (
 \begin{itemize}
 \item metoda gradientów sprzężonych, 
 \item metoda Levenberga-Marquardta. 
+\end{itemize}
 
 Metody te są dużo szybsze od wstecznej propagacji błędu, ale przez swoje ograniczenia prawie nigdy nie są używane w praktyce.\cite{odkrywanieSieci}
 
@@ -1286,7 +1290,16 @@ Wariant sieci ResNet zaproponowany przez zespół pod przywództwem Xie. Podstaw
  		\caption{Wizualizacja architektury szerokiej sieci szczątkowej.}
  \end{figure}
 
-Architektura szerokiej sieci szczątkowej (ang. Wide Residual Network) jest rozszerzeniem pomysłu ResNet oraz ResNeXt. WRN są zdolne do skalowania się do tysięcy warstw ukrytych bez zjawiska znikającego gradientu. Autorzy sieci osiągnęli wzrost jakości sieci dokładając tysiące warstw. Jednakże po przekroczeniu progu kilkuset warstw, dokładność sieci zwiększa się o coraz mniejsze ułamki procenta. \cite{}
+Architektura szerokiej sieci szczątkowej (ang. Wide Residual Network) jest rozszerzeniem pomysłu ResNet oraz ResNeXt. WRN są zdolne do skalowania się do tysięcy warstw ukrytych bez zjawiska znikającego gradientu. Autorzy sieci osiągnęli wzrost jakości sieci dokładając tysiące warstw. Jednakże po przekroczeniu progu kilkuset warstw, dokładność sieci zwiększa się o coraz mniejsze ułamki procenta. Pomysł na szerokie sieci został umotywowany przez problem ,,znikających cech'' w zwykłych głęgokich sieciach. Autorzy zauważyli, że podwajanie głębokości sieci neuronowych zwiększa ich precyzję o niewielki ułamek procenta. Gradient, który przechodzi przez głęboką sieć nie ma żadnego wymuszenia by przechodził przez wagi bloku szczątkowego. Gradient może w ten sposób ominąć uczenie się w trakcie treningu. Ostatecznie doprowadza to do sytuacji, gdzie niewielka liczba bloków uczy się reprezentacji cech lub wszystkie uczą się mało istotnych informacji. Dotychczas jedynym sposobem na znany problem było stosowanie wyrzucania połączeń. Stąd wyszli z teorią, która stała się podstawą nowatorskiej architektury. Założyli oni, że zmniejszenie głębokości sieci na rzecz zwiększenia szerokości (ilości map cech) pomoże zwiększyć precyzję sieci zachowując koszt trenowania na relatywnie niskim poziomie.
+
+Sieć szczątkowa ułożona jest sekwencyjnie ustawionymi blokami szczątkowymi. Bloki dzielą się na dwa typy:
+\begin{itemize}
+\item podstawowy (ang. \textit{basic}) -- złożony z dwóch, następujących po sobie warstw konwolucyjnych o wymiarach 3 x 3 piksele. Warstwy poprzedzone są filtrem aktywacyjnym ReLU.
+\item szyjka (ang. \textit{bottleneck}) -- złożony z jednej warstwy konwolucyjnej o wymiarach 3 x 3 piksele. Przed oraz za tą warstwą ustawione są warstwy konwolucyjne o rozmiarze 1 piksela, których celem jest pierw zmiejszenie, a następnie rozszerzenie warstw konwolucji. 
+\end{itemize}
+
+Zastosowanie bloków szyjkowych znacząco obniżyło koszt obliczeń podczas trenowania sieci przy zwiększaniu ilości warstw. W eksperymentach przeprowadzonych przez autorów architektury WRN, poszerzanie bloków pozwoliło znacząco zwiększyć wydajność, 16 warstwowa sieć z szerokimi blokami osiągnęła lepsze wyniki od 1000 warstwowej standardowej sieci. Czas uczenia szerokiej sieci, również jest dwuktotnie krótszy od jej głębszego wąskiego odpowiednika.
+\cite{DBLP:journals/corr/ZagoruykoK16}
 
 \section{SqueezeNet}
 \begin{figure}[ht]
@@ -1322,7 +1335,7 @@ Pierwsza warstwa sieci jest warstwą konwolucyjną o rozmiarach 111 x 111 x 96 (
 \item Moduł 7: 27 x 27 x 512 (77 581 parametrów),
 \item Moduł 8: 13 x 13 x 512 (77 581 parametrów).
 \end{itemize}
-Dodatkowo ostatni moduł ognia (dziewiąta warstwa). Wyposażony jest w mechanizm odrzucania części sygnałów (ang. \textit{dropout}). Sygnały z ostatniej warstwy ognia przechodzą przez jeszcze jedną warstwę konwolucyjną rozmiarów 13 x 13 x 1000 (szerokość wyznaczona ilością klas).
+Dodatkowo ostatni moduł ognia (dziewiąta warstwa). Wyposażony jest w mechanizm odrzucania wyrzucania połączeń (ang. \textit{dropout}). Sygnały z ostatniej warstwy ognia przechodzą przez jeszcze jedną warstwę konwolucyjną rozmiarów 13 x 13 x 1000 (szerokość wyznaczona ilością klas).
 Zakończenie sieci wyliczane jest przez funkcję liczącą średniej z warstwy łączącej. Ta wartość jest przekazywana do warstwy wyjściowej, wyliczającej softmax dla wszystkich z 1000 klas. Zakończenie sieci nie różni się od pozostałych architektur konwolucyjnych.
 
 Różnicą szczególnie widoczną względem pozostałych sieci splotowych jest brak jakiejkolwiek warstwy w pełni połączonej. Jest to świadomy wybór. Warto zaznaczyć podejście autorów do ograniczenia rozmiarów sieci nie ogranicza się do samej architektury. Rejestry pamięci zostały przycięte do 6 bitów, redukując tym samym rozmiar dziesięciokrotnie. Rysunek z porównaniem rozmiaru modeli przy różnych stopniach kompresji udowadnia, że wraz z kompresją nie trzeba tracić na jakości, wręcz przeciwnie, przy prawidłowej architekturze dokładność może być wyższa niż w innych rozbudowanych architekturach. \cite{DBLP:journals/corr/IandolaMAHDK16}
@@ -1517,6 +1530,7 @@ Kolejnym wspólnym elementem dla każdego z programów głębokiego uczenia masz
 \item odpowiedzi dla każdej z klas z najwyższą pewnością (prawdopodobieństwem) niepoprawnie sklasyfikowanie,
 \item odpowiedzi najbardziej niepewne, najbliższe przejścia do innej klasy.
 \end{itemize}
+
 Wyświetlenie po kilka obrazów z każdej z powyższych kategorii pozwoli zrozumieć dlaczego algorytm zachowuje się w dany sposób i znacząco ułatwia jego modyfikacje. Dla oszczędności miejsca, poniżej umieszczono obrazy z wartości granicznych tylko dla jednej architektury. Powtarzanie zabiegu próbkowania dla każdej z architektury jest zbędne, ponieważ ma na celu głównie uwidocznić osobie badającej zbiór danych, niezależnie od używanego algorytmu. Jak wspomniano we wcześniejszych rozdziałach, uczenie głębokie jest jeszcze praktyką skazaną na metodykę prób i błędów, dlatego wizualizacja jest najprostszym sposobem na uwidocznienie błędów.
 
 \subsection{Przegląd danych}
@@ -1677,13 +1691,13 @@ Wartosci po podstawowym nauczaniu sieci:
 \begin{center}
     \begin{tabular}{ | l | l | l | l | l |}
     \hline
-    Sieć & Rozmiar wejścia & Dokładność & Błąd treningowy & Błąd walidacyjny \\ \hline
-    ResNet34 & 500 & 93,75\% & 6,67\% & 9,31\% \\ \hline
-    VGG19 & 350 & 100\%& 8,10\% & 8,10\%\\ \hline
-    Wide Residual Network & 350 & 93,75\% & 4,22\% & 25,64\% \\ \hline
-    ResNeXt 101 & 350 & 100\%& 4,67\% & 4,86\%\\\hline
-    Inception v4 & 350 & 93,75\% & 8,98\% & 7,46\% \\ \hline
-    DenseNet 201 & 350 & 100\% & 3,56\% & 3,82\% \\ \hline
+    Sieć & Wejście & Dokładność & Błąd treningowy & Błąd walidacyjny \\ \hline
+    ResNet & 500 px & 93,75\% & 6,67\% & 9,31\% \\ \hline
+    VGG & 350 px & 100\%& 8,10\% & 8,10\%\\ \hline
+    WRN & 350 px & 93,75\% & 4,22\% & 25,64\% \\ \hline
+    ResNeXt & 350 px & 100\%& 4,67\% & 4,86\%\\\hline
+    Inception & 350 px & 93,75\% & 8,98\% & 7,46\% \\ \hline
+    DenseNet & 350 px & 100\% & 3,56\% & 3,82\% \\ \hline
     \end{tabular}
 \end{center}
 
@@ -1691,13 +1705,13 @@ Wartości po nauczaniu sieci ze strojeniem:
 \begin{center}
     \begin{tabular}{ | l | l | l | l | l |}
     \hline
-    Sieć & Rozmiar wejścia & Dokładność & Błąd treningowy & Błąd walidacyjny \\ \hline
-    ResNet34 & 300 & 100\% & 5,45\% & 3,22\% \\ \hline
-    VGG19 & 100 & 68,75\% & 7,72\% & 36,53\% \\ \hline
-    Wide Residual Network & 100 & 87,5\% & 5,21\% & 40,55\% \\ \hline    
-	ResNeXt & 100 & 100\% & 5,61\% & 8,83\% \\ \hline
-    Inception v4 & 100 & 81,25\% & 17,82\% & 49,46\% \\ \hline
-    DenseNet & 100 & 87,5\% & 7,05\% & 38,32\%\\ \hline
+    Sieć & Wejście & Dokładność & Błąd treningowy & Błąd walidacyjny \\ \hline
+    ResNet & 300 px & 100\% & 5,45\% & 3,22\% \\ \hline
+    VGG & 100 px & 68,75\% & 7,72\% & 36,53\% \\ \hline
+    WRN & 100 px & 87,5\% & 5,21\% & 40,55\% \\ \hline    
+    ResNeXt & 100 px & 100\% & 5,61\% & 8,83\% \\ \hline
+    Inception & 100 px & 81,25\% & 17,82\% & 49,46\% \\ \hline
+    DenseNet & 100 px & 87,5\% & 7,05\% & 38,32\%\\ \hline
     \end{tabular}
 \end{center}
 
@@ -1716,7 +1730,7 @@ Ze względu na ogromny rozmiar tej sieci, jest unikana przez osoby nie mające d
 Architektura szczątkowa sieci, sprawiła najmniej problemów podczas ładowania zbioru danych uczących do pamięci. Podobnie jak ResNet, ograniczenie ilości parametrów dało spore możliwości sztucznego powielania danych bez przepełnienia bufora. ResNeXt to idealny kandydat dla entuzjastów mających do dyspozycji wyłącznie komputer osobisty. Należy zastrzec, że bezproblemowe ładowanie zbioru danych odbywa się wyłącznie na niezmodyfikownej sieci. Proces sztucznego zwiększania ilości danych, bardzo szybko wyczerpał zasoby sieci, bo już przy 150 pikselach rozmiaru wejściowego, architektura odmówiła współpracy. Wyniki na tak niskiej rozdzielczości okazały się mierne.
 
 \subsection{Wide Residual Network}
-Mało popularna architektura WRN okazała się wadliwa do wybranego przez autora pracy zbioru danych. W każdym przypadku testowym dochodziło do przeuczenia sieci na zestawie treningowym. Mimo wielu prób, nie zdołano poprawić wyniku dla zestawu walidacyjnego. Testy ze zwielokrotnioną ilością danych, zwróciły jeszcze gorsze wyniki, błąd zestawu walidacyjnego wyniósł ponad 40\%.
+Mało popularna architektura WRN okazała się wadliwa do wybranego przez autora pracy zbioru danych. W każdym przypadku testowym dochodziło do przeuczenia sieci na zestawie treningowym. Mimo wielu prób, nie zdołano poprawić wyniku dla zestawu walidacyjnego. Testy ze zwielokrotnioną ilością danych, zwróciły jeszcze gorsze wyniki, błąd zestawu walidacyjnego wyniósł ponad 40\%.  \cite{DBLP:journals/corr/ZagoruykoK16}
 
 \subsection{Inception}
 Architektura GoogLeNet z modułami incepcji jest najbardziej wymagającą pamięciowo siecią z przetestowanych przez autora. Po wynikach widać, że póki starczyło pamięci na załadowanie zdjęć o wysokiej rozdzielczości, 300 x 300 pikseli, wyniki były zadowalające. Po wykonaniu -- zwielokrotnienia danych, dodania cyklicznej stałej uczenia, moduły incepcji przeuczyły sieć. Stopień przeuczenia jest tak widoczny, że nowe dane są błędnie rozpoznawane w prawie połowie przypadków, oznacza to że sieć nie widzi cech obrazu wskazujących określoną klasę.
