@@ -1290,15 +1290,30 @@ Wariant sieci ResNet zaproponowany przez zespół pod przywództwem Xie. Podstaw
  		\caption{Wizualizacja architektury szerokiej sieci szczątkowej.}
  \end{figure}
 
-Architektura szerokiej sieci szczątkowej (ang. Wide Residual Network) jest rozszerzeniem pomysłu ResNet oraz ResNeXt. WRN są zdolne do skalowania się do tysięcy warstw ukrytych bez zjawiska znikającego gradientu. Autorzy sieci osiągnęli wzrost jakości sieci dokładając tysiące warstw. Jednakże po przekroczeniu progu kilkuset warstw, dokładność sieci zwiększa się o coraz mniejsze ułamki procenta. Pomysł na szerokie sieci został umotywowany przez problem ,,znikających cech'' w zwykłych głęgokich sieciach. Autorzy zauważyli, że podwajanie głębokości sieci neuronowych zwiększa ich precyzję o niewielki ułamek procenta. Gradient, który przechodzi przez głęboką sieć nie ma żadnego wymuszenia by przechodził przez wagi bloku szczątkowego. Gradient może w ten sposób ominąć uczenie się w trakcie treningu. Ostatecznie doprowadza to do sytuacji, gdzie niewielka liczba bloków uczy się reprezentacji cech lub wszystkie uczą się mało istotnych informacji. Dotychczas jedynym sposobem na znany problem było stosowanie wyrzucania połączeń. Stąd wyszli z teorią, która stała się podstawą nowatorskiej architektury. Założyli oni, że zmniejszenie głębokości sieci na rzecz zwiększenia szerokości (ilości map cech) pomoże zwiększyć precyzję sieci zachowując koszt trenowania na relatywnie niskim poziomie.
+Architektura szerokiej sieci szczątkowej (ang. Wide Residual Network) jest rozszerzeniem pomysłu ResNet oraz ResNeXt. Sieci oparte o architekturę szczątkową są zdolne do skalowania się do tysięcy warstw ukrytych bez zjawiska znikającego gradientu. Autorzy architektury osiągnęli wzrost jakości sieci dokładając tysiące warstw. %Jednakże po przekroczeniu progu kilkuset warstw, dokładność sieci zwiększa się o coraz mniejsze ułamki procenta. 
+Pomysł na szerokie sieci został umotywowany przez problem ,,znikających cech'' w zwykłych głębokich sieciach. Autorzy zauważyli, że podwajanie głębokości sieci neuronowych zwiększa ich precyzję o niewielki ułamek procenta. Gradient, przechodzący przez głęboką sieć nie ma żadnego ograniczenia wymuszającego by przechodził przez wagi bloku szczątkowego. Gradient może w ten sposób ominąć uczenie się w trakcie treningu. Ostatecznie doprowadza to do sytuacji, gdzie niewielka liczba bloków uczy się reprezentacji cech lub wszystkie uczą się mało istotnych informacji. 
+Dotychczas jedynym sposobem na opisany problem było stosowanie losowego wyrzucania połączeń.
+Badacze wyszli z teorią, która stała się podstawą nowatorskiej architektury. Założyli oni, że zmniejszenie głębokości sieci na rzecz zwiększenia szerokości (ilości map cech) pomoże zwiększyć precyzję sieci zachowując koszt trenowania na relatywnie niskim poziomie.
 
 Sieć szczątkowa ułożona jest sekwencyjnie ustawionymi blokami szczątkowymi. Bloki dzielą się na dwa typy:
 \begin{itemize}
 \item podstawowy (ang. \textit{basic}) -- złożony z dwóch, następujących po sobie warstw konwolucyjnych o wymiarach 3 x 3 piksele. Warstwy poprzedzone są filtrem aktywacyjnym ReLU.
-\item szyjka (ang. \textit{bottleneck}) -- złożony z jednej warstwy konwolucyjnej o wymiarach 3 x 3 piksele. Przed oraz za tą warstwą ustawione są warstwy konwolucyjne o rozmiarze 1 piksela, których celem jest pierw zmiejszenie, a następnie rozszerzenie warstw konwolucji. 
+\item szyjka (ang. \textit{bottleneck}) -- złożony z jednej warstwy konwolucyjnej o wymiarach 3 x 3 piksele. Przed oraz za tą warstwą ustawione są warstwy konwolucyjne o rozmiarze 1 piksela, których celem jest pierw zmiejszenie, a następnie rozszerzenie warstw konwolucji. 	
 \end{itemize}
 
-Zastosowanie bloków szyjkowych znacząco obniżyło koszt obliczeń podczas trenowania sieci przy zwiększaniu ilości warstw. W eksperymentach przeprowadzonych przez autorów architektury WRN, poszerzanie bloków pozwoliło znacząco zwiększyć wydajność, 16 warstwowa sieć z szerokimi blokami osiągnęła lepsze wyniki od 1000 warstwowej standardowej sieci. Czas uczenia szerokiej sieci, również jest dwuktotnie krótszy od jej głębszego wąskiego odpowiednika.
+Zastosowanie bloków szyjkowych znacząco obniżyło koszt obliczeń podczas trenowania sieci przy zwiększaniu ilości warstw. W eksperymentach przeprowadzonych przez autorów architektury szerokiej sieci szczątkowej, poszerzanie bloków pozwoliło znacząco zwiększyć wydajność, 16 warstwowa sieć z szerokimi blokami osiągnęła lepsze wyniki od 1000 warstwowej standardowej sieci. Czas uczenia szerokiej sieci, również jest dwukrotnie krótszy od jej głębszego wąskiego odpowiednika.
+
+Zwiększenie mocy reprezentacyjnej w blokach szczątkowych ogranicza się do trzech możliwości:
+\begin{itemize}
+\item dodawanie większej ilości warstw konwolucyjnych w każdym bloku,
+\item zwiększenie ilości warstw cech powodując poszerzenie warstw konwolucyjnych,
+\item zwiększenie rozmiarów filtra w warstwach konwolucyjnych.
+\end{itemize}
+
+Ostatnia z wyżej wymienionych metod jest ograniczona, ze względu na empiryczne doświadczenia z filtrami o rozmiarach 3 x 3 piksele. Generują one świetne wyniki przy niskim zapotrzebowaniu na pamięć.
+
+Ogólna struktura sieci szczątkowej złożona jest z następujących warstw: konwolucyjna, której wyjście przetwarzane jest przez 3 grupy bloków szczątkowych. Następnie sygnał przechodzi przez warstwę łączącą, przekazując wynik do warstwy klasyfikacji.
+
 \cite{DBLP:journals/corr/ZagoruykoK16}
 
 \section{SqueezeNet}
@@ -1715,7 +1730,7 @@ Wartości po nauczaniu sieci ze strojeniem:
     \end{tabular}
 \end{center}
 
-Trening sieci ze strojeniem jest zadaniem wymagającym sporej dozy cierpliwości. Nie można uruchomić algorymu uczącego z nadzieją na zadowalające wyniki. Rozmiar pamięci potrzebnej na TTA, cykliczne współczynniki uczenia, czy stochastic gradient descent algo with restarts (jak to po polsku nazwać?) wzrasta wielokrotnie z każdą kolejną epoką. Należy dobierać parametry metodą prób i błędów, starając się maksymalnie wykorzystać dostępny sprzęt. Hiperparametry, na które należy zwrócić szczególną uwagę to: rozmiar sygnałów wejściowych, wybrane typy próbkowania przekształceń obrazu (TTA), ilość cykli dla każdej epoki.
+Trening sieci ze strojeniem jest zadaniem wymagającym sporej dozy cierpliwości. Nie można uruchomić algorytmu uczącego z nadzieją na zadowalające wyniki. Rozmiar pamięci potrzebnej na TTA, cykliczne współczynniki uczenia, czy na dane algorytmu gradientu spadkowego z restartami wzrasta wielokrotnie z każdą kolejną epoką. Należy dobierać parametry metodą prób i błędów, starając się maksymalnie wykorzystać dostępny sprzęt. Hiperparametry, na które należy zwrócić szczególną uwagę to: rozmiar sygnałów wejściowych, wybrane typy próbkowania przekształceń obrazu (TTA), ilość cykli dla każdej epoki.
 
 \subsection{ResNet}
 ResNet jest architekturą najłatwiejszą do wytrenowania. Jej kompaktowa struktura pozwala zmieścić cały zbiór danych w rozmiarze 500 pikseli. Również po dodaniu sztucznie wygenerowanych danych, niewielka ilość parametrów bez problemu pozwala na trenowanie w ograniczonych pamięciowo środowiskach. Jest to świetna wiadomość dla osób pracujących na pojedynczych maszynach GPU. Wstępne nauczenie sieci dało świetny rezultat widoczny poniżej.
@@ -1730,7 +1745,7 @@ Ze względu na ogromny rozmiar tej sieci, jest unikana przez osoby nie mające d
 Architektura szczątkowa sieci, sprawiła najmniej problemów podczas ładowania zbioru danych uczących do pamięci. Podobnie jak ResNet, ograniczenie ilości parametrów dało spore możliwości sztucznego powielania danych bez przepełnienia bufora. ResNeXt to idealny kandydat dla entuzjastów mających do dyspozycji wyłącznie komputer osobisty. Należy zastrzec, że bezproblemowe ładowanie zbioru danych odbywa się wyłącznie na niezmodyfikownej sieci. Proces sztucznego zwiększania ilości danych, bardzo szybko wyczerpał zasoby sieci, bo już przy 150 pikselach rozmiaru wejściowego, architektura odmówiła współpracy. Wyniki na tak niskiej rozdzielczości okazały się mierne.
 
 \subsection{Wide Residual Network}
-Mało popularna architektura WRN okazała się wadliwa do wybranego przez autora pracy zbioru danych. W każdym przypadku testowym dochodziło do przeuczenia sieci na zestawie treningowym. Mimo wielu prób, nie zdołano poprawić wyniku dla zestawu walidacyjnego. Testy ze zwielokrotnioną ilością danych, zwróciły jeszcze gorsze wyniki, błąd zestawu walidacyjnego wyniósł ponad 40\%.  \cite{DBLP:journals/corr/ZagoruykoK16}
+Mało popularna architektura WRN okazała się wadliwa do wybranego przez autora pracy zbioru danych. W każdym przypadku testowym dochodziło do przeuczenia sieci na zestawie treningowym. Mimo wielu prób, nie zdołano poprawić wyniku dla zestawu walidacyjnego. Testy ze zwielokrotnioną ilością danych, zwróciły jeszcze gorsze wyniki, błąd zestawu walidacyjnego wyniósł ponad 40\%.   \cite{DBLP:journals/corr/ZagoruykoK16}
 
 \subsection{Inception}
 Architektura GoogLeNet z modułami incepcji jest najbardziej wymagającą pamięciowo siecią z przetestowanych przez autora. Po wynikach widać, że póki starczyło pamięci na załadowanie zdjęć o wysokiej rozdzielczości, 300 x 300 pikseli, wyniki były zadowalające. Po wykonaniu -- zwielokrotnienia danych, dodania cyklicznej stałej uczenia, moduły incepcji przeuczyły sieć. Stopień przeuczenia jest tak widoczny, że nowe dane są błędnie rozpoznawane w prawie połowie przypadków, oznacza to że sieć nie widzi cech obrazu wskazujących określoną klasę.
@@ -1769,7 +1784,15 @@ W przypadku testowanego przez autora zbioru, mogło nastąpić zatracenie cech w
 \chapter*{Podsumowanie}
 \markboth{}{Podsumowanie}
 \addcontentsline{toc}{chapter}{Podsumowanie}
-Głębokie sieci neuronowe w ciągu ostatnich kilku lat stały się ogólnodostępnym narzędziem. Wykorzystanie ich zminiło postać z zastosowań naukowych, na bardziej uniwersalne mechanizmy wspierające życie codzienne.
+Głębokie sieci neuronowe w ciągu ostatnich kilku lat stały się ogólnodostępnym narzędziem. Nowatorskie architektury zmieniły sposób pracy nie tylko programistów, ale każdego kto ma styczność z dużą ilością danych. W porównaniu do stanu sprzed 50 lat, fundamenty technologii pozostały bez zmian, jednak rozwój sprzętu pozwolił na stworzenie wymyślnych konstrukcji, między innymi wskazanych w tej pracy.
+
+Na dzień dzisiejszy wydaje się, że kolejna \textit{zima SI} nie będzie miała miejsca w najbliższych latach. Rządy krajów takich jak USA, Chin, Francji, Wielkiej Brytanii, przeznaczają ogromne fundusze na laboratoria badawcze. Autor pracy przedstawił firmę NVIDIA jako jedną z korporacji, które zmieniły kierunek biznesu na priorytetowe podejście do wykorzystania Sztucznej Inteligencji \textit{(ang. AI first)}.
+
+Sieci neuronowe nie przypominają połączeń mózgowych. Wręcz przeciwnie, pierwotne wyjście z uproszczonego neuronu ustępuje miejsca wyszukanym konstrukcjom matematycznym. Porównania znane od wielu lat obecnie wspominane są jako luźna analogia mająca wprowadzić nowicjusza w abstrakcje związane z sieciami neuronowymi i niejako wyjaśnić nazewnictwo stosowane w sztucznych sieciach perceptronowych.
+
+Testowane w niniejszej pracy architektury pozwalają wyciągnąć wnioski dotyczące przyszłości. Wydajność w klasyfikacji obrazów dla dużych zbiorów danych medycznych przewyższa dokładność radiologów. Wykorzystanie na szeroką skalę, przykładowo przy wsparciu pracy radiologa, jest już stosowane w chińskich placówkach medycznych w Pekinie. Niestety do wykorzystania systemu samodzielnie, należy rozwiązać problem uzasadnienia decyzji.
+
+   Wykorzystanie ich zmieniło postać z zastosowań naukowych, na bardziej uniwersalne mechanizmy wspierające życie codzienne.
 
 % ################################
 %        SPIS RYSUNKÓW
