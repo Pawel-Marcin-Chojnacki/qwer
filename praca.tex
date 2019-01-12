@@ -1761,17 +1761,17 @@ Oba pomiary dotyczą już przygotowanej sieci z dostrojeniem, a hiperparametry p
     \begin{tabular}{ | l | l | l | l | l |}
     \hline
     Parametr & CPU & GPU & CPU ze strojeniem & GPU ze strojeniem \\ \hline
-    Czas & 10,2s & 12,4s & 2612s &  \\ \hline
-    Dokładność & 100\% & 93,7\% & 100\% & \\ \hline
-    Błąd treningowy & 8,5\% & 8\% & 7,5\% &  \\ \hline
-    Błąd walidacyjny & 10,2\% & 10\% & 3,7\% &  \\ \hline
+    Czas & 10,2s & 12,4s & 2612s & 457s \\ \hline
+    Dokładność & 100\% & 93,7\% & 100\% & 93,7\% \\ \hline
+    Błąd treningowy & 8,5\% & 8\% & 7,5\% & 8\% \\ \hline
+    Błąd walidacyjny & 10,2\% & 10\% & 3,7\% & 10\% \\ \hline
     \end{tabular}
 \end{center}
 
 \section{Podsumowanie}
-Pierwszym wnioskiem, jaki nasuwa się po przeprowadzeniu testów wydajności, jest: nie zaczynać przygody z głębokimi sieciami neuronowymi bez dostępu do procesora graficznego ze średniej półki cenowej. Oczekiwanie na wyniki używając jedynie CPU zniechęci każdego do eksperymentów, a na tym obecnie polega dobieranie świetnych modeli. Wybierając kartę graficzną również należy się kierować odpowiednio dużą pamięcią. Spora część zbioru danych uczących jest ładowana do pamięci GPU, stąd zaleca się minimum 6 GB.
+Pierwszym wnioskiem, jaki nasuwa się po przeprowadzeniu testów wydajności, jest: nie zaczynać przygody z głębokimi sieciami neuronowymi bez dostępu do procesora graficznego o dużej mocy obliczeniowej. Oczekiwanie na wyniki używając jedynie jednostki wyposażonej w CPU zniechęci każdego do eksperymentów, a to eksperymenty są podstawą doboru świetnych modeli. Wybierając kartę graficzną należy się kierować odpowiednio dużą pamięcią. Spora część zbioru danych uczących jest ładowana do pamięci GPU.
 
-Wpływ wybranej architektury na wynik ma znaczenie malejące z każdą nową siecią. Zbliżając się do blisko stuprocentowej skuteczności rozpoznawania obrazów trudno jest stwierdzić, że istnieją wyzwania w tej dziedzinie. Należałoby się raczej skupić na bezpieczeństwie sieci i zabezpieczeniami przed próbami oszukania. Ataki stają się popularne, kiedy agenci automatyczni zostają wdrożeni na szeroką skalę.
+Wpływ wybranej architektury na dokładność sieci ma malejące znaczenie z każdą nową siecią. Dzieje się tak, ponieważ blisko stuprocentowa skuteczność nie daje dużego pola manewru. Zbliżając się do blisko stuprocentowej skuteczności rozpoznawania obrazów trudno jest stwierdzić, że istnieją wyzwania w tej dziedzinie. Należałoby się raczej skupić na bezpieczeństwie sieci i zabezpieczeniami przed próbami oszukania. Ataki stają się popularne, kiedy agenci automatyczni zostają wdrożeni na szeroką skalę.
 
 Dużo ważniejsze od ułożenia kolejnych warstw neuronów okazują się techniki pozwalające optymalizować znajdywanie globalnego minimum funkcji określającej model. Nowe techniki pojawiające się z każdym miesiącem pozwalają na skuteczne wykorzystanie algorytmu przez osoby nieznające matematyki stojącej za algorytmami głębokiego uczenia.
 
@@ -1790,9 +1790,13 @@ Na dzień dzisiejszy wydaje się, że kolejna \textit{zima SI} nie będzie miał
 
 Sieci neuronowe nie przypominają połączeń mózgowych. Wręcz przeciwnie, pierwotne wyjście z uproszczonego neuronu ustępuje miejsca wyszukanym konstrukcjom matematycznym. Porównania znane od wielu lat obecnie wspominane są jako luźna analogia mająca wprowadzić nowicjusza w abstrakcje związane z sieciami neuronowymi i niejako wyjaśnić nazewnictwo stosowane w sztucznych sieciach perceptronowych.
 
-Testowane w niniejszej pracy architektury pozwalają wyciągnąć wnioski dotyczące przyszłości. Wydajność w klasyfikacji obrazów dla dużych zbiorów danych medycznych przewyższa dokładność radiologów. Wykorzystanie na szeroką skalę, przykładowo przy wsparciu pracy radiologa, jest już stosowane w chińskich placówkach medycznych w Pekinie. Niestety do wykorzystania systemu samodzielnie, należy rozwiązać problem uzasadnienia decyzji.
+Architektury sieci neuronowych przeszły wielką ewolucję w ostatniej dekadzie po latach powolnego rozwoju. Wymyślność kolejnych zwycięzców zawodów pozwoliła na korzystanie z wyszukanych modeli. Cieszy również fakt obecnej popularności tematyki uczenia maszynowego. Mnogość aktywnie utrzymywanych bibliotek daje wielkie nadzieje na dalszy dynamiczny rozwój dziedziny.
 
-   Wykorzystanie ich zmieniło postać z zastosowań naukowych, na bardziej uniwersalne mechanizmy wspierające życie codzienne.
+Wyniki testowanych w niniejszej pracy architektur, pozwalają wyciągnąć wnioski dotyczące przyszłości. 
+Wydajność w klasyfikacji obrazów dla dużych zbiorów danych medycznych przewyższa dokładność pojedynczego radiologa. Wykorzystanie systemów uczących na szeroką skalę, przykładowo przy wsparciu pracy radiologa, jest już stosowane w chińskich placówkach medycznych w Pekinie. 
+Niestety do wykorzystania systemu jako samodzielnego agenta decyzyjnego, należy rozwiązać problem uzasadnienia decyzji. W prawodastwie rzymskim (w tym również polskim) prócz samego czynu równie ważne okazują się motywacje. Tak długo jak system nie będzie w stanie argumentować swoich decyzji, nawet model o stuprocentowej skuteczności nie będzie mógł podejmować sprawczych decyzji.
+
+%Firmy produkujące biblioteki głębokiego uczenia maszynowego, publikują od czasu do czasu notatki prasowe, w których oznajmiają szumnie informacje o nadchodzącej rewolucji. Głównym motywem jest sprzedaż usług Sztucznej Inteligencji jako usługi na żądanie w chmurze obliczniowej. 
 
 % ################################
 %        SPIS RYSUNKÓW
